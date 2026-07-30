@@ -7,7 +7,7 @@
     {
       "type": "patchouli:text",
       "title": "Tier 3 Layout",
-      "text": "Tier 3 opens the footprint to a thirteen by thirteen octagon rimmed with Darkstone Slabs, and raises four pillars on the diagonals. The ring grows to $(o)twelve$() pedestals.$(br)Any of the four rotations works; mirror images do not. Pedestals are matched by tag, so plain and magnetized Darkstone Pedestals are interchangeable everywhere the preview shows one."
+      "text": "Tier 3 opens the footprint to a thirteen by thirteen octagon rimmed with Darkstone Slabs, and raises four pillars on the diagonals. The ring grows to $(o)twelve$() pedestals.$(br)Any of the four rotations works. Only the blocks shown are checked - the gaps inside the shape are ignored, so decorate them freely. Pedestals are matched by tag, so plain and magnetized Darkstone Pedestals are interchangeable everywhere the preview shows one."
     },
     {
       "type": "patchouli:multiblock",

@@ -7,7 +7,7 @@
     {
       "type": "patchouli:text",
       "title": "Tier 2 Layout",
-      "text": "Tier 2 abandons the stock nine by nine. The base becomes a cut-corner platform of Polished Darkstone laced with Soulstone, and the ring carries $(o)eight$() pedestals - the same count the native forge had, on a different footprint.$(br)Any of the four rotations works; mirror images do not. Pedestals are matched by tag, so plain and magnetized Darkstone Pedestals are interchangeable everywhere the preview shows one."
+      "text": "Tier 2 abandons the stock nine by nine. The base becomes a cut-corner platform of Polished Darkstone laced with Soulstone, and the ring carries $(o)eight$() pedestals - the same count the native forge had, on a different footprint.$(br)Any of the four rotations works. Only the blocks shown are checked - the gaps inside the shape are ignored, so decorate them freely. Pedestals are matched by tag, so plain and magnetized Darkstone Pedestals are interchangeable everywhere the preview shows one."
     },
     {
       "type": "patchouli:multiblock",

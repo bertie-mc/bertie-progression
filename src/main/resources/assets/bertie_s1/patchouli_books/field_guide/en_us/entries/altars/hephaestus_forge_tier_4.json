@@ -7,7 +7,7 @@
     {
       "type": "patchouli:text",
       "title": "Tier 4 Layout",
-      "text": "Tier 4 is the same thirteen by thirteen footprint as tier 3, inlaid with Frost Infused Netherite over a Voiderite and Stellarite core, and roofed with a canopy on Neolith pillars. Still $(o)twelve$() pedestals - you are buying the tier, not more inputs.$(br)Any of the four rotations works; mirror images do not. Pedestals are matched by tag, so plain and magnetized Darkstone Pedestals are interchangeable everywhere the preview shows one."
+      "text": "Tier 4 is the same thirteen by thirteen footprint as tier 3, inlaid with Frost Infused Netherite over a Voiderite and Stellarite core, and roofed with a canopy on Neolith pillars. Still $(o)twelve$() pedestals - you are buying the tier, not more inputs.$(br)Any of the four rotations works. Only the blocks shown are checked - the gaps inside the shape are ignored, so decorate them freely. Pedestals are matched by tag, so plain and magnetized Darkstone Pedestals are interchangeable everywhere the preview shows one."
     },
     {
       "type": "patchouli:multiblock",

@@ -1,0 +1,37 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "deeperdarker"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "deeperdarker:reinforced_echo_shard",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "deeperdarker:soul_crystal",
+      "count": 1
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:arcane",
+      "count": 8
+    },
+    {
+      "type": "malum:aqueous",
+      "count": 8
+    }
+  ],
+  "result": {
+    "id": "bertie_s1:spirit_focused_echo",
+    "count": 1
+  }
+}

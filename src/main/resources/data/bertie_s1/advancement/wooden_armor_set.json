@@ -1,0 +1,74 @@
+{
+  "criteria": {
+    "helmet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "slag:dynamic_part",
+            "components": {
+              "slag:material_type": "slag:wooden",
+              "slag:part_type": "slag:helmet"
+            }
+          }
+        ]
+      }
+    },
+    "chestplate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "slag:dynamic_part",
+            "components": {
+              "slag:material_type": "slag:wooden",
+              "slag:part_type": "slag:chestplate"
+            }
+          }
+        ]
+      }
+    },
+    "leggings": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "slag:dynamic_part",
+            "components": {
+              "slag:material_type": "slag:wooden",
+              "slag:part_type": "slag:leggings"
+            }
+          }
+        ]
+      }
+    },
+    "boots": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "slag:dynamic_part",
+            "components": {
+              "slag:material_type": "slag:wooden",
+              "slag:part_type": "slag:boots"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "helmet"
+    ],
+    [
+      "chestplate"
+    ],
+    [
+      "leggings"
+    ],
+    [
+      "boots"
+    ]
+  ]
+}

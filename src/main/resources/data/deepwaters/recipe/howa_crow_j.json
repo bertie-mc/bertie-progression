@@ -1,0 +1,37 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "deepwaters"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "a": {
+      "item": "deepwaters:pearl"
+    },
+    "b": {
+      "item": "malum:hallowed_gold_ingot"
+    },
+    "c": {
+      "item": "deepwaters:medusabucket"
+    },
+    "d": {
+      "item": "deepwaters:fopal"
+    }
+  },
+  "pattern": [
+    "dad",
+    "bcb",
+    "dad"
+  ],
+  "result": {
+    "id": "deepwaters:crownedjelly",
+    "count": 1
+  }
+}

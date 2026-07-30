@@ -1,0 +1,73 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "born_in_chaos_v1"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "iceandfire"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "l2complements"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "twilightforest"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "twilightforest:naga_trophy",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "born_in_chaos_v1:ethereal_spirit",
+      "count": 2
+    },
+    {
+      "item": "minecraft:cactus",
+      "count": 12
+    },
+    {
+      "item": "iceandfire:sea_serpent_scales_green",
+      "count": 3
+    },
+    {
+      "item": "malum:cthonic_gold",
+      "count": 1
+    },
+    {
+      "item": "l2complements:totemic_gold_nugget",
+      "count": 3
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:wicked",
+      "count": 6
+    },
+    {
+      "type": "malum:eldritch",
+      "count": 6
+    },
+    {
+      "type": "malum:aerial",
+      "count": 6
+    },
+    {
+      "type": "malum:earthen",
+      "count": 6
+    }
+  ],
+  "result": {
+    "id": "twilightforest:naga_trophy",
+    "count": 2
+  }
+}

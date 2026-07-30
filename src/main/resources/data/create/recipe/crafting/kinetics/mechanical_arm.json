@@ -1,0 +1,33 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "tag": "c:plates/brass"
+    },
+    "A": {
+      "item": "create:brass_hand"
+    },
+    "I": {
+      "item": "create:precision_mechanism"
+    },
+    "C": {
+      "item": "create:brass_casing"
+    }
+  },
+  "pattern": [
+    "LLA",
+    "L  ",
+    "IC "
+  ],
+  "result": {
+    "id": "create:mechanical_arm",
+    "count": 1
+  }
+}

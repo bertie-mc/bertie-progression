@@ -1,0 +1,61 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "elemental_metals"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "forbidden_arcanus"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "iceandfire"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "irons_spellbooks"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "minecraft:iron_ingot",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "iceandfire:sea_serpent_scales_teal",
+      "count": 1
+    },
+    {
+      "item": "minecraft:soul_sand",
+      "count": 3
+    },
+    {
+      "item": "forbidden_arcanus:corrupt_soul",
+      "count": 1
+    },
+    {
+      "item": "irons_spellbooks:uncommon_ink",
+      "count": 4
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:sacred",
+      "count": 8
+    },
+    {
+      "type": "malum:aerial",
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "elemental_metals:soul_infused_iron_ingot",
+    "count": 1
+  }
+}

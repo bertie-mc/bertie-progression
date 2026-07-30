@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "forbidden_arcanus"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "slag"
+    }
+  ],
+  "type": "slag:double_smelting",
+  "ingredientA": {
+    "tag": "forbidden_arcanus:runic_stones"
+  },
+  "ingredientB": {
+    "tag": "forbidden_arcanus:runic_stones"
+  },
+  "result": {
+    "id": "forbidden_arcanus:rune",
+    "count": 2
+  },
+  "experience": 0.5,
+  "cookingTime": 200
+}

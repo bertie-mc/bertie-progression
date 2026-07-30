@@ -1,0 +1,69 @@
+{
+  "essences": {
+    "aureal": 1000,
+    "blood": 10000,
+    "souls": 10,
+    "experience": 900
+  },
+  "inputs": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "twilightforest:exanimate_essence"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "create:precision_mechanism"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "mythsandlegends:bound_soul_ingot"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "l2complements:totemic_gold_ingot"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "create:electron_tube"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "bertie_s1:kinetic_vane"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "irons_spellbooks:blank_rune"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "minecraft:writable_book"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "minecraft:crafting_table"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "bertie_s1:crafting_license",
+      "count": 1
+    }
+  }
+}

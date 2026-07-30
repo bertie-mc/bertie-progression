@@ -1,0 +1,34 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "create:golden_sheet"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "C": {
+      "item": "create:cogwheel"
+    }
+  },
+  "pattern": [
+    " GGGC",
+    "  GSC",
+    " GSC ",
+    " S   ",
+    "S    "
+  ],
+  "result": {
+    "id": "create:wrench",
+    "count": 1
+  },
+  "show_notification": true
+}

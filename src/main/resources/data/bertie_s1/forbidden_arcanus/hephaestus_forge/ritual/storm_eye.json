@@ -1,0 +1,44 @@
+{
+  "essences": {
+    "aureal": 0,
+    "blood": 0,
+    "souls": 0
+  },
+  "inputs": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "twilightforest:knightmetal_ingot"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "minecraft:phantom_membrane"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "iceandfire:amphithere_feather"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "minecraft:sea_lantern"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "twilightforest:ur_ghast_trophy"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "cataclysm:storm_eye",
+      "count": 1
+    }
+  }
+}

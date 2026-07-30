@@ -1,0 +1,23 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "deepwaters"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "f": {
+      "item": "deepwaters:fopal"
+    }
+  },
+  "pattern": [
+    "ff",
+    "ff"
+  ],
+  "result": {
+    "id": "deepwaters:fopal_block",
+    "count": 1
+  }
+}

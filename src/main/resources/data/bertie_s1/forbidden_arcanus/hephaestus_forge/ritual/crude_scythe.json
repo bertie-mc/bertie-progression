@@ -1,0 +1,51 @@
+{
+  "essences": {
+    "aureal": 1000,
+    "blood": 1000,
+    "souls": 10
+  },
+  "inputs": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "armageddon_mod:colossal_iron_ingot"
+      }
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "iceandfire:dragonbone"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "armageddon_mod:gilded_ingot_smithing_template"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "minecraft:lantern"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "irons_spellbooks:decrepit_scythe"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "malum:crude_scythe",
+      "count": 1
+    }
+  },
+  "forge_tier": 1
+}

@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "malum:refined_soulstone",
+    "count": 1
+  },
+  "extraInputs": [],
+  "spirits": [
+    {
+      "type": "malum:aerial",
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "bertie_s1:runewood_resonance",
+    "count": 1
+  }
+}

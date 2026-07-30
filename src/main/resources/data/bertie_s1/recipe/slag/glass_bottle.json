@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "slag"
+    }
+  ],
+  "type": "slag:double_smelting",
+  "ingredientA": {
+    "item": "minecraft:glass"
+  },
+  "ingredientB": {
+    "item": "minecraft:glass"
+  },
+  "result": {
+    "id": "minecraft:glass_bottle",
+    "count": 1
+  },
+  "experience": 0.5,
+  "cookingTime": 200
+}

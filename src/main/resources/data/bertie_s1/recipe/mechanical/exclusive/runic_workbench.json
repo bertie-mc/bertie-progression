@@ -1,0 +1,39 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "R": {
+      "item": "malum:runewood_planks"
+    },
+    "G": {
+      "item": "malum:hallowed_gold_ingot"
+    },
+    "S": {
+      "item": "malum:refined_soulstone"
+    },
+    "P": {
+      "item": "malum:arcana_pylon"
+    }
+  },
+  "pattern": [
+    "RGR",
+    "SPS",
+    "RGR"
+  ],
+  "result": {
+    "id": "malum:runic_workbench",
+    "count": 1
+  },
+  "show_notification": true
+}

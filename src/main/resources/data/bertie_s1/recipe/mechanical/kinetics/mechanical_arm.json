@@ -1,0 +1,37 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "create:brass_sheet"
+    },
+    "H": {
+      "item": "create:brass_hand"
+    },
+    "P": {
+      "item": "create:precision_mechanism"
+    },
+    "B": {
+      "item": "create:brass_casing"
+    }
+  },
+  "pattern": [
+    "  SSS",
+    "  S H",
+    " SS  ",
+    " SPS ",
+    "BBBBB"
+  ],
+  "result": {
+    "id": "create:mechanical_arm",
+    "count": 1
+  },
+  "show_notification": true
+}

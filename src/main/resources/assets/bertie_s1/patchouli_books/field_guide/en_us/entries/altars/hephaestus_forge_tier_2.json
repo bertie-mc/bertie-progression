@@ -1,0 +1,70 @@
+{
+  "name": "Hephaestus Forge - Tier 2",
+  "icon": "forbidden_arcanus:hephaestus_forge_tier_2",
+  "category": "bertie_s1:altars",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Tier 2 Layout",
+      "text": "Tier 2 abandons the stock nine by nine. The base becomes a cut-corner platform of Polished Darkstone laced with Soulstone, and the ring carries $(o)eight$() pedestals - the same count the native forge had, on a different footprint.$(br)Any of the four rotations works; mirror images do not. Pedestals are matched by tag, so plain and magnetized Darkstone Pedestals are interchangeable everywhere the preview shows one."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "name": "Tier 2 Hephaestus Forge",
+      "multiblock": {
+        "pattern": [
+          [
+            "_________",
+            "_F_____F_",
+            "_________",
+            "_________",
+            "_________",
+            "_________",
+            "_________",
+            "_F_____F_",
+            "_________"
+          ],
+          [
+            "_________",
+            "_DG_K_HD_",
+            "_IK___KI_",
+            "_________",
+            "_K__0__K_",
+            "_________",
+            "_JK___KJ_",
+            "_DG_K_HD_",
+            "_________"
+          ],
+          [
+            "___ABA___",
+            "_AACDCAA_",
+            "_ADAAADA_",
+            "ACAAEAACA",
+            "BDAEDEADB",
+            "ACAAEAACA",
+            "_ADAAADA_",
+            "_AACDCAA_",
+            "___ABA___"
+          ]
+        ],
+        "mapping": {
+          "0": "forbidden_arcanus:hephaestus_forge_tier_2",
+          "A": "forbidden_arcanus:polished_darkstone",
+          "B": "minecraft:chiseled_resin_bricks",
+          "C": "malum:block_of_soulstone",
+          "D": "forbidden_arcanus:gilded_chiseled_polished_darkstone",
+          "E": "forbidden_arcanus:chiseled_arcane_polished_darkstone",
+          "F": "forbidden_arcanus:arcane_crystal_block",
+          "G": "forbidden_arcanus:polished_darkstone_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+          "H": "forbidden_arcanus:polished_darkstone_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]",
+          "I": "forbidden_arcanus:polished_darkstone_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]",
+          "J": "forbidden_arcanus:polished_darkstone_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+          "K": "#forbidden_arcanus:pedestals"
+        },
+        "symmetrical": false
+      },
+      "text": "Hold the book and press the visualize button to project this onto the world."
+    }
+  ]
+}

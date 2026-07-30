@@ -1,0 +1,39 @@
+{
+  "essences": {
+    "aureal": 0,
+    "blood": 0,
+    "souls": 0
+  },
+  "inputs": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "item": "malum:soul_stained_steel_ingot"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "malum:hallowed_gold_ingot"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "minecraft:dragon_head"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "betterend:aeternium_ingot"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "malum:soulbinding_brazier",
+      "count": 1
+    }
+  },
+  "forge_tier": 3
+}

@@ -1,0 +1,29 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "bertie_s1:weeping_compass",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "bertie_s1:soulbound_authority",
+      "count": 1
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:arcane",
+      "count": 8
+    }
+  ],
+  "result": {
+    "id": "bertie_s1:well_attunement",
+    "count": 1
+  }
+}

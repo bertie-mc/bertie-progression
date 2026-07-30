@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": {
+      "item": "create:brass_sheet"
+    },
+    "F": {
+      "item": "create:fluid_pipe"
+    },
+    "T": {
+      "item": "create:electron_tube"
+    }
+  },
+  "pattern": [
+    "PFP",
+    "PTP",
+    "PFP"
+  ],
+  "result": {
+    "id": "create:smart_fluid_pipe",
+    "count": 1
+  }
+}

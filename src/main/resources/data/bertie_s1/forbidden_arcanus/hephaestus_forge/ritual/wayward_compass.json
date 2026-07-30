@@ -1,0 +1,40 @@
+{
+  "essences": {
+    "aureal": 0,
+    "blood": 0,
+    "souls": 4,
+    "experience": 10
+  },
+  "inputs": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "irons_spellbooks:arcane_essence"
+      }
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "item": "forbidden_arcanus:rune"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "minecraft:ender_pearl"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "minecraft:compass"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "irons_spellbooks:wayward_compass",
+      "count": 1
+    }
+  },
+  "forge_tier": 1
+}

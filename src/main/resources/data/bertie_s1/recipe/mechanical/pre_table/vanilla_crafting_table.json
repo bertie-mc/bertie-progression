@@ -1,0 +1,45 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "forbidden_arcanus"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "P": {
+      "item": "forbidden_arcanus:edelwood_planks"
+    },
+    "N": {
+      "item": "malum:null_slate"
+    },
+    "C": {
+      "item": "create:cogwheel"
+    },
+    "H": {
+      "item": "minecraft:creaking_heart"
+    }
+  },
+  "pattern": [
+    "PPPPP",
+    "PNCNP",
+    "PCHCP",
+    "PNCNP",
+    "PPPPP"
+  ],
+  "result": {
+    "id": "minecraft:crafting_table",
+    "count": 1
+  },
+  "show_notification": true
+}

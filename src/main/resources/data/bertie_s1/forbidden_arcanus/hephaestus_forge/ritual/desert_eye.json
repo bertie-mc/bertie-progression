@@ -1,0 +1,44 @@
+{
+  "essences": {
+    "aureal": 0,
+    "blood": 0,
+    "souls": 0
+  },
+  "inputs": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "malum:grim_talc"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "minecraft:dead_bush"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "malum:cthonic_gold"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "minecraft:chiseled_sandstone"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "block_factorys_bosses:sandworm_gauntlet"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "cataclysm:desert_eye",
+      "count": 1
+    }
+  }
+}

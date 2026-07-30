@@ -1,0 +1,47 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "slag"
+    }
+  ],
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "item": "slag:deep_alloy"
+    },
+    {
+      "item": "slag:deep_alloy"
+    },
+    {
+      "item": "slag:deep_alloy"
+    },
+    {
+      "item": "slag:deep_alloy"
+    },
+    {
+      "item": "slag:deep_alloy"
+    },
+    {
+      "item": "slag:deep_alloy"
+    },
+    {
+      "item": "slag:deep_alloy"
+    },
+    {
+      "item": "slag:deep_alloy"
+    },
+    {
+      "item": "slag:deep_alloy"
+    }
+  ],
+  "results": [
+    {
+      "id": "slag:deep_alloy_block"
+    }
+  ]
+}

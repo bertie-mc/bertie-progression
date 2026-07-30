@@ -1,0 +1,55 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "malum:natural_quartz",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "minecraft:redstone",
+      "count": 2
+    },
+    {
+      "type": "neoforge:components",
+      "items": "slag:dynamic_part",
+      "components": {
+        "slag:material_type": "slag:golden",
+        "slag:part_type": "slag:plate"
+      },
+      "count": 1
+    },
+    {
+      "type": "neoforge:components",
+      "items": "slag:dynamic_part",
+      "components": {
+        "slag:material_type": "slag:iron",
+        "slag:part_type": "slag:plate"
+      },
+      "count": 1
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:arcane",
+      "count": 2
+    },
+    {
+      "type": "malum:aerial",
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "create:electron_tube",
+    "count": 3
+  }
+}

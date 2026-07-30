@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "create:copper_sheet"
+    },
+    "A": {
+      "item": "create:andesite_alloy"
+    }
+  },
+  "pattern": [
+    "CA AC",
+    "CA AC",
+    " CAC ",
+    "  C  "
+  ],
+  "result": {
+    "id": "create:copper_valve_handle",
+    "count": 1
+  },
+  "show_notification": true
+}

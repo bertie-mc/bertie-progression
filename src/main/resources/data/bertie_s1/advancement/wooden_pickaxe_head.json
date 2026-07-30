@@ -1,0 +1,18 @@
+{
+  "criteria": {
+    "head": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "slag:dynamic_part",
+            "components": {
+              "slag:material_type": "slag:wooden",
+              "slag:part_type": "slag:pickaxe_head"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

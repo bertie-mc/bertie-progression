@@ -1,0 +1,57 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "block_factorys_bosses"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "create:brass_casing",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "block_factorys_bosses:dragon_bone",
+      "count": 1
+    },
+    {
+      "item": "create:electron_tube",
+      "count": 1
+    },
+    {
+      "item": "create:cogwheel",
+      "count": 1
+    },
+    {
+      "item": "minecraft:diamond",
+      "count": 1
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:eldritch",
+      "count": 4
+    },
+    {
+      "type": "malum:earthen",
+      "count": 4
+    },
+    {
+      "type": "malum:arcane",
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "create:mechanical_crafter",
+    "count": 1
+  }
+}

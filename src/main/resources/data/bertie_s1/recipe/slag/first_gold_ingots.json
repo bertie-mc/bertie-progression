@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "slag"
+    }
+  ],
+  "type": "slag:double_smelting",
+  "ingredientA": {
+    "item": "minecraft:raw_gold"
+  },
+  "ingredientB": {
+    "item": "minecraft:raw_gold"
+  },
+  "result": {
+    "id": "minecraft:gold_ingot",
+    "count": 1
+  },
+  "experience": 0.5,
+  "cookingTime": 200
+}

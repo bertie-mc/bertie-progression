@@ -1,0 +1,69 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "forbidden_arcanus"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "iceandfire"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "slag"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "slag:brick_forge",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "minecraft:blast_furnace",
+      "count": 4
+    },
+    {
+      "item": "forbidden_arcanus:chiseled_polished_darkstone",
+      "count": 8
+    },
+    {
+      "item": "forbidden_arcanus:rune",
+      "count": 12
+    },
+    {
+      "item": "iceandfire:fire_lily",
+      "count": 6
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:infernal",
+      "count": 48
+    },
+    {
+      "type": "malum:wicked",
+      "count": 32
+    },
+    {
+      "type": "malum:sacred",
+      "count": 32
+    },
+    {
+      "type": "malum:earthen",
+      "count": 16
+    },
+    {
+      "type": "malum:aerial",
+      "count": 16
+    }
+  ],
+  "result": {
+    "id": "forbidden_arcanus:clibano_core",
+    "count": 1
+  }
+}

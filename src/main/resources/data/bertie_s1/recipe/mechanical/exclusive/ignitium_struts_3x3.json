@@ -1,0 +1,32 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "K": {
+      "item": "bertie_s1:kinetic_pattern_plate"
+    },
+    "B": {
+      "item": "create:brass_sheet"
+    },
+    "L": {
+      "item": "bertie_s1:ignitium_lattice"
+    }
+  },
+  "pattern": [
+    "KBK",
+    "BLB",
+    "KBK"
+  ],
+  "result": {
+    "id": "bertie_s1:ignitium_strut",
+    "count": 8
+  },
+  "show_notification": true
+}

@@ -1,0 +1,29 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "create:copper_sheet"
+    },
+    "B": {
+      "item": "minecraft:iron_bars"
+    },
+    "D": {
+      "item": "create:copper_casing"
+    }
+  },
+  "pattern": [
+    "CBC",
+    "CDC"
+  ],
+  "result": {
+    "id": "create:item_drain",
+    "count": 1
+  }
+}

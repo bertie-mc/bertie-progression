@@ -1,0 +1,31 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "create:andesite_alloy"
+    },
+    "E": {
+      "item": "create:iron_sheet"
+    }
+  },
+  "pattern": [
+    "  A  ",
+    " EAE ",
+    "EAEAE",
+    "EAEAE",
+    " E E "
+  ],
+  "result": {
+    "id": "create:whisk",
+    "count": 1
+  },
+  "show_notification": true
+}

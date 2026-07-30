@@ -1,0 +1,45 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "minecraft:clay_ball",
+    "count": 6
+  },
+  "extraInputs": [
+    {
+      "item": "malum:grim_talc",
+      "count": 1
+    },
+    {
+      "item": "minecraft:bone",
+      "count": 5
+    },
+    {
+      "tag": "c:mushrooms",
+      "count": 3
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:arcane",
+      "count": 2
+    },
+    {
+      "type": "malum:earthen",
+      "count": 2
+    },
+    {
+      "type": "malum:aqueous",
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "malum:alchemical_calx",
+    "count": 1
+  }
+}

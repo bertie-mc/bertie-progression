@@ -1,0 +1,39 @@
+{
+  "essences": {
+    "aureal": 500,
+    "blood": 5000,
+    "souls": 10,
+    "experience": 100
+  },
+  "inputs": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "item": "malum:refined_soulstone"
+      }
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "type": "neoforge:components",
+        "items": "slag:dynamic_part",
+        "components": {
+          "slag:material_type": "slag:golden",
+          "slag:part_type": "slag:plate"
+        }
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "malum:runewood_planks"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "malum:spirit_altar",
+      "count": 1
+    }
+  },
+  "forge_tier": 1
+}

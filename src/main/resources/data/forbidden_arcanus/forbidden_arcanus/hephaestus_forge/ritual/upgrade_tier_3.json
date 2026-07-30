@@ -1,0 +1,36 @@
+{
+  "essences": {
+    "aureal": 1000,
+    "blood": 9000,
+    "souls": 50
+  },
+  "inputs": [
+    {
+      "amount": 3,
+      "ingredient": {
+        "item": "forbidden_arcanus:arcane_crystal"
+      }
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "item": "forbidden_arcanus:deorum_ingot"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "pastel:moonstone_shard"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:upgrade_tier",
+  "main_ingredient": {
+    "item": "forbidden_arcanus:chiseled_polished_darkstone"
+  },
+  "match_tier_exact": true,
+  "result": {
+    "type": "forbidden_arcanus:upgrade_tier",
+    "result_tier": 3
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "armageddon_mod"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "slag"
+    }
+  ],
+  "type": "slag:double_smelting",
+  "ingredientA": {
+    "item": "minecraft:iron_ingot"
+  },
+  "ingredientB": {
+    "tag": "minecraft:small_flowers"
+  },
+  "result": {
+    "id": "armageddon_mod:iron_remote",
+    "count": 1
+  },
+  "experience": 0.5,
+  "cookingTime": 200
+}

@@ -1,0 +1,40 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "betterend"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "pastel"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "M": {
+      "item": "pastel:moonstone_chiseled_calcite"
+    },
+    "A": {
+      "item": "betterend:aeternium_ingot"
+    },
+    "F": {
+      "item": "bertie_s1:dragonbone_frame"
+    }
+  },
+  "pattern": [
+    "MAM",
+    "AFA",
+    "MAM"
+  ],
+  "result": {
+    "id": "bertie_s1:dragonbone_brace",
+    "count": 8
+  },
+  "show_notification": true
+}

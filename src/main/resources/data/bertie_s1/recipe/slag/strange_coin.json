@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "armageddon_mod"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "slag"
+    }
+  ],
+  "type": "slag:double_smelting",
+  "ingredientA": {
+    "item": "armageddon_mod:colossal_iron_ingot"
+  },
+  "ingredientB": {
+    "item": "minecraft:gold_ingot"
+  },
+  "result": {
+    "id": "armageddon_mod:strange_coin",
+    "count": 1
+  },
+  "experience": 0.5,
+  "cookingTime": 200
+}

@@ -1,0 +1,51 @@
+{
+  "essences": {
+    "aureal": 200,
+    "blood": 10000,
+    "souls": 10
+  },
+  "inputs": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "armageddon_mod:colossal_iron_ingot"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "armageddon_mod:gilded_plate"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "armageddon_mod:gilded_ingot_smithing_template"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "minecraft:amethyst_shard"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "minecraft:emerald"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "iceandfire:siren_tear"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "armageddon_mod:builder_stone",
+      "count": 1
+    }
+  },
+  "forge_tier": 1
+}

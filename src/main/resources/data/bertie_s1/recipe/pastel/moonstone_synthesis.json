@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "pastel"
+    }
+  ],
+  "type": "pastel:spirit_instiller",
+  "time": 400,
+  "experience": 4.0,
+  "ingredient1": "pastel:bismuth_flake",
+  "ingredient2": "pastel:onyx_powder",
+  "center_ingredient": {
+    "item": "pastel:moonstone_shard",
+    "count": 1
+  },
+  "result": {
+    "id": "pastel:moonstone_shard",
+    "count": 4
+  }
+}

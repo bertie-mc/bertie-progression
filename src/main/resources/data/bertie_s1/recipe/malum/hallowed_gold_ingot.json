@@ -1,0 +1,73 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "armageddon_mod"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "forbidden_arcanus"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "irons_spellbooks"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "create:brass_ingot",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "malum:cthonic_gold",
+      "count": 1
+    },
+    {
+      "item": "forbidden_arcanus:deorum_ingot",
+      "count": 1
+    },
+    {
+      "item": "irons_spellbooks:arcane_ingot",
+      "count": 1
+    },
+    {
+      "item": "armageddon_mod:gilded_nugget",
+      "count": 1
+    },
+    {
+      "item": "minecraft:quartz",
+      "count": 4
+    },
+    {
+      "item": "malum:mnemonic_fragment",
+      "count": 1
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:sacred",
+      "count": 9
+    },
+    {
+      "type": "malum:eldritch",
+      "count": 6
+    },
+    {
+      "type": "malum:infernal",
+      "count": 3
+    }
+  ],
+  "result": {
+    "id": "malum:hallowed_gold_ingot",
+    "count": 1
+  }
+}

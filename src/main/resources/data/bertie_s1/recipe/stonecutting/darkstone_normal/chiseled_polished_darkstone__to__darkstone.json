@@ -1,0 +1,16 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "forbidden_arcanus"
+    }
+  ],
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "forbidden_arcanus:chiseled_polished_darkstone"
+  },
+  "result": {
+    "id": "forbidden_arcanus:darkstone",
+    "count": 1
+  }
+}

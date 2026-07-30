@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "slag"
+    }
+  ],
+  "type": "slag:double_smelting",
+  "ingredientA": {
+    "item": "malum:raw_brilliance"
+  },
+  "ingredientB": {
+    "item": "malum:raw_brilliance"
+  },
+  "result": {
+    "id": "malum:refined_brilliance",
+    "count": 1
+  },
+  "experience": 0.5,
+  "cookingTime": 200
+}

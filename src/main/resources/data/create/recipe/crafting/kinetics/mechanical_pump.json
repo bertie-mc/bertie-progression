@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "create:iron_sheet"
+    },
+    "F": {
+      "item": "create:fluid_pipe"
+    },
+    "C": {
+      "item": "create:cogwheel"
+    }
+  },
+  "pattern": [
+    "IFI",
+    "ICI",
+    "IFI"
+  ],
+  "result": {
+    "id": "create:mechanical_pump",
+    "count": 1
+  }
+}

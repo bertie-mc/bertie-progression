@@ -1,0 +1,41 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "forbidden_arcanus"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "minecraft:gunpowder",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "forbidden_arcanus:arcane_crystal_dust_speck",
+      "count": 1
+    },
+    {
+      "item": "malum:arcane_charcoal_fragment",
+      "count": 1
+    },
+    {
+      "item": "malum:refined_soulstone",
+      "count": 1
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:arcane",
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "malum:hex_ash",
+    "count": 1
+  }
+}

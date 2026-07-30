@@ -1,0 +1,39 @@
+{
+  "essences": {
+    "aureal": 120,
+    "blood": 0,
+    "souls": 5
+  },
+  "inputs": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "item": "create:shaft"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "forbidden_arcanus:deorum_nugget"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "minecraft:slime_ball"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "minecraft:polished_deepslate"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "create:windmill_bearing",
+      "count": 1
+    }
+  },
+  "forge_tier": 1
+}

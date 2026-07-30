@@ -1,0 +1,38 @@
+{
+  "criteria": {
+    "flint": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "slag:dynamic_part",
+            "components": {
+              "slag:material_type": "slag:flint",
+              "slag:part_type": "slag:pickaxe_head"
+            }
+          }
+        ]
+      }
+    },
+    "bone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "slag:dynamic_part",
+            "components": {
+              "slag:material_type": "slag:bone",
+              "slag:part_type": "slag:pickaxe_head"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "flint",
+      "bone"
+    ]
+  ]
+}

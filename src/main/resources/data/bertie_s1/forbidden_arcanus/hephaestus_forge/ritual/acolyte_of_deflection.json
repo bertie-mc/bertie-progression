@@ -1,0 +1,58 @@
+{
+  "essences": {
+    "aureal": 100,
+    "blood": 6000,
+    "souls": 10,
+    "experience": 400
+  },
+  "inputs": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "iceandfire:dragonbone"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "malum:hallowed_gold_ingot"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "born_in_chaos_v1:shattered_skull"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "create:precision_mechanism"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "mythsandlegends:bound_soul_ingot"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "twilightforest:magic_map_focus"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "twilightforest:lich_trophy"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "bertie_s1:acolyte_of_deflection",
+      "count": 1
+    }
+  },
+  "forge_tier": 1
+}

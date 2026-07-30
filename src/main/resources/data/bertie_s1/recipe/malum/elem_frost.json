@@ -1,0 +1,57 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "elemental_metals"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "iceandfire"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "irons_spellbooks"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "minecraft:iron_ingot",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "iceandfire:sea_serpent_scales_blue",
+      "count": 1
+    },
+    {
+      "item": "minecraft:snowball",
+      "count": 3
+    },
+    {
+      "item": "minecraft:packed_ice",
+      "count": 1
+    },
+    {
+      "item": "irons_spellbooks:uncommon_ink",
+      "count": 4
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:aqueous",
+      "count": 8
+    },
+    {
+      "type": "malum:wicked",
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "elemental_metals:frost_infused_iron_ingot",
+    "count": 1
+  }
+}

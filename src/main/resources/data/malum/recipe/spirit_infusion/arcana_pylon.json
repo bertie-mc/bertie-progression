@@ -1,0 +1,53 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "malum:runewood_obelisk",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "malum:refined_soulstone",
+      "count": 8
+    },
+    {
+      "item": "malum:hex_ash",
+      "count": 4
+    },
+    {
+      "item": "malum:soulwood_planks",
+      "count": 2
+    },
+    {
+      "item": "bertie_s1:runewood_resonance",
+      "count": 1
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:aerial",
+      "count": 8
+    },
+    {
+      "type": "malum:aqueous",
+      "count": 8
+    },
+    {
+      "type": "malum:earthen",
+      "count": 8
+    },
+    {
+      "type": "malum:infernal",
+      "count": 8
+    }
+  ],
+  "result": {
+    "id": "malum:arcana_pylon",
+    "count": 1
+  }
+}

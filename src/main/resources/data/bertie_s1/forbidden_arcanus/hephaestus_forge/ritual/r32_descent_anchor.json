@@ -1,0 +1,39 @@
+{
+  "essences": {
+    "aureal": 0,
+    "blood": 0,
+    "souls": 0
+  },
+  "inputs": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "deeperdarker:warden_carapace"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "twilightforest:lich_trophy"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "pastel:onyx_shard"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "bertie_s1:spirit_focused_echo"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "bertie_s1:descent_anchor",
+      "count": 1
+    }
+  },
+  "forge_tier": 2
+}

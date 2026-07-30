@@ -1,0 +1,61 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "born_in_chaos_v1"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "elemental_metals"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "create:empty_blaze_burner",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "minecraft:nether_brick",
+      "count": 12
+    },
+    {
+      "item": "elemental_metals:fire_infused_iron_ingot",
+      "count": 2
+    },
+    {
+      "item": "born_in_chaos_v1:dark_metal_ingot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:campfire",
+      "count": 1
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:wicked",
+      "count": 16
+    },
+    {
+      "type": "malum:earthen",
+      "count": 16
+    },
+    {
+      "type": "malum:infernal",
+      "count": 32
+    }
+  ],
+  "result": {
+    "id": "create:blaze_burner",
+    "count": 1
+  }
+}

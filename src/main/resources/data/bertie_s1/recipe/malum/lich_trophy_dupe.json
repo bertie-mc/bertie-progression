@@ -1,0 +1,77 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "born_in_chaos_v1"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "iceandfire"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "l2complements"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mythsandlegends"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "twilightforest"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "twilightforest:lich_trophy",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "iceandfire:stymphalian_bird_feather",
+      "count": 2
+    },
+    {
+      "item": "born_in_chaos_v1:shattered_skull",
+      "count": 1
+    },
+    {
+      "item": "l2complements:totemic_gold_ingot",
+      "count": 1
+    },
+    {
+      "item": "mythsandlegends:bound_soul_ingot",
+      "count": 1
+    },
+    {
+      "item": "malum:mnemonic_fragment",
+      "count": 4
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:wicked",
+      "count": 6
+    },
+    {
+      "type": "malum:eldritch",
+      "count": 6
+    },
+    {
+      "type": "malum:arcane",
+      "count": 6
+    },
+    {
+      "type": "malum:aerial",
+      "count": 6
+    }
+  ],
+  "result": {
+    "id": "twilightforest:lich_trophy",
+    "count": 2
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "forbidden_arcanus"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "pastel"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "T": {
+      "item": "pastel:topaz_shard"
+    },
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "C": {
+      "item": "pastel:citrine_shard"
+    },
+    "D": {
+      "item": "forbidden_arcanus:chiseled_arcane_polished_darkstone"
+    },
+    "S": {
+      "item": "malum:arcane_spirit"
+    },
+    "B": {
+      "item": "create:brass_sheet"
+    }
+  },
+  "pattern": [
+    "TAC",
+    "DSB"
+  ],
+  "result": {
+    "id": "pastel:fusion_shrine_basalt",
+    "count": 1
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "minecraft:deepslate",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "malum:refined_soulstone",
+      "count": 1
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:aqueous",
+      "count": 8
+    }
+  ],
+  "result": {
+    "id": "minecraft:sculk",
+    "count": 8
+  }
+}

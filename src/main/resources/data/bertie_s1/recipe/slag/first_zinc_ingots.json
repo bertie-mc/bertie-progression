@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "slag"
+    }
+  ],
+  "type": "slag:double_smelting",
+  "ingredientA": {
+    "item": "create:raw_zinc"
+  },
+  "ingredientB": {
+    "item": "create:raw_zinc"
+  },
+  "result": {
+    "id": "create:zinc_ingot",
+    "count": 1
+  },
+  "experience": 0.5,
+  "cookingTime": 200
+}

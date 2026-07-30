@@ -1,0 +1,12 @@
+{
+  "combine_info": {
+    "required_amount": 1,
+    "result": {
+      "count": 1,
+      "id": "minecraft:diamond"
+    }
+  },
+  "name": {
+    "text": "Diamond Residue"
+  }
+}

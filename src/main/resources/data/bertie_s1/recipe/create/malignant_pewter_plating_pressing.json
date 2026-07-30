@@ -1,0 +1,23 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "malum:malignant_pewter_ingot"
+    }
+  ],
+  "results": [
+    {
+      "id": "malum:malignant_pewter_plating"
+    }
+  ]
+}

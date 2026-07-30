@@ -1,0 +1,40 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "create:copper_sheet"
+    },
+    "P": {
+      "item": "create:fluid_pipe"
+    },
+    "B": {
+      "item": "create:copper_casing"
+    },
+    "T": {
+      "item": "create:fluid_tank"
+    },
+    "V": {
+      "item": "create:copper_valve_handle"
+    }
+  },
+  "pattern": [
+    "CCPCC",
+    "CBTBC",
+    "CBTBC",
+    " CPC ",
+    "  V  "
+  ],
+  "result": {
+    "id": "create:spout",
+    "count": 1
+  },
+  "show_notification": true
+}

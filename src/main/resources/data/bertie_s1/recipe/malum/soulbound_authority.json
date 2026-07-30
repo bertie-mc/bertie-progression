@@ -1,0 +1,65 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "pastel"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "minecraft:dragon_head",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "pastel:moonstone_shard",
+      "count": 1
+    },
+    {
+      "item": "malum:soul_stained_steel_ingot",
+      "count": 4
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:aerial",
+      "count": 8
+    },
+    {
+      "type": "malum:aqueous",
+      "count": 8
+    },
+    {
+      "type": "malum:earthen",
+      "count": 8
+    },
+    {
+      "type": "malum:infernal",
+      "count": 8
+    },
+    {
+      "type": "malum:arcane",
+      "count": 8
+    },
+    {
+      "type": "malum:eldritch",
+      "count": 8
+    },
+    {
+      "type": "malum:sacred",
+      "count": 8
+    },
+    {
+      "type": "malum:wicked",
+      "count": 8
+    }
+  ],
+  "result": {
+    "id": "bertie_s1:soulbound_authority",
+    "count": 4
+  }
+}

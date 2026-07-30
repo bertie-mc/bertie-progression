@@ -1,0 +1,40 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "create:andesite_casing"
+    },
+    "C": {
+      "item": "create:cogwheel"
+    },
+    "R": {
+      "item": "minecraft:iron_bars"
+    },
+    "S": {
+      "item": "create:shaft"
+    },
+    "F": {
+      "item": "create:propeller"
+    }
+  },
+  "pattern": [
+    "BBBBB",
+    "BCCCR",
+    "SS CF",
+    "BCCCR",
+    "BBBBB"
+  ],
+  "result": {
+    "id": "create:encased_fan",
+    "count": 1
+  },
+  "show_notification": true
+}

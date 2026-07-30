@@ -1,0 +1,31 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "create:copper_sheet"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    }
+  },
+  "pattern": [
+    "CCCCC",
+    "CGGGC",
+    "CGGGC",
+    "CGGGC",
+    "CCCCC"
+  ],
+  "result": {
+    "id": "create:fluid_tank",
+    "count": 1
+  },
+  "show_notification": true
+}

@@ -1,0 +1,44 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "avaritia"
+    }
+  ],
+  "type": "avaritia:shaped_table",
+  "tier": 2,
+  "key": {
+    "I": {
+      "item": "bertie_s1:ignitium_strut"
+    },
+    "D": {
+      "item": "bertie_s1:dragonbone_brace"
+    },
+    "P": {
+      "item": "bertie_s1:complex_spectrum_seal"
+    },
+    "B": {
+      "item": "bertie_s1:soulbound_authority"
+    },
+    "O": {
+      "item": "bertie_s1:concordant_moonsteel_ingot"
+    },
+    "S": {
+      "item": "bertie_s1:hephaestian_sovereign_seal"
+    },
+    "C": {
+      "item": "bertie_s1:convergence_matrix"
+    }
+  },
+  "pattern": [
+    "IDPDI",
+    "BOSOB",
+    "PSCSP",
+    "BOSOB",
+    "IDPDI"
+  ],
+  "result": {
+    "id": "bertie_s1:mekanism_access_core",
+    "count": 1
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "essences": {
+    "aureal": 0,
+    "blood": 0,
+    "souls": 0
+  },
+  "inputs": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "forbidden_arcanus:deorum_ingot"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "create:zinc_ingot"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "slag:rose_gold_ingot"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "armageddon_mod:colossal_iron_ingot"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "create:brass_ingot",
+      "count": 2
+    }
+  },
+  "forge_tier": 1
+}

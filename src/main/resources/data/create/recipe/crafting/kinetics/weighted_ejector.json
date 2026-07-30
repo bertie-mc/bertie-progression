@@ -1,0 +1,33 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "create:golden_sheet"
+    },
+    "S": {
+      "item": "create:shaft"
+    },
+    "D": {
+      "item": "create:depot"
+    },
+    "C": {
+      "item": "create:cogwheel"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "SDS",
+    " C "
+  ],
+  "result": {
+    "id": "create:weighted_ejector",
+    "count": 1
+  }
+}

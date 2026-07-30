@@ -1,0 +1,39 @@
+{
+  "essences": {
+    "aureal": 100,
+    "blood": 1000,
+    "souls": 5
+  },
+  "inputs": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "minecraft:amethyst_shard"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "minecraft:heart_of_the_sea"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "minecraft:chiseled_deepslate"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "minecraft:stonecutter"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "berlords_carving:carving_station",
+      "count": 1
+    }
+  },
+  "forge_tier": 1
+}

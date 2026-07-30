@@ -1,0 +1,53 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "born_in_chaos_v1"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "irons_spellbooks"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "tag": "bertie_s1:dragon_flesh",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "minecraft:rotten_flesh",
+      "count": 64
+    },
+    {
+      "item": "irons_spellbooks:blood_vial",
+      "count": 8
+    },
+    {
+      "item": "born_in_chaos_v1:monster_flesh",
+      "count": 4
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:sacred",
+      "count": 6
+    },
+    {
+      "type": "malum:wicked",
+      "count": 6
+    },
+    {
+      "type": "malum:aqueous",
+      "count": 6
+    }
+  ],
+  "result": {
+    "id": "malum:living_flesh",
+    "count": 1
+  }
+}

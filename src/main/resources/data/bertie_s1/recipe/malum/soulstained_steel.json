@@ -1,0 +1,41 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "forbidden_arcanus"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "forbidden_arcanus:obsidiansteel_ingot",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "malum:refined_soulstone",
+      "count": 4
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:earthen",
+      "count": 3
+    },
+    {
+      "type": "malum:arcane",
+      "count": 6
+    },
+    {
+      "type": "malum:wicked",
+      "count": 9
+    }
+  ],
+  "result": {
+    "id": "malum:soul_stained_steel_ingot",
+    "count": 1
+  }
+}

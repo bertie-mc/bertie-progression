@@ -1,0 +1,65 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "armageddon_mod"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "cataclysm"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "iceandfire"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "slag"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "create:brass_sheet"
+    },
+    "G": {
+      "item": "armageddon_mod:gilded_plate"
+    },
+    "C": {
+      "item": "malum:cthonic_gold"
+    },
+    "R": {
+      "item": "slag:rose_gold_block"
+    },
+    "K": {
+      "item": "iceandfire:dragonbone"
+    },
+    "M": {
+      "item": "cataclysm:ancient_metal_block"
+    }
+  },
+  "pattern": [
+    "SSSGSSS",
+    "SCRKRCS",
+    "SRCKCRS",
+    "GKKMKKG",
+    "SRCKCRS",
+    "SCRKRCS",
+    "SSSGSSS"
+  ],
+  "result": {
+    "id": "bertie_s1:desert_core",
+    "count": 1
+  },
+  "show_notification": true
+}

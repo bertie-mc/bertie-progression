@@ -1,0 +1,51 @@
+{
+  "essences": {
+    "aureal": 500,
+    "blood": 0,
+    "souls": 10
+  },
+  "inputs": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "item": "slag:crucible"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "slag:rose_gold_block"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "create:fluid_tank"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "forbidden_arcanus:smelter_prism"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "slag:drain"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "forbidden_arcanus:clibano_core"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "slag:melter",
+      "count": 1
+    }
+  },
+  "forge_tier": 1
+}

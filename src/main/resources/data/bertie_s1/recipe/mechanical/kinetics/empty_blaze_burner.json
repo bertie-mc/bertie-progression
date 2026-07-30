@@ -1,0 +1,38 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "slag"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "create:iron_sheet"
+    },
+    "R": {
+      "item": "minecraft:netherrack"
+    },
+    "I": {
+      "item": "slag:deep_alloy"
+    }
+  },
+  "pattern": [
+    "S   S",
+    "S   S",
+    "SSSSS",
+    "IRRRI",
+    "IIIII"
+  ],
+  "result": {
+    "id": "create:empty_blaze_burner",
+    "count": 1
+  },
+  "show_notification": true
+}

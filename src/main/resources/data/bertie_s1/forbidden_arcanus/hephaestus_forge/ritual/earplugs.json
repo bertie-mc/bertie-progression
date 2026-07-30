@@ -1,0 +1,33 @@
+{
+  "essences": {
+    "aureal": 20,
+    "blood": 0,
+    "souls": 0
+  },
+  "inputs": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "tag": "minecraft:planks"
+      }
+    },
+    {
+      "amount": 6,
+      "ingredient": {
+        "tag": "minecraft:wool"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "minecraft:string"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "iceandfire:earplugs",
+      "count": 1
+    }
+  },
+  "forge_tier": 1
+}

@@ -1,0 +1,61 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "iceandfire"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "tag": "iceandfire:dragon_hearts",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "malum:imitation_flesh",
+      "count": 4
+    },
+    {
+      "item": "malum:warp_flux",
+      "count": 2
+    },
+    {
+      "item": "create:brass_sheet",
+      "count": 6
+    },
+    {
+      "item": "malum:iridescent_ether",
+      "count": 6
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:sacred",
+      "count": 16
+    },
+    {
+      "type": "malum:wicked",
+      "count": 16
+    },
+    {
+      "type": "malum:arcane",
+      "count": 16
+    },
+    {
+      "type": "malum:eldritch",
+      "count": 16
+    }
+  ],
+  "result": {
+    "id": "malum:imitation_heart",
+    "count": 1
+  }
+}

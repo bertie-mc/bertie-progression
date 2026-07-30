@@ -1,0 +1,39 @@
+{
+  "essences": {
+    "aureal": 0,
+    "blood": 0,
+    "souls": 0
+  },
+  "inputs": [
+    {
+      "amount": 3,
+      "ingredient": {
+        "item": "minecraft:blaze_powder"
+      }
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "item": "minecraft:nether_bricks"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "malum:infernal_spirit"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "minecraft:blaze_powder"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "bertie_s1:boss_rematch_seal",
+      "count": 1
+    }
+  },
+  "forge_tier": 3
+}

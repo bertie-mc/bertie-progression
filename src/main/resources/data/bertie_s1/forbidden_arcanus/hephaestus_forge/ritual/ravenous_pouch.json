@@ -1,0 +1,45 @@
+{
+  "essences": {
+    "aureal": 0,
+    "blood": 0,
+    "souls": 0
+  },
+  "inputs": [
+    {
+      "amount": 3,
+      "ingredient": {
+        "item": "twilightforest:raven_feather"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "malum:soulwoven_silk"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "malum:grim_talc"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "minecraft:string"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "malum:soulwoven_pouch"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "malum:ravenous_pouch",
+      "count": 1
+    }
+  },
+  "forge_tier": 1
+}

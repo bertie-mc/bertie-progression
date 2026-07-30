@@ -1,0 +1,115 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+    id 'net.neoforged.moddev' version '2.0.134'
+}
+
+version = mod_version
+group = mod_group_id
+
+repositories {
+    mavenLocal()
+    maven { url = "https://api.modrinth.com/maven" }
+}
+
+base {
+    archivesName = mod_id
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+neoForge {
+    version = project.neo_version
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+        }
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+// --- Ponder (the Deep Waters Shrine scene) -------------------------------------------------------
+// Ponder is NOT published standalone on any maven: it ships JarJar-embedded inside Create. So we pull
+// Create from Modrinth and extract the nested ponder jar onto the compile classpath. Same pattern
+// berlords_emi already uses for anvillib / l2core / confluence_magic_lib. Nothing third-party is
+// committed to the repo. All of this is compileOnly + ModList-guarded at runtime, so bertie_s1 still
+// loads fine without Create.
+configurations {
+    jarJarParents
+}
+
+def extractedLibsDir = layout.buildDirectory.dir("extracted-jarjar-libs").get().asFile
+
+dependencies {
+    compileOnly "maven.modrinth:create:6.0.10+mc1.21.1"
+    jarJarParents "maven.modrinth:create:6.0.10+mc1.21.1"     // -> ponder-neoforge-1.0.82+mc1.21.1
+    compileOnly fileTree(dir: extractedLibsDir, include: '*.jar').builtBy('extractJarJarLibs')
+}
+
+tasks.register('extractJarJarLibs') {
+    description = 'Extract JarJar-embedded libraries (ponder, catnip) from parent mods onto the compile classpath.'
+    def parents = configurations.jarJarParents
+    def outDir = extractedLibsDir
+    inputs.files(parents)
+    outputs.dir(outDir)
+    doLast {
+        outDir.deleteDir()
+        outDir.mkdirs()
+        def wanted = ['ponder-neoforge', 'catnip']
+        parents.each { parent ->
+            def zf = new java.util.zip.ZipFile(parent)
+            try {
+                zf.entries().each { e ->
+                    if (e.name.startsWith('META-INF/jarjar/') && e.name.endsWith('.jar') && wanted.any { e.name.contains(it) }) {
+                        def target = new File(outDir, new File(e.name).name)
+                        if (!target.exists()) {
+                            target.withOutputStream { os -> zf.getInputStream(e).withStream { ins -> os << ins } }
+                            logger.lifecycle("extractJarJarLibs: extracted ${target.name} from ${parent.name}")
+                        }
+                    }
+                }
+            } finally {
+                zf.close()
+            }
+        }
+    }
+}
+tasks.named('compileJava') { dependsOn 'extractJarJarLibs' }
+
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    var replaceProperties = [minecraft_version      : minecraft_version,
+                             minecraft_version_range: minecraft_version_range,
+                             neo_version            : neo_version,
+                             neo_version_range      : neo_version_range,
+                             loader_version_range   : loader_version_range,
+                             mod_id                 : mod_id,
+                             mod_name               : mod_name,
+                             mod_license            : mod_license,
+                             mod_version            : mod_version,
+                             mod_authors            : mod_authors,
+                             mod_description        : mod_description]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
+}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata

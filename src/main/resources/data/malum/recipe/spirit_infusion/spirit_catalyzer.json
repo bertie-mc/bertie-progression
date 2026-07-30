@@ -1,0 +1,69 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "pastel"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "pastel:onyx_shard",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "malum:hallowed_gold_ingot",
+      "count": 4
+    },
+    {
+      "item": "create:brass_sheet",
+      "count": 4
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:aerial",
+      "count": 8
+    },
+    {
+      "type": "malum:aqueous",
+      "count": 8
+    },
+    {
+      "type": "malum:earthen",
+      "count": 8
+    },
+    {
+      "type": "malum:infernal",
+      "count": 8
+    },
+    {
+      "type": "malum:arcane",
+      "count": 8
+    },
+    {
+      "type": "malum:eldritch",
+      "count": 8
+    },
+    {
+      "type": "malum:sacred",
+      "count": 8
+    },
+    {
+      "type": "malum:wicked",
+      "count": 8
+    }
+  ],
+  "result": {
+    "id": "malum:spirit_catalyzer",
+    "count": 1
+  }
+}

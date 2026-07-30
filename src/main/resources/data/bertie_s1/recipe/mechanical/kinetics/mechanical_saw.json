@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "create:iron_sheet"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "P": {
+      "item": "create:propeller"
+    },
+    "B": {
+      "item": "create:andesite_casing"
+    }
+  },
+  "pattern": [
+    " SSS ",
+    "SSISS",
+    "SIPIS",
+    "BBBBB"
+  ],
+  "result": {
+    "id": "create:mechanical_saw",
+    "count": 1
+  },
+  "show_notification": true
+}

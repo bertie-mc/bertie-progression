@@ -1,0 +1,39 @@
+{
+  "essences": {
+    "aureal": 60,
+    "blood": 0,
+    "souls": 4,
+    "experience": 200
+  },
+  "inputs": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "item": "iceandfire:sea_serpent_fang"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "malum:warp_flux"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "slag:deep_alloy"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "minecraft:nautilus_shell"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "deepwaters:endlesscaves",
+      "count": 1
+    }
+  }
+}

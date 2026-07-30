@@ -1,0 +1,32 @@
+{
+  "essences": {
+    "aureal": 30,
+    "blood": 1000,
+    "souls": 0
+  },
+  "inputs": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "item": "malum:soulwoven_silk"
+      }
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "item": "minecraft:string"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "minecraft:bundle"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "malum:soulwoven_pouch",
+      "count": 1
+    }
+  }
+}

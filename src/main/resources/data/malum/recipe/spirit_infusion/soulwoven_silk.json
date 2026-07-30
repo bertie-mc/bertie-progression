@@ -1,0 +1,53 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "born_in_chaos_v1"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "tag": "minecraft:wool",
+    "count": 4
+  },
+  "extraInputs": [
+    {
+      "item": "malum:hex_ash",
+      "count": 1
+    },
+    {
+      "item": "born_in_chaos_v1:spiritual_dust",
+      "count": 1
+    },
+    {
+      "item": "minecraft:string",
+      "count": 5
+    },
+    {
+      "item": "minecraft:leather",
+      "count": 3
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:sacred",
+      "count": 4
+    },
+    {
+      "type": "malum:aerial",
+      "count": 3
+    },
+    {
+      "type": "malum:earthen",
+      "count": 3
+    }
+  ],
+  "result": {
+    "id": "malum:soulwoven_silk",
+    "count": 1
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "essences": {
+    "aureal": 0,
+    "blood": 0,
+    "souls": 0
+  },
+  "inputs": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "malum:arcana_pylon"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "forbidden_arcanus:deorum_ingot"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "create:brass_sheet"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "malum:arcane_spirit"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "malum:eldritch_spirit"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "malum:sacred_spirit"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "malum:wicked_spirit"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "pastel:pedestal_onyx"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "pastel:spirit_instiller",
+      "count": 1
+    }
+  },
+  "forge_tier": 2
+}

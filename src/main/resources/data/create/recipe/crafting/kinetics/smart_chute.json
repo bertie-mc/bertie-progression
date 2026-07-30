@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": {
+      "item": "create:brass_sheet"
+    },
+    "K": {
+      "item": "create:chute"
+    },
+    "T": {
+      "item": "create:electron_tube"
+    }
+  },
+  "pattern": [
+    "P P",
+    "PKP",
+    "PTP"
+  ],
+  "result": {
+    "id": "create:smart_chute",
+    "count": 1
+  }
+}

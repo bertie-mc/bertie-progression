@@ -1,0 +1,32 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "forbidden_arcanus"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "slag"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "forbidden_arcanus:mundabitur_dust"
+    },
+    {
+      "item": "slag:rose_gold_ingot"
+    },
+    {
+      "item": "minecraft:charcoal"
+    },
+    {
+      "item": "forbidden_arcanus:arcane_crystal_dust_speck"
+    }
+  ],
+  "result": {
+    "id": "forbidden_arcanus:deorum_nugget",
+    "count": 1
+  }
+}

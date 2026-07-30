@@ -1,0 +1,49 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "betterend"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "block_factorys_bosses"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "pastel"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "betterend:aeternium_ingot"
+    },
+    "B": {
+      "item": "block_factorys_bosses:dragon_bone"
+    },
+    "M": {
+      "item": "pastel:moonstone_chiseled_calcite"
+    },
+    "E": {
+      "item": "bertie_s1:spirit_focused_echo"
+    }
+  },
+  "pattern": [
+    "ABMBA",
+    "BBBBB",
+    "MBEBM",
+    "BBBBB",
+    "ABMBA"
+  ],
+  "result": {
+    "id": "bertie_s1:dragonbone_frame",
+    "count": 2
+  },
+  "show_notification": true
+}

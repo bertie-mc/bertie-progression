@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bertie_s1:item/kinetic_vane"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "malum:soul_stained_steel_ingot"
+    }
+  ],
+  "results": [
+    {
+      "id": "malum:soul_stained_steel_plating"
+    }
+  ]
+}

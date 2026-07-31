@@ -19,7 +19,7 @@ import net.minecraft.world.level.Level;
 /**
  * R32 Descent Anchor (demo tier of the Imbrifer portal controller): use to descend
  * into pastel:deeper_down before the Dragon; use again inside to return to the
- * recorded departure point. Team/proof authorization is deferred (DEVIATIONS.md).
+ * recorded departure point. Team/proof authorization is deferred.
  */
 public class DescentAnchorItem extends Item {
 

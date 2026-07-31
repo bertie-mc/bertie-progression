@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
-bertie_progression data/asset generator for the work-in-progress R-ledger
-(PROGRESSION_SPEC.md §8) at current demo fidelity (see s1-build/DEVIATIONS.md).
+bertie_progression data/asset generator for the progression recipe ledger.
 
 Writes into src/main/resources/:
   data/bertie_progression/recipe/**        authored recipes
@@ -501,7 +500,7 @@ write(f"{R}/mechanical/exclusive/echo_lock.json",               # R31C
       mech(["DSD", "SOS", "DSD"],
            {"D": "minecraft:deepslate_tiles", "S": "minecraft:sculk", "O": "pastel:onyx_shard"},
            "bertie_progression:echo_lock"))
-write(f"{R}/mechanical/exclusive/ignitium_lattice_5x5.json",    # R38 (x2 output — demo economy, see DEVIATIONS)
+write(f"{R}/mechanical/exclusive/ignitium_lattice_5x5.json",    # R38 (x2 output)
       mech(["KSSSK", "SIIIS", "SIIIS", "SIIIS", "KSSSK"],
            {"K": "bertie_progression:kinetic_pattern_plate", "S": "malum:infernal_spirit", "I": "cataclysm:ignitium_ingot"},
            "bertie_progression:ignitium_lattice", 2))
@@ -628,7 +627,7 @@ write("data/minecraft/recipe/furnace.json", shaped(_FURNACE_PAT, _FURNACE_KEY, "
 write(f"{R}/mechanical/pre_table/furnace.json", mech(_FURNACE_PAT, _FURNACE_KEY, "minecraft:furnace"))
 
 # ==================================================== berlord batch 6 (2026-07-24, "build all")
-# Every id below verified present in the s1 instance jars (elemental_metals, iceandfire, malum,
+# Every id below was verified in the pack instance jars (elemental_metals, iceandfire, malum,
 # forbidden_arcanus, irons_spellbooks, slag, create, twilightforest).
 
 # --- Note 9: Blast Furnace (table + mecha), Clibano Core, Refined Brilliance smelts ---
@@ -1784,11 +1783,11 @@ write(f"{RIT}/netherly_meal.json",
 #   2. writes removed_items.json at the jar root for RemovedItems.java, which drops the ids from
 #      every creative tab (and therefore from EMI, whose index-source is `creative`);
 #   3. rewrites the LEAKS block in each doc with the loot tables that still reference a removed id.
-# Needs the `s1 demo` instance to scan. Without it: warn and skip, never silently emit nothing.
+# Needs a synced bertie pack instance to scan. Without it: warn and skip, never silently emit nothing.
 
 REMOVED_DOCS = os.path.normpath(os.path.join(ROOT, "..", "..", "docs", "removed"))
 INSTANCE_MODS = os.path.join(os.environ.get("APPDATA", ""), "PrismLauncher", "instances",
-                             "s1 demo", ".minecraft", "mods")
+                             "bertie demo", ".minecraft", "mods")
 
 def _parse_removed(path, modid):
     """Strict pipe-table parser. A malformed row is a build error, never a silent skip."""
@@ -1998,8 +1997,6 @@ if os.path.isdir(REMOVED_DOCS) and (not _removed or _scan_ok):
 # The scene structure is generated from the SAME grid the matcher uses, and this script ASSERTS the
 # two agree (it parses LAYERS straight out of DeepWatersShrineHandler.java). A ponder that teaches a
 # shrine the handler would then reject is worse than no ponder at all, so the check is load-bearing.
-# Canonical layers live in s1-build/DEEPWATERS-SHRINE-SPEC.md.
-
 SHRINE_LAYERS = [
     ["MMMMMMM", "MMMMMMM", "MMMMMMM", "MMMMMMM", "MMMMMMM", "MMMMMMM", "MMMMMMM"],  # L1 floor
     ["..SBS..", ".M...M.", "S.MMM.S", "B.MPM.B", "S.MMM.S", ".M...M.", "..SBS.."],  # L2

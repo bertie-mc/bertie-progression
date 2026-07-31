@@ -50,7 +50,7 @@ public final class DeepWatersShrineHandler {
     private static final ResourceLocation SEASTONE =
             ResourceLocation.parse("cataclysm:polished_azure_seastone");
 
-    /** Layers bottom to top. Rows north->south, chars west->east. See DEEPWATERS-SHRINE-SPEC.md. */
+    /** Layers bottom to top. Rows north->south, chars west->east. */
     private static final String[][] LAYERS = {
             {   // L1 floor
                 "MMMMMMM",

@@ -4,8 +4,6 @@ The progression mod for the **bertie** modpack. NeoForge **1.21.1** / Java **21*
 
 This mod contains the custom items, gated crafting, Hephaestus Forge shaping rules and
 recipe changes used to connect the pack's exploration, technology and magic systems.
-The project is a work in progress; its mechanics and balance remain provisional while
-the pack's integration develops.
 
 > **Scope.** This mod is written for the bertie modpack. It assumes the pack's mod list is
 > present and is not intended as a standalone drop-in. It targets no other Minecraft version.

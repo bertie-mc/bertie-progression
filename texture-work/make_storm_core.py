@@ -14,12 +14,15 @@ glow marks where it is running behind:
             its own top edge, so every crown keeps a lit cap and the mass stays
             lumpy rather than settling into one grey slab.
     bolt    a 2px stroke. The tip clears the skyline through the valley between
-            the crowns (rows 0..2), the middle is hidden behind the cloud
-            (rows 3..8), and the whole glyph — down-left, one row that juts
-            right, down-left again to a point — hangs clear of the base in
-            rows 9..15 where nothing covers it. The kink has to be below the
-            cloud: it is the only part of the outline that says lightning, and
-            buried in the grey there is nothing left to read.
+            the crowns (rows 0..2), running down-left a column per row — a tip
+            dropped straight down is a pole standing on the cloud, not a bolt,
+            and the valley is cut wide enough to let the diagonal through. The
+            middle is hidden behind the cloud (rows 3..8), and the whole glyph
+            — down-left, one row that juts right, down-left again to a point —
+            hangs clear of the base in rows 9..15 where nothing covers it. The
+            kink has to be below the cloud: it is the only part of the outline
+            that says lightning, and buried in the grey there is nothing left
+            to read.
     glow    yellow mixed into the grey the hidden run passes through, plus one
             faint ring. Strongest where the bolt enters and leaves the cloud
             and falling away with depth, so it reads as light at the two holes
@@ -74,12 +77,15 @@ GLOW = "#C89020"
 
 # The cloud, as inclusive x spans per row. Two crowns, each two rows tall so
 # they read as lobes rather than one-pixel bumps, with a valley between them
-# that the tip of the bolt clears the skyline through. The sides taper in
-# above and below the widest rows so the body is not a full-width bar.
+# that the tip of the bolt clears the skyline through. The valley is five
+# columns at row 1 and three at row 2 — it has to be wider than the stroke,
+# because the tip crosses it on a diagonal and a narrower gap would clip it.
+# The sides taper in above and below the widest rows so the body is not a
+# full-width bar.
 CLOUD = {
-    1: [(3, 6), (10, 12)],
-    2: [(2, 7), (10, 13)],
-    3: [(1, 13)],
+    1: [(2, 5), (11, 13)],
+    2: [(1, 6), (10, 14)],
+    3: [(1, 14)],
     4: [(1, 14)],
     5: [(1, 14)],
     6: [(1, 13)],
@@ -96,8 +102,8 @@ CLOUD = {
 # pass kicked five columns and the two strokes stopped reading as one bolt —
 # with that much offset the shape curves and lands as a dollar sign.
 BOLT_PATH = {
-    0:  (9, 9),
-    1:  (8, 9),
+    0:  (10, 11),
+    1:  (9, 10),
     2:  (8, 9),
     3:  (8, 9),
     4:  (8, 9),

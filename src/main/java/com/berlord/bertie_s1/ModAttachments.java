@@ -42,5 +42,16 @@ public final class ModAttachments {
                     .serialize(Codec.INT)
                     .build());
 
+    /**
+     * Set the first time a player eats a Netherly Meal, and never cleared. It is the Nether's key -
+     * a milestone like the Crafting License, so it survives death.
+     */
+    public static final Supplier<AttachmentType<Boolean>> NETHER_UNLOCKED =
+            ATTACHMENTS.register("nether_unlocked", () -> AttachmentType
+                    .builder(() -> Boolean.FALSE)
+                    .serialize(Codec.BOOL)
+                    .copyOnDeath()
+                    .build());
+
     private ModAttachments() {}
 }

@@ -28,5 +28,6 @@ public final class BertieS1 {
         NeoForge.EVENT_BUS.register(PedestalFormationHandler.class);
         NeoForge.EVENT_BUS.register(DeepWatersShrineHandler.class);
         NeoForge.EVENT_BUS.register(AllayCorruptionHandler.class);
+        NeoForge.EVENT_BUS.register(NetherGateHandler.class);
     }
 }

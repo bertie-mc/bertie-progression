@@ -2305,6 +2305,7 @@ lang.update({
     "message.bertie_s1.finder_missing": "Nothing like %s exists in this world.",
     "message.bertie_s1.finder_none": "Nothing within range. Carry the chart further and try again.",
     "message.bertie_s1.finder_found": "The chart is now a map. X=%s, Z=%s.",
+    "message.bertie_s1.nether_locked": "The heat refuses you. Eat a Netherly Meal first.",
     "item.bertie_s1.sirok_nest_map.filled": "Map to Sirok's Nest",
     "item.bertie_s1.kraken_ship_map.filled": "Map to the Kraken's Ship",
     "item.bertie_s1.yeti_hideout_map.filled": "Map to Skor's Hideout",

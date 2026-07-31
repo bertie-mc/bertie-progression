@@ -4,9 +4,14 @@ bertie_s1 texture generator — netherly_meal (16x16), hand-placed pixel art.
 
 The Hephaestus ritual folds a fire dragon heart, a koboleton bone, living flesh,
 dragon blood, fire scales and a bucket of lava into a plain bowl, so the item
-shows all three readable parts of that: a bowl plated in red dragon scale with
-black seams, a koboleton bone jutting out to the right, a chunk of fire dragon
-heart hanging off the left rim, and the molten brew drooling over the front lip.
+shows all of that: the vanilla bowl silhouette pixel-for-pixel but plated in
+black dragon scale, a koboleton bone jutting out to the right, a chunk of fire
+dragon heart hanging off the left rim, and the molten brew drooling over the
+front lip.
+
+The bowl reuses minecraft:item/bowl's exact outline and its shading structure,
+with the vanilla brown ramp remapped onto a black-scale ramp; the belly band is
+broken by two darker seams so the plating reads at 16px.
 
 Every pixel is placed here. The Ice and Fire / Cataclysm items were looked at for
 silhouette and colour family only — no third-party art is copied, so nothing here
@@ -22,12 +27,15 @@ TEX_ITEM = os.path.join(ROOT, "src", "main", "resources", "assets", "bertie_s1",
 
 PALETTE = {
     ".": None,
-    # bowl — red dragon scale
-    "K": "#0D0206",   # black seam / silhouette outline
-    "D": "#56101C",   # deep scale shadow
-    "M": "#A31D26",   # scale mid
-    "R": "#D6332F",   # scale bright
-    "H": "#F0705A",   # rim highlight
+    # bowl — black dragon scale ramp, darkest to lightest
+    "0": "#000000",
+    "1": "#14101A",
+    "2": "#1B1622",
+    "3": "#2A2331",
+    "4": "#342C3E",
+    "5": "#3E3844",
+    "6": "#5A565E",
+    "7": "#969495",   # rim specular
     # brew — lava / blood
     "l": "#B32A06",
     "o": "#F0600C",
@@ -47,40 +55,40 @@ PALETTE = {
 }
 
 # (row, first column, run). Painted in order, so later layers sit in front.
-# A '.' inside a run leaves whatever is already underneath.
+# A '.' inside a run leaves whatever is already underneath — that is how the
+# bowl's interior is left open for the brew.
 LAYERS = [
-    # --- bowl: far rim, front rim, then two staggered courses of scale plates ---
-    (7,  5, "KDDDDK"),
-    (8,  3, "KM......MK"),
-    (9,  2, "KM........MK"),
-    (10, 2, "KM........MK"),
-    (11, 2, "KHRRRRRRRMDK"),
-    (12, 2, "KMKRRKRRKRMK"),
-    (13, 3, "KRKMRKMRMK"),
-    (14, 5, "KMMMDK"),
+    # --- bowl: vanilla bowl outline 1:1, recoloured to black scale ---
+    (5,  5, "333333"),
+    (6,  3, "33......33"),
+    (7,  2, "3..........0"),
+    (8,  2, "344......440"),
+    (9,  2, "375444445210"),
+    (10, 3, "1636636520"),
+    (11, 4, "00556500"),
+    (12, 6, "0000"),
     # --- brew ---
-    (8,  5, "lloool"),
-    (9,  4, "loayaool"),
-    (10, 4, "loaaooll"),
-    # --- drool over the front lip, plus a smaller dribble on the right ---
-    (11, 6, "ya"),
-    (12, 6, "ao"),
-    (13, 6, "o"),
-    (11, 10, "o"),
-    (12, 10, "l"),
+    (6, 5, "lloool"),
+    (7, 3, "loayaoooll"),
+    (8, 5, "oaaool"),
+    # --- drool over the front lip, plus a dribble on the right ---
+    (9,  6, "ao"),
+    (10, 6, "o"),
+    (11, 6, "l"),
+    (9, 10, "o"),
     # --- koboleton bone, out to the right ---
-    (3, 13, "nnn"),
-    (4, 13, "cww"),
-    (5, 12, "nwcn"),
-    (6, 11, "nwcn"),
-    (7, 10, "nwcn"),
-    (8,  9, "ncbn"),
+    (1, 13, "nnn"),
+    (2, 13, "cww"),
+    (3, 12, "nwcn"),
+    (4, 11, "nwcn"),
+    (5, 10, "nwcn"),
+    (6,  9, "ncbn"),
     # --- fire dragon heart, out to the left ---
-    (5, 1, "eph"),
-    (6, 0, "pegep"),
-    (7, 0, "pfeeep"),
-    (8, 1, "pehhp"),
-    (9, 2, "php"),
+    (3, 1, "eph"),
+    (4, 0, "pegep"),
+    (5, 0, "pfeeep"),
+    (6, 1, "pehhp"),
+    (7, 2, "php"),
 ]
 
 

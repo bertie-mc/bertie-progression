@@ -1,0 +1,69 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "iceandfire"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "irons_spellbooks"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "twilightforest"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "twilightforest:ur_ghast_trophy",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "minecraft:bone_block",
+      "count": 16
+    },
+    {
+      "item": "irons_spellbooks:blood_vial",
+      "count": 6
+    },
+    {
+      "item": "iceandfire:dragonbone",
+      "count": 6
+    },
+    {
+      "item": "minecraft:ghast_tear",
+      "count": 4
+    },
+    {
+      "item": "minecraft:fire_charge",
+      "count": 8
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:wicked",
+      "count": 6
+    },
+    {
+      "type": "malum:eldritch",
+      "count": 6
+    },
+    {
+      "type": "malum:aerial",
+      "count": 6
+    },
+    {
+      "type": "malum:infernal",
+      "count": 6
+    }
+  ],
+  "result": {
+    "id": "twilightforest:ur_ghast_trophy",
+    "count": 2
+  }
+}

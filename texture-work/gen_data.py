@@ -401,12 +401,10 @@ r19 = ritual("malum:runewood_planks",
 ritual_component_input(r19, 1, "slag:dynamic_part", GOLD_PLATE, 4)
 write(f"{RIT}/r19_spirit_altar.json", r19)
 
-# NOTE: this ritual's third input used to be the Crafting Language Seal, which was dropped in
-# batch 4. Left at two inputs for now — tell me what should replace the Seal here.
-write(f"{RIT}/r26a_nether_lintel_core.json",
-      ritual("pastel:pedestal_all_basic",
-             [("malum:refined_soulstone", 1), ("malum:hallowed_gold_ingot", 1)],
-             "bertie_s1:nether_lintel_core", 1, tier=1))
+# R26A Nether Lintel Core RITUAL REMOVED (berlord 2026-07-31) together with the Nether Lintel and
+# the Core themselves - both items are obsolete now the Nether is entered through the Netherly Meal.
+# This also closes the long-open "what replaces the Crafting Language Seal as its third input"
+# question: there is no ritual left to have a third input.
 
 # R29B Ritual Burner Cage REMOVED (berlord 2026-07-26) along with the item itself.
 
@@ -465,8 +463,8 @@ write(f"{RIT}/r40_convergence_matrix.json",
 # R19A (Spirit Altar Witness) removed — item dropped, berlord batch 4.
 write(f"{R}/malum/runewood_resonance.json",                # R20A
       infusion("malum:refined_soulstone", 1, [], [SP("aerial", 4)], "bertie_s1:runewood_resonance"))
-write(f"{R}/malum/arcana_resonance.json",                  # R21C
-      infusion("forbidden_arcanus:arcane_crystal_dust", 1, [], [SP("arcane", 4)], "bertie_s1:arcana_resonance"))
+# R21C Arcana Resonance REMOVED (berlord 2026-07-31): nothing ever consumed it. The Arcana Pylon
+# takes the RUNEWOOD Resonance (R20A above), which stays.
 write(f"{R}/malum/sculk_blocks.json",                      # R30S
       infusion("minecraft:deepslate", 1, [("malum:refined_soulstone", 1)], [SP("aqueous", 8)],
                "minecraft:sculk", 8))
@@ -498,9 +496,7 @@ write(f"{R}/mechanical/exclusive/runic_workbench.json",         # R21A
             "S": "malum:refined_soulstone", "P": "malum:arcana_pylon"},
            "malum:runic_workbench"))
 # R24A Victory Ledger recipe removed (berlord 2026-07-25) along with the block itself.
-write(f"{R}/mechanical/exclusive/nether_lintel.json",           # R27
-      mech(["OOO", "OCO", "OOO"], {"O": "minecraft:obsidian", "C": "bertie_s1:nether_lintel_core"},
-           "bertie_s1:nether_lintel"))
+# R27 Nether Lintel recipe removed (berlord 2026-07-31) along with the item and its Core.
 write(f"{R}/mechanical/exclusive/echo_lock.json",               # R31C
       mech(["DSD", "SOS", "DSD"],
            {"D": "minecraft:deepslate_tiles", "S": "minecraft:sculk", "O": "pastel:onyx_shard"},
@@ -888,11 +884,13 @@ write("data/irons_spellbooks/recipe/inscription_table.json",
 write("data/forbidden_arcanus/forbidden_arcanus/hephaestus_forge/ritual/upgrade_tier_2.json", {
     "essences": {"aureal": 1000, "blood": 10000, "souls": 10, "experience": 900},
     "inputs": [
-        {"amount": 1, "ingredient": {"item": "bertie_s1:abyssal_core"}},
-        {"amount": 1, "ingredient": {"item": "bertie_s1:desert_core"}},
-        {"amount": 1, "ingredient": {"item": "bertie_s1:cursed_core"}},
-        {"amount": 1, "ingredient": {"item": "bertie_s1:storm_core"}},
-        {"amount": 4, "ingredient": {"item": "forbidden_arcanus:arcane_crystal"}},
+        {"amount": 2, "ingredient": {"item": "bertie_s1:abyssal_core"}},
+        {"amount": 2, "ingredient": {"item": "bertie_s1:desert_core"}},
+        {"amount": 2, "ingredient": {"item": "bertie_s1:cursed_core"}},
+        {"amount": 2, "ingredient": {"item": "bertie_s1:storm_core"}},
+        # berlord 2026-07-31: "double all cores required". 2x4 = 8 pedestals, the hard cap - so the
+        # 4 Arcane Crystal that used to fill the last four slots had to come out. There is no
+        # arrangement of doubled cores that keeps them: 2+2+2+2+4 = 12 > 8.
     ],
     "magic_circle": "forbidden_arcanus:upgrade_tier",
     "main_ingredient": {"item": "forbidden_arcanus:carved_edelwood_log"},
@@ -1345,11 +1343,19 @@ write(f"{R}/malum/lich_trophy_dupe.json",
 #     recipes are 3x3 (table-gated) with these exact ingredients, so these are additive early routes,
 #     compressed to the 2 ingredients slag:double_smelting allows. small_flowers = the stock tag. ---
 write(f"{R}/slag/iron_remote.json",
-      double_smelting("minecraft:iron_ingot", "#minecraft:small_flowers",
+      double_smelting("minecraft:iron_ingot", "minecraft:sunflower",
                       "armageddon_mod:iron_remote", 1))
 write(f"{R}/slag/strange_coin.json",
       double_smelting("armageddon_mod:colossal_iron_ingot", "minecraft:gold_ingot",
                       "armageddon_mod:strange_coin", 1))
+
+# berlord 2026-07-31: both stock 3x3 routes are OUT, so the two Brick Forge recipes above are now
+# the only way to either item. The Iron Remote also narrows from #minecraft:small_flowers to the
+# Sunflower specifically - which is a TALL flower and was never in that tag, so this is a real
+# tightening, not a restatement. armageddon_mod:infinite_iron_remote_recipe is a DIFFERENT item and
+# is left alone. Needs the armageddon_mod ordering="AFTER" edge in neoforge.mods.toml.
+write("data/armageddon_mod/recipe/iron_remote_recipe.json", DISABLED)
+write("data/armageddon_mod/recipe/strange_coin_recipe.json", DISABLED)
 
 # --- Refined Soulstone: was a Mallet bed recipe (4 raw + diamond); berlord moved it to a plain
 #     Brick-Forge alloy, 1 Diamond + 1 Raw Soulstone. ---
@@ -1613,33 +1619,35 @@ write(f"{R}/yeti_hideout_map.json",
        "catalyst": {"item": "twilightforest:snow_queen_trophy"}})
 
 # --- The four elemental cores. 7x7 mechanical-crafter walls, transcribed from berlord's screenshots
-#     (all four are 4-fold symmetric, which is the check that the transcription is right). ---
+#     (all four are 4-fold symmetric, which is the check that the transcription is right).
+#     Each wall yields TWO (berlord 2026-07-31), which is exactly what the doubled HF2 ritual eats,
+#     so one wall per core still upgrades the forge once. ---
 write(f"{R}/mechanical/abyssal_core.json",
       mech(["WWPPPWW", "WPOAOPW", "PODCDOP", "PACBCAP", "PODCDOP", "WPOAOPW", "WWPPPWW"],
            {"W": "malum:astral_weave", "P": "malum:soul_stained_steel_plating",
             "O": "deepwaters:fopal", "A": "deepwaters:aquamarine_block",
             "D": "minecraft:diamond_block", "C": "cataclysm:coral_chunk",
             "B": "deepwaters:blackpearl"},
-           "bertie_s1:abyssal_core"))
+           "bertie_s1:abyssal_core", 2))
 write(f"{R}/mechanical/desert_core.json",
       mech(["SSSGSSS", "SCRKRCS", "SRCKCRS", "GKKMKKG", "SRCKCRS", "SCRKRCS", "SSSGSSS"],
            {"S": "create:brass_sheet", "G": "armageddon_mod:gilded_plate",
             "C": "malum:cthonic_gold", "R": "slag:rose_gold_block",
             "K": "iceandfire:dragonbone", "M": "cataclysm:ancient_metal_block"},
-           "bertie_s1:desert_core"))
+           "bertie_s1:desert_core", 2))
 write(f"{R}/mechanical/cursed_core.json",
       mech(["DDFDFDD", "DFSSSFD", "FSBBBSF", "DSBCBSD", "FSBBBSF", "DFSSSFD", "DDFDFDD"],
            {"D": "slag:deep_alloy_block", "F": "malum:imitation_flesh",
             "S": "malum:cursed_sapball", "B": "cataclysm:black_steel_ingot",
             "C": "cataclysm:cursium_ingot"},
-           "bertie_s1:cursed_core"))
+           "bertie_s1:cursed_core", 2))
 write(f"{R}/mechanical/storm_core.json",
       mech(["BLBLBLB", "LPNINPL", "BNEPENB", "LIPHPIL", "BNEPENB", "LPNINPL", "BLBLBLB"],
            {"B": "irons_spellbooks:lightning_bottle", "L": "cataclysm:lacrima",
             "P": "minecraft:lapis_block", "N": "malum:wind_nucleus",
             "I": "elemental_metals:lightning_infused_iron_ingot",
             "E": "cataclysm:essence_of_the_storm", "H": "minecraft:heart_of_the_sea"},
-           "bertie_s1:storm_core"))
+           "bertie_s1:storm_core", 2))
 
 # ================================================================ batch 18 (berlord 2026-07-29)
 # Dark Arts textile/pouch/scythe branch and Imitation Heart rewrite.
@@ -2179,6 +2187,21 @@ write("data/bertie_s1/advancement/copper_pickaxe_head.json", {
 write("data/twilightforest/tags/item/portal/activator.json",
       {"replace": True, "values": [{"id": "bertie_s1:twilight_concord", "required": False}]})
 
+# ================================================================ batch 19 (berlord 2026-07-31)
+
+# --- Ur-Ghast Trophy duplication, on the Spirit Altar. One trophy in, two out: the trophy is the
+#     infusion INPUT (Malum consumes it) so the recipe pays for itself once and profits thereafter.
+#     Five extraInputs, which spirit_infusion allows - its cap is pedestals reachable in the 4x3x4
+#     capture box, NOT the Hephaestus 8-pedestal rule. Blood Vial is irons_spellbooks:blood_vial
+#     (jar-verified by lang value + item model), Dragon Bone is iceandfire:dragonbone. ---
+write("data/malum/recipe/spirit_infusion/ur_ghast_trophy_dupe.json",
+      infusion("twilightforest:ur_ghast_trophy", 1,
+               [("minecraft:bone_block", 16), ("irons_spellbooks:blood_vial", 6),
+                ("iceandfire:dragonbone", 6), ("minecraft:ghast_tear", 4),
+                ("minecraft:fire_charge", 8)],
+               [SP("wicked", 6), SP("eldritch", 6), SP("aerial", 6), SP("infernal", 6)],
+               "twilightforest:ur_ghast_trophy", 2))
+
 # ---------------------------------------------------------------- assets
 
 ITEMS = {
@@ -2202,12 +2225,9 @@ ITEMS = {
     "storm_core": "Storm Core",
     "kinetic_pattern_plate": "Kinetic Pattern Plate",
     "crafting_license": "Crafting License",
-    "nether_lintel": "Nether Lintel",
-    "nether_lintel_core": "Nether Lintel Core",
     "twilight_concord": "Twilight Concord",
     "spirit_focused_echo": "Spirit-Focused Echo",
     "runewood_resonance": "Runewood Resonance",
-    "arcana_resonance": "Arcana Resonance",
     "warden_echo_pattern": "Warden Echo Pattern",
     "echoing_city_compass": "Echoing City Compass",
     "weeping_compass": "Weeping Compass",

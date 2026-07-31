@@ -86,15 +86,15 @@ public final class ModItems {
                     new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
 
     // --- Portals / dimension keys ---
-    public static final DeferredItem<Item> NETHER_LINTEL = rare("nether_lintel", 1, Rarity.UNCOMMON);
-    public static final DeferredItem<Item> NETHER_LINTEL_CORE = rare("nether_lintel_core", 1, Rarity.UNCOMMON);
+    // NETHER_LINTEL and NETHER_LINTEL_CORE removed 2026-07-31 (berlord): obsolete now the Nether is
+    // entered by eating a Netherly Meal. Nothing else consumed either item.
     public static final DeferredItem<Item> TWILIGHT_CONCORD = simple("twilight_concord", 16);
     public static final DeferredItem<DescentAnchorItem> DESCENT_ANCHOR = ITEMS.register(
             "descent_anchor", () -> new DescentAnchorItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
 
     // --- Altar witnesses / resonances ---
     public static final DeferredItem<Item> RUNEWOOD_RESONANCE = simple("runewood_resonance", 1);
-    public static final DeferredItem<Item> ARCANA_RESONANCE = simple("arcana_resonance", 1);
+    // ARCANA_RESONANCE removed 2026-07-31 (berlord): no recipe ever consumed it.
 
     // --- Deep dark / echo chain ---
     public static final DeferredItem<Item> WARDEN_ECHO_PATTERN = rare("warden_echo_pattern", 1, Rarity.UNCOMMON);

@@ -99,3 +99,13 @@ type="optional"
 versionRange="[0,)"
 ordering="AFTER"
 side="BOTH"
+
+# We now disable data/armageddon_mod/recipe/{iron_remote,strange_coin}_recipe.json (berlord
+# 2026-07-31). "armageddon_mod" sorts before "bertie_s1" alphabetically so we would win anyway -
+# declare it so a future reshuffle cannot silently restore both stock 3x3 recipes.
+[[dependencies.${mod_id}]]
+modId="armageddon_mod"
+type="optional"
+versionRange="[0,)"
+ordering="AFTER"
+side="BOTH"

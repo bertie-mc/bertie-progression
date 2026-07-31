@@ -14,7 +14,7 @@
     "item": "minecraft:iron_ingot"
   },
   "ingredientB": {
-    "tag": "minecraft:small_flowers"
+    "item": "minecraft:sunflower"
   },
   "result": {
     "id": "armageddon_mod:iron_remote",

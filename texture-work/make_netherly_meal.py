@@ -77,18 +77,18 @@ LAYERS = [
     (11, 6, "l"),
     (9, 10, "o"),
     # --- koboleton bone, out to the right ---
-    (1, 13, "nnn"),
-    (2, 13, "cww"),
+    (1, 14, "nn"),
+    (2, 13, "nww"),
     (3, 12, "nwcn"),
     (4, 11, "nwcn"),
     (5, 10, "nwcn"),
     (6,  9, "ncbn"),
     # --- fire dragon heart, out to the left ---
-    (3, 1, "eph"),
-    (4, 0, "pegep"),
+    (3, 2, "php"),
+    (4, 1, "pehhp"),
     (5, 0, "pfeeep"),
-    (6, 1, "pehhp"),
-    (7, 2, "php"),
+    (6, 0, "pegep"),
+    (7, 1, "eph"),
 ]
 
 

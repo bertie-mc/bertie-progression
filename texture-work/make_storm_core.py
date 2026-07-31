@@ -9,19 +9,20 @@ is only drawn where it is in open air; the stretch still inside the cloud is
 occluded and marked by a glow alone. Paint that stretch on top and it stops
 being a bolt in a cloud and becomes a bolt lying in front of one.
 
-    cloud   rows 1..8: three crowns over a body that swells to the full width.
-            Shaded by each column's depth below its own top edge, so every
-            crown keeps a lit cap and the mass stays lumpy rather than
-            settling into one grey slab. The underside is three lumps hanging
-            off row 7, so the bottom edge steps between rows 6, 7 and 8
-            instead of ruling one flat line across the sprite.
+    cloud   rows 1..8: a body that swells to the full width, broken into three
+            small bumps along the skyline and three deep lobes along the base,
+            so neither edge rules a flat line across the sprite. Shaded by
+            each column's depth below its own top edge, so the mass stays
+            lumpy rather than settling into one grey slab — which does mean
+            the base lobes sit at the dark end of the ramp and read as feet
+            rather than as billows, the price of keeping the light overhead.
     bolt    a 2px stroke leaning down-left the whole way, never vertical on
             any stretch long enough to notice. It gathers inside the cloud
-            (rows 5..7, hidden), drops out between the second and third lump
-            of the underside at row 8, and runs to row 15 — down-left, one row
-            that juts right, down-left again to a point. The kink has to be
-            below the cloud: it is the only part of the outline that says
-            lightning, and buried in the grey there is nothing left to read.
+            (rows 5..8, hidden), drops clear of the middle base lobe at row 9,
+            and runs to row 15 — down-left, one row that juts right, down-left
+            again to a point. The kink has to be below the cloud: it is the
+            only part of the outline that says lightning, and buried in the
+            grey there is nothing left to read.
     glow    yellow mixed into the grey along the hidden run, with a halo where
             the bolt breaks out of the underside and nothing else. The run
             gets no falloff rings of its own — give it any and the diagonal
@@ -71,23 +72,23 @@ AIR_EDGE = "#2E1D04"  # its outline, which only exists in open air
 # lobes with a light waist. This warms the grey without lifting it.
 GLOW = "#C89020"
 
-# The cloud, as inclusive x spans per row: three crowns over a body that
-# swells to the full width. Two crowns over a narrower body reads as a bean —
-# it takes the third crown, and a body wide enough to carry all three, before
-# the silhouette is unmistakably a cloud.
+# The cloud, as inclusive x spans per row. This is the three-crown silhouette
+# turned through 180 degrees, so the deep lobes now carry the base and the
+# small lumps break the skyline. Two lobes over a narrower body reads as a
+# bean — it takes the third, and a body wide enough to carry all three,
+# before the silhouette is unmistakably a cloud.
 #
-# The underside is broken into three lumps hanging off row 7, so the bottom
-# edge steps between rows 6, 7 and 8 instead of ruling one flat line across
-# the sprite. The bolt drops out between the second and third lump.
+# Both edges step across two rows rather than ruling one flat line. The bolt
+# drops clear from under the middle base lobe.
 CLOUD = {
-    1: [(1, 3), (6, 9), (12, 14)],
-    2: [(0, 10), (12, 15)],
-    3: [(0, 15)],
+    1: [(2, 4), (8, 9), (11, 13)],
+    2: [(2, 14)],
+    3: [(1, 15)],
     4: [(0, 15)],
     5: [(0, 15)],
-    6: [(0, 14)],
-    7: [(1, 13)],
-    8: [(2, 4), (6, 7), (11, 13)],
+    6: [(0, 15)],
+    7: [(0, 3), (5, 15)],
+    8: [(1, 3), (6, 9), (12, 14)],
 }
 
 # The bolt, as inclusive x spans per row. One continuous path top to bottom;
@@ -99,17 +100,17 @@ CLOUD = {
 # pass kicked five columns and the two strokes stopped reading as one bolt —
 # with that much offset the shape curves and lands as a dollar sign.
 BOLT_PATH = {
-    5:  (12, 13),
-    6:  (11, 12),
-    7:  (10, 11),
-    8:  (9, 10),
-    9:  (8, 9),
-    10: (7, 8),
-    11: (6, 7),
-    12: (6, 9),
-    13: (7, 8),
-    14: (6, 7),
-    15: (6, 6),
+    5:  (10, 11),
+    6:  (9, 10),
+    7:  (8, 9),
+    8:  (7, 8),
+    9:  (6, 7),
+    10: (5, 6),
+    11: (4, 5),
+    12: (4, 7),
+    13: (5, 6),
+    14: (4, 5),
+    15: (4, 4),
 }
 
 ORTHO = ((1, 0), (-1, 0), (0, 1), (0, -1))

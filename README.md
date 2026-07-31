@@ -69,7 +69,7 @@ Gradle `8.8`. A `server()` run is wired for headless boot tests.
 Bump `mod_version` in `gradle.properties`, then tag:
 
 ```bash
-git tag v0.25.1 && git push origin v0.25.1
+git tag v0.25.2 && git push origin v0.25.2
 ```
 
 `release.yml` builds the jar and attaches it to a GitHub Release.

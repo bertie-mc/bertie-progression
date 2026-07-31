@@ -9,18 +9,17 @@ is only drawn where it is in open air; the stretch still inside the cloud is
 occluded and marked by a glow alone. Paint that stretch on top and it stops
 being a bolt in a cloud and becomes a bolt lying in front of one.
 
-    cloud   a union of seven circles, rows 0..7: three crowns, two shoulders
-            rounding the sides in, and two low ones hanging the base into
-            lumps. Only the outer perimeter of that union survives as an
-            outline; every arc inside another circle is gone. Spurs where two
-            arcs almost meet get pruned, and the skyline takes a lighter
-            outline than the sides and base — near-black all the way round
-            draws a cut-out, not a cloud. Shaded by each column's depth below
-            its own top edge, so the mass stays lumpy.
+    cloud   rows 0..7, a stepped dome on a flat base, after berlord's
+            reference. Not shaded as a gradient: a flat mid-grey fill,
+            irregular lighter clusters scattered through the upper body, and
+            a darker band along the underside. A per-column ramp reads as a
+            shaded ball; the clusters are what make it read as cloud. The edge
+            is one colour all the way round and only a couple of steps darker
+            than the fill — a near-black ring turns it into a cut-out.
     bolt    a 2px stroke leaning down-left the whole way, never vertical on
             any stretch long enough to notice. It gathers inside the cloud
-            (rows 3..6, hidden), drops through the gap between the two base
-            lumps at row 7, and runs to a single-pixel point at row 14 —
+            (rows 3..7, hidden), drops clear of the flat base at row 8 just
+            left of centre, and runs to a single-pixel point at row 14 —
             down-left, one row that juts right, down-left again, then the tip.
             The kink has to be below the cloud: it is the only part of the
             outline that says lightning, and buried in the grey there is
@@ -73,23 +72,14 @@ TEX_ITEM = os.path.join(ROOT, "src", "main", "resources", "assets", "bertie_prog
 
 SIZE = 16
 
-OUTLINE = "#0A0C11"
-# The skyline takes a lighter outline than the sides and base. Near-black all
-# the way round draws the cloud as a hard cut-out; up top, where the light is
-# coming from, a softer edge lets the crowns turn instead of stopping. Still
-# dark enough to hold a silhouette against a white inventory slot.
-OUTLINE_TOP = "#252C38"
-# Cloud greys, by depth below the column's own top edge. Dark, faintly blue so
-# they stay cold against the yellow.
-CLOUD_RAMP = [
-    "#7C8794",   # lit cap
-    "#606A77",
-    "#4B5360",
-    "#3C424D",
-    "#2F343E",
-    "#262B33",
-    "#1E222A",   # the base, in its own shadow
-]
+# Cloud greys. Not a smooth ramp: a flat mid fill, irregular lighter clusters
+# scattered through the upper body, and a darker band along the underside. A
+# per-column gradient reads as a shaded ball; the clusters are what make it
+# read as cloud.
+CLOUD_FILL = "#565D67"
+CLOUD_LIGHT = "#737B86"
+CLOUD_DARK = "#383D45"    # the underside, in its own shadow
+CLOUD_EDGE = "#22262D"    # darker than the fill, well short of black
 
 BOLT_HI = "#FFE870"   # leading edge of the stroke
 BOLT = "#FFB800"      # the stroke
@@ -101,26 +91,39 @@ AIR_EDGE = "#2E1D04"  # its outline, which only exists in open air
 GLOW = "#C89020"
 # Ring-by-ring falloff of that light out through the grey: the aura around the
 # hidden run, and the tighter, brighter spot where it breaks out of the base.
-GLOW_AURA = (0.13, 0.075, 0.04)
-GLOW_BREAK = (0.28, 0.12, 0.05)
+GLOW_AURA = (0.09, 0.05, 0.025)
+GLOW_BREAK = (0.22, 0.10, 0.04)
 
-# The cloud, as a union of circles — the way you would draw one by hand. Every
-# arc that falls inside another circle disappears; only the outer perimeter of
-# the union survives, and that perimeter becomes the outline with the interior
-# shaded as cloud.
-#
-# Spacing is the whole game. Circles closer together than roughly twice their
-# radius merge with no dip between them and the union comes out a slab — that
-# is what went wrong with every earlier attempt at this, hand-drawn or not.
-# These sit far enough apart that each crown keeps its own arc.
-CLOUD_CIRCLES = (
-    (4.0, 3.9, 2.5),     # left crown
-    (8.0, 3.1, 2.8),     # centre crown, the tallest
-    (12.0, 3.9, 2.5),    # right crown
-    (2.6, 5.0, 1.7),     # shoulders, rounding the sides in rather than
-    (13.4, 5.0, 1.7),    #   letting them drop straight
-    (5.9, 6.1, 1.9),     # base lumps; the bolt drops through the gap
-    (10.1, 6.1, 1.9),    #   left between them
+# The cloud, as inclusive x spans per row: a stepped dome on a flat base,
+# after berlord's reference. Circle unions were tried and abandoned — at this
+# size circles either merge into a slab or leave spurs and holes, and neither
+# gives the clean stepped skyline the reference has.
+CLOUD = {
+    0: [(6, 9)],
+    1: [(4, 11)],
+    2: [(3, 12)],
+    3: [(2, 13)],
+    4: [(1, 14)],
+    5: [(1, 14)],
+    6: [(1, 14)],
+    7: [(2, 13)],
+}
+
+# Rows from here down take the dark underside colour.
+CLOUD_UNDERSIDE = 6
+
+# The lighter clusters, as (row, first column, run). Deliberately irregular in
+# size and placement — evenly spaced ones read as a pattern, not as cloud.
+CLOUD_LIGHTS = (
+    (1, 7, 2),
+    (2, 4, 2),
+    (2, 9, 3),
+    (3, 3, 2),
+    (3, 6, 3),
+    (4, 10, 3),
+    (4, 2, 2),
+    (5, 5, 2),
+    (5, 12, 2),
 )
 
 # The bolt, as inclusive x spans per row. One continuous path top to bottom;
@@ -195,8 +198,8 @@ FRAMES = [
     (("veiled",  3),    1),
     (("veiled",  4),    1),
     (("veiled",  5),    1),
-    (("burst",   6),    1),
-    (("open",    7),    1),
+    (("veiled",  6),    1),
+    (("burst",   7),    1),
     (("open",    8),    1),
     (("open",    9),    1),
     (("open",   10),    1),
@@ -244,25 +247,6 @@ def disperse(grid, source, cloud, colour, strengths):
             grid[p] = mix(grid[p], hexcol(colour), t)
 
 
-def circle_union(circles):
-    return {(x, y) for y in range(SIZE) for x in range(SIZE)
-            if any((x + 0.5 - cx) ** 2 + (y + 0.5 - cy) ** 2 <= r * r
-                   for cx, cy, r in circles)}
-
-
-def declutter(pixels):
-    """Drop anything hanging off the union by a single orthogonal neighbour.
-    Where two arcs almost meet they leave one-pixel spurs, and at 16px those
-    read as grit on the outline rather than as cloud."""
-    px = set(pixels)
-    while True:
-        spurs = {p for p in px
-                 if sum((p[0] + dx, p[1] + dy) in px for dx, dy in ORTHO) <= 1}
-        if not spurs:
-            return px
-        px -= spurs
-
-
 def tip_edge():
     """The outline pixel down-left of the bolt's point. The ring pass only
     reaches orthogonally, so without this the point closes off flat underneath
@@ -288,32 +272,33 @@ def bolt_row(row):
 
 
 def paint(pulse=None):
-    cloud = declutter(circle_union(CLOUD_CIRCLES))
+    cloud = spans(CLOUD)
     bolt = spans(BOLT_PATH)
     visible = bolt - cloud   # in open air: drawn
     hidden = bolt & cloud    # behind the cloud: glow only
 
-    # Depth below each column's own top edge, so every crown keeps a lit cap.
-    tops = {}
-    for (x, y) in cloud:
-        tops[x] = min(y, tops.get(x, SIZE))
+    grid = {p: hexcol(CLOUD_FILL) for p in cloud}
 
-    grid = {}
-    for (x, y) in cloud:
-        grid[(x, y)] = hexcol(CLOUD_RAMP[min(y - tops[x], len(CLOUD_RAMP) - 1)])
+    for row, x0, run in CLOUD_LIGHTS:
+        for x in range(x0, x0 + run):
+            if (x, row) in cloud and row < CLOUD_UNDERSIDE:
+                grid[(x, row)] = hexcol(CLOUD_LIGHT)
 
-    # Inset outline: any cloud pixel with an orthogonal neighbour outside it,
-    # lighter along the skyline than round the sides and base.
     for (x, y) in cloud:
-        open_sides = [(dx, dy) for dx, dy in ORTHO if (x + dx, y + dy) not in cloud]
-        if open_sides:
-            skyline = open_sides == [(0, -1)]
-            grid[(x, y)] = hexcol(OUTLINE_TOP if skyline else OUTLINE)
+        if y >= CLOUD_UNDERSIDE:
+            grid[(x, y)] = hexcol(CLOUD_DARK)
+
+    # Inset edge: any cloud pixel with an orthogonal neighbour outside it. One
+    # colour all the way round, and only a step or two darker than the fill —
+    # a near-black ring turns the whole thing into a cut-out.
+    for (x, y) in cloud:
+        if any((x + dx, y + dy) not in cloud for dx, dy in ORTHO):
+            grid[(x, y)] = hexcol(CLOUD_EDGE)
 
     # Light coming through the cloud. Applied after the outline, so the edge
     # warms too where the bolt crosses it.
     for p in hidden:
-        grid[p] = mix(grid[p], hexcol(GLOW), 0.22)
+        grid[p] = mix(grid[p], hexcol(GLOW), 0.16)
     # A cloud does not hold light in a line — it scatters it — so the hidden
     # run carries an aura out into the grey around it. This wants a long
     # shallow falloff and nothing steeper: one strong ring lands as a smudge

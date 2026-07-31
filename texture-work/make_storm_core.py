@@ -28,9 +28,23 @@ being a bolt in a cloud and becomes a bolt lying in front of one.
             gets no falloff rings of its own — give it any and the diagonal
             stops reading as a line and turns into a smudge across the cloud.
 
+    pulse   a white charge running the length of the bolt, from its top end
+            inside the cloud down and off the tail. Behind the grey it is a
+            bloom rather than a stroke — the run plus a ring of the cloud
+            around it, lifted towards white. It breaks out of the base one
+            frame oversized, with a white halo and a second ring, then drops
+            back to the stroke's own width at full strength and rides the
+            glyph down. Held longest going in and quickest coming out: three
+            ticks a row through the cloud, one a row below it.
+
 The lean matters more than it looks. The hidden run is what carries the eye
 down to the glyph, and if it drops straight the bolt reads as a pole hung off
 the cloud however diagonal the part below it is.
+
+This writes a vertical strip of 16x16 frames plus storm_core.png.mcmeta, which
+is how Minecraft animates a sprite. Frame 0 carries no pulse — it is the
+fallback for a client with animation off, so it has to stand on its own, and
+it is pixel-for-pixel the sprite this file produced before the pulse existed.
 
 storm_core used to be the fourth of the glass-sphere cores in make_cores.py.
 It is generated here instead, and make_cores.py now covers the other three.
@@ -40,6 +54,7 @@ no NOTICE carve-out.
 
 Run:  python texture-work/make_storm_core.py [--ascii]
 """
+import json
 import os
 import sys
 
@@ -115,6 +130,55 @@ BOLT_PATH = {
 
 ORTHO = ((1, 0), (-1, 0), (0, 1), (0, -1))
 
+# --- animation ---------------------------------------------------------------
+#
+# A pulse runs the length of the bolt, from its top end inside the cloud down
+# and out of the tail. Emitted as a vertical strip of 16x16 frames with a
+# storm_core.png.mcmeta beside it, which is how Minecraft animates a sprite.
+#
+# Frame 0 is the resting sprite with no pulse in it, and it is what a client
+# with animation off falls back to, so it has to stand on its own.
+
+PULSE_CORE = "#FFFFFF"    # the head, in open air
+PULSE_EDGE = "#FFF6C8"    # its halo, and the first row of tail behind it
+PULSE_VEIL = "#FFF0C0"    # what the cloud mixes towards while the pulse is behind it
+
+# Head first, then the two rows of tail trailing it. Each is the colour used
+# where that row is in open air, and the mix strength where it is behind the
+# cloud. The veiled strengths stay well under the open ones — behind the grey
+# the pulse is meant to be a bloom in the cloud, not the stroke showing through.
+PULSE_FALLOFF = (
+    (PULSE_CORE, 0.62),
+    (PULSE_EDGE, 0.40),
+    (BOLT_HI,    0.20),
+)
+
+# (pulse, hold in ticks). `pulse` is (phase, head row) or None for the rest
+# frame. Phases: "veiled" while the head is still behind the cloud, "burst" for
+# the frame it breaks out on, "open" for the rest of the run.
+#
+# The heads at rows 16 and 17 are past the end of the bolt on purpose — no head
+# is drawn, only the tail behind it, so the pulse runs off the tail rather than
+# vanishing on the last row. The gather inside the cloud is held longer than
+# the strike below it: three ticks a row going in, one coming out.
+FRAMES = [
+    (None,             30),
+    (("veiled",  5),    3),
+    (("veiled",  6),    3),
+    (("veiled",  7),    3),
+    (("veiled",  8),    3),
+    (("burst",   9),    2),
+    (("open",    9),    2),
+    (("open",   10),    1),
+    (("open",   11),    1),
+    (("open",   12),    1),
+    (("open",   13),    1),
+    (("open",   14),    1),
+    (("open",   15),    1),
+    (("open",   16),    2),
+    (("open",   17),    3),
+]
+
 
 def hexcol(s):
     return tuple(int(s[i:i + 2], 16) for i in (1, 3, 5)) + (255,)
@@ -144,7 +208,15 @@ def spans(table):
     return out
 
 
-def paint():
+def bolt_row(row):
+    """The stroke pixels on one row, empty past either end of the path."""
+    if row not in BOLT_PATH:
+        return set()
+    x0, x1 = BOLT_PATH[row]
+    return {(x, row) for x in range(x0, x1 + 1)}
+
+
+def paint(pulse=None):
     cloud = spans(CLOUD)
     bolt = spans(BOLT_PATH)
     visible = bolt - cloud   # in open air: drawn
@@ -193,6 +265,40 @@ def paint():
             if (x, y) in visible:
                 grid[(x, y)] = hexcol(BOLT_HI if x == x0 else BOLT)
 
+    if pulse is not None:
+        phase, head = pulse
+
+        # Head and the two rows of tail behind it. Behind the cloud this only
+        # lifts the grey; in open air it replaces the stroke outright.
+        for i, (air, veil) in enumerate(PULSE_FALLOFF):
+            row = bolt_row(head - i)
+            # Behind the cloud the pulse bleeds a ring into the surrounding
+            # grey. Confined to the two stroke pixels it is far too small to
+            # register at 16px, and the whole approach into the cloud plays as
+            # nothing happening until the burst.
+            for p in (grow(row) & cloud) - bolt:
+                grid[p] = mix(grid[p], hexcol(PULSE_VEIL), veil * 0.45)
+            for p in row & visible:
+                grid[p] = hexcol(air)
+            for p in row & cloud:
+                grid[p] = mix(grid[p], hexcol(PULSE_VEIL), veil)
+
+        # The halo, only where the head is already in open air. On the frame it
+        # breaks out of the cloud the halo goes white and takes a second ring,
+        # which is the whole "bigger" beat; the frame after drops back to one
+        # ring and the pulse carries on at its own width.
+        crown = bolt_row(head) & visible
+        if crown:
+            ring = grow(crown) - bolt - cloud
+            if phase == "burst":
+                for p in grow(crown | ring) - bolt - cloud - ring:
+                    grid[p] = hexcol(PULSE_EDGE)
+                for p in ring:
+                    grid[p] = hexcol(PULSE_CORE)
+            else:
+                for p in ring:
+                    grid[p] = hexcol(PULSE_EDGE)
+
     img = Image.new("RGBA", (SIZE, SIZE), (0, 0, 0, 0))
     px = img.load()
     for (x, y), col in grid.items():
@@ -212,10 +318,32 @@ def dump(img):
         print(row)
 
 
+def build_strip():
+    """The frames stacked top to bottom, which is the layout Minecraft wants."""
+    frames = [paint(spec) for spec, _ in FRAMES]
+    strip = Image.new("RGBA", (SIZE, SIZE * len(frames)), (0, 0, 0, 0))
+    for i, frame in enumerate(frames):
+        strip.paste(frame, (0, i * SIZE))
+    return strip, frames
+
+
+def build_mcmeta():
+    return {
+        "animation": {
+            "frametime": 1,
+            "frames": [{"index": i, "time": hold}
+                       for i, (_, hold) in enumerate(FRAMES)],
+        }
+    }
+
+
 if __name__ == "__main__":
     os.makedirs(TEX_ITEM, exist_ok=True)
-    image = paint()
-    image.save(os.path.join(TEX_ITEM, "storm_core.png"))
-    print("wrote storm_core.png")
+    strip, frames = build_strip()
+    strip.save(os.path.join(TEX_ITEM, "storm_core.png"))
+    with open(os.path.join(TEX_ITEM, "storm_core.png.mcmeta"), "w", newline="\n") as fh:
+        json.dump(build_mcmeta(), fh, indent=2)
+        fh.write("\n")
+    print("wrote storm_core.png (%d frames) and storm_core.png.mcmeta" % len(frames))
     if "--ascii" in sys.argv:
-        dump(image)
+        dump(frames[0])

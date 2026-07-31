@@ -64,7 +64,7 @@ repositories {
         content { includeGroup "bertie-progression" }
     }
 }
-dependencies { compileOnly "bertie-progression:bertie-progression:0.25.0" }
+dependencies { compileOnly "bertie-progression:bertie-progression:0.25.1" }
 ```
 
 **Test for whether you got it right:** could a fresh clone on a machine that has never

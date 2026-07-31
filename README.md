@@ -1,12 +1,11 @@
 # Bertie Progression (`bertie_progression`)
 
-Work-in-progress progression content for the **bertie** modpack. NeoForge **1.21.1** /
-Java **21**.
+The progression mod for the **bertie** modpack. NeoForge **1.21.1** / Java **21**.
 
-Development currently focuses on integrating the pack's early-to-mid game across its
-exploration, technology and magic mods. This mod contains the custom items, gated
-crafting, Hephaestus Forge shaping rules and recipe changes used to connect those
-systems. Its mechanics and balance remain provisional while that integration develops.
+This mod contains the custom items, gated crafting, Hephaestus Forge shaping rules and
+recipe changes used to connect the pack's exploration, technology and magic systems.
+The project is a work in progress; its mechanics and balance remain provisional while
+the pack's integration develops.
 
 > **Scope.** This mod is written for the bertie modpack. It assumes the pack's mod list is
 > present and is not intended as a standalone drop-in. It targets no other Minecraft version.
@@ -70,7 +69,7 @@ Gradle `8.8`. A `server()` run is wired for headless boot tests.
 Bump `mod_version` in `gradle.properties`, then tag:
 
 ```bash
-git tag v0.25.0 && git push origin v0.25.0
+git tag v0.25.1 && git push origin v0.25.1
 ```
 
 `release.yml` builds the jar and attaches it to a GitHub Release.

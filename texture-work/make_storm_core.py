@@ -9,20 +9,23 @@ is only drawn where it is in open air; the stretch still inside the cloud is
 occluded and marked by a glow alone. Paint that stretch on top and it stops
 being a bolt in a cloud and becomes a bolt lying in front of one.
 
-    cloud   rows 1..8: a body that swells to the full width, broken into three
-            small bumps along the skyline and three deep lobes along the base,
-            so neither edge rules a flat line across the sprite. Shaded by
-            each column's depth below its own top edge, so the mass stays
-            lumpy rather than settling into one grey slab — which does mean
-            the base lobes sit at the dark end of the ramp and read as feet
-            rather than as billows, the price of keeping the light overhead.
+    cloud   rows 0..7, drawn so no edge moves more than a pixel per row. That
+            rule is the whole of why it reads as soft: two shallow crowns
+            widening a pixel a row into the body, sides rounding in over four
+            rows, and a base dipping into two broad lobes. The skyline takes a
+            lighter outline than the sides and base — near-black all the way
+            round draws a cut-out, not a cloud. Shaded by each column's depth
+            below its own top edge, so the mass stays lumpy rather than
+            settling into one grey slab.
     bolt    a 2px stroke leaning down-left the whole way, never vertical on
             any stretch long enough to notice. It gathers inside the cloud
-            (rows 5..8, hidden), drops clear of the middle base lobe at row 9,
-            and runs to row 15 — down-left, one row that juts right, down-left
-            again to a point. The kink has to be below the cloud: it is the
-            only part of the outline that says lightning, and buried in the
-            grey there is nothing left to read.
+            (rows 3..6, hidden), drops through the gap between the two base
+            lobes at row 7, and runs to row 15 — down-left, one row that juts
+            right, down-left again, then two rows of single pixel for the
+            point. The kink has to be below the cloud: it is the only part of
+            the outline that says lightning, and buried in the grey there is
+            nothing left to read. The point matters too — cut the stroke off
+            at its full width and the bolt looks snapped rather than tapered.
     glow    yellow mixed into the grey along the hidden run, plus an aura
             scattering out of it ring by ring — a cloud diffuses what is lit
             inside it rather than holding the light in a line. The falloff has
@@ -70,6 +73,11 @@ TEX_ITEM = os.path.join(ROOT, "src", "main", "resources", "assets", "bertie_prog
 SIZE = 16
 
 OUTLINE = "#0A0C11"
+# The skyline takes a lighter outline than the sides and base. Near-black all
+# the way round draws the cloud as a hard cut-out; up top, where the light is
+# coming from, a softer edge lets the crowns turn instead of stopping. Still
+# dark enough to hold a silhouette against a white inventory slot.
+OUTLINE_TOP = "#252C38"
 # Cloud greys, by depth below the column's own top edge. Dark, faintly blue so
 # they stay cold against the yellow.
 CLOUD_RAMP = [
@@ -95,23 +103,27 @@ GLOW = "#C89020"
 GLOW_AURA = (0.13, 0.075, 0.04)
 GLOW_BREAK = (0.28, 0.12, 0.05)
 
-# The cloud, as inclusive x spans per row. This is the three-crown silhouette
-# turned through 180 degrees, so the deep lobes now carry the base and the
-# small lumps break the skyline. Two lobes over a narrower body reads as a
-# bean — it takes the third, and a body wide enough to carry all three,
-# before the silhouette is unmistakably a cloud.
+# The cloud, as inclusive x spans per row. Drawn to one rule: no edge moves
+# more than a pixel per row. That rule is what makes it read as soft, and
+# breaking it is what made the version before this read as rigid — it jumped
+# from three-pixel lumps straight to a thirteen-wide body in a single step,
+# then held the full width dead straight for four rows and hung its base off
+# in detached lumps. No amount of shading rescues a silhouette that turns
+# that hard.
 #
-# Both edges step across two rows rather than ruling one flat line. The bolt
-# drops clear from under the middle base lobe.
+# So: two shallow crowns at the skyline, each widening a pixel a row into the
+# body, sides rounding in over four rows rather than dropping, and a base that
+# dips into two broad lobes rather than hanging separate ones. The bolt drops
+# clear through the gap between those lobes.
 CLOUD = {
-    1: [(2, 4), (8, 9), (11, 13)],
-    2: [(2, 14)],
-    3: [(1, 15)],
+    0: [(5, 6), (10, 11)],
+    1: [(3, 7), (9, 12)],
+    2: [(2, 13)],
+    3: [(1, 14)],
     4: [(0, 15)],
     5: [(0, 15)],
-    6: [(0, 15)],
-    7: [(0, 3), (5, 15)],
-    8: [(1, 3), (6, 9), (12, 14)],
+    6: [(1, 13)],
+    7: [(3, 6), (9, 11)],
 }
 
 # The bolt, as inclusive x spans per row. One continuous path top to bottom;
@@ -123,16 +135,18 @@ CLOUD = {
 # pass kicked five columns and the two strokes stopped reading as one bolt —
 # with that much offset the shape curves and lands as a dollar sign.
 BOLT_PATH = {
-    5:  (10, 11),
-    6:  (9, 10),
-    7:  (8, 9),
-    8:  (7, 8),
-    9:  (6, 7),
-    10: (5, 6),
-    11: (4, 5),
-    12: (4, 7),
+    3:  (11, 12),
+    4:  (10, 11),
+    5:  (9, 10),
+    6:  (8, 9),
+    7:  (7, 8),
+    8:  (6, 7),
+    9:  (5, 6),
+    10: (4, 5),
+    11: (4, 7),
+    12: (6, 7),
     13: (5, 6),
-    14: (4, 5),
+    14: (5, 5),
     15: (4, 4),
 }
 
@@ -182,10 +196,12 @@ PULSE_AURA_BURST = (0.50, 0.30, 0.16, 0.08)
 # vanishing on the last row.
 FRAMES = [
     (None,             12),
+    (("veiled",  3),    1),
+    (("veiled",  4),    1),
     (("veiled",  5),    1),
-    (("veiled",  6),    1),
-    (("veiled",  7),    1),
-    (("burst",   8),    1),
+    (("burst",   6),    1),
+    (("open",    7),    1),
+    (("open",    8),    1),
     (("open",    9),    1),
     (("open",   10),    1),
     (("open",   11),    1),
@@ -264,10 +280,13 @@ def paint(pulse=None):
     for (x, y) in cloud:
         grid[(x, y)] = hexcol(CLOUD_RAMP[min(y - tops[x], len(CLOUD_RAMP) - 1)])
 
-    # Inset outline: any cloud pixel with an orthogonal neighbour outside it.
+    # Inset outline: any cloud pixel with an orthogonal neighbour outside it,
+    # lighter along the skyline than round the sides and base.
     for (x, y) in cloud:
-        if any((x + dx, y + dy) not in cloud for dx, dy in ORTHO):
-            grid[(x, y)] = hexcol(OUTLINE)
+        open_sides = [(dx, dy) for dx, dy in ORTHO if (x + dx, y + dy) not in cloud]
+        if open_sides:
+            skyline = open_sides == [(0, -1)]
+            grid[(x, y)] = hexcol(OUTLINE_TOP if skyline else OUTLINE)
 
     # Light coming through the cloud. Applied after the outline, so the edge
     # warms too where the bolt crosses it.

@@ -9,13 +9,15 @@ is only drawn where it is in open air; the stretch still inside the cloud is
 occluded and marked by a glow alone. Paint that stretch on top and it stops
 being a bolt in a cloud and becomes a bolt lying in front of one.
 
-    cloud   rows 0..7, a stepped dome on a flat base, after berlord's
-            reference. Not shaded as a gradient: a flat mid-grey fill,
-            irregular lighter clusters scattered through the upper body, and
-            a darker band along the underside. A per-column ramp reads as a
-            shaded ball; the clusters are what make it read as cloud. The edge
-            is one colour all the way round and only a couple of steps darker
-            than the fill — a near-black ring turns it into a cut-out.
+    cloud   rows 0..7, two crowns over a body on a flat base, after berlord's
+            reference. Not shaded as a gradient: a flat mid-grey fill, compact
+            lighter blocks scattered through the upper body, and a darker band
+            along the underside. A per-column ramp reads as a shaded ball, and
+            single-row highlights read as stripes; it takes two-row blocks,
+            one under each crown and each shoulder, before the mass breaks up
+            into puffs. The edge is one colour all the way round and only a
+            couple of steps darker than the fill — a near-black ring turns the
+            whole thing into a cut-out.
     bolt    a 2px stroke leaning down-left the whole way, never vertical on
             any stretch long enough to notice. It gathers inside the cloud
             (rows 3..7, hidden), drops clear of the flat base at row 8 just
@@ -76,8 +78,8 @@ SIZE = 16
 # scattered through the upper body, and a darker band along the underside. A
 # per-column gradient reads as a shaded ball; the clusters are what make it
 # read as cloud.
-CLOUD_FILL = "#565D67"
-CLOUD_LIGHT = "#737B86"
+CLOUD_FILL = "#4E555F"
+CLOUD_LIGHT = "#79828E"
 CLOUD_DARK = "#383D45"    # the underside, in its own shadow
 CLOUD_EDGE = "#22262D"    # darker than the fill, well short of black
 
@@ -99,12 +101,12 @@ GLOW_BREAK = (0.22, 0.10, 0.04)
 # size circles either merge into a slab or leave spurs and holes, and neither
 # gives the clean stepped skyline the reference has.
 CLOUD = {
-    0: [(6, 9)],
-    1: [(4, 11)],
-    2: [(3, 12)],
-    3: [(2, 13)],
-    4: [(1, 14)],
-    5: [(1, 14)],
+    0: [(4, 6), (9, 11)],
+    1: [(3, 7), (9, 12)],
+    2: [(2, 13)],
+    3: [(1, 14)],
+    4: [(0, 14)],
+    5: [(0, 14)],
     6: [(1, 14)],
     7: [(2, 13)],
 }
@@ -114,16 +116,15 @@ CLOUD_UNDERSIDE = 6
 
 # The lighter clusters, as (row, first column, run). Deliberately irregular in
 # size and placement — evenly spaced ones read as a pattern, not as cloud.
+# Compact blocks, two rows each, not single-row runs — a run reads as a stripe
+# across the cloud, a block reads as a puff turning towards the light.
 CLOUD_LIGHTS = (
-    (1, 7, 2),
-    (2, 4, 2),
-    (2, 9, 3),
-    (3, 3, 2),
-    (3, 6, 3),
-    (4, 10, 3),
-    (4, 2, 2),
-    (5, 5, 2),
-    (5, 12, 2),
+    (1, 4, 3), (2, 4, 2),      # left crown
+    (1, 10, 2), (2, 10, 2),    # right crown
+    (3, 2, 2), (4, 2, 2),      # left shoulder
+    (3, 7, 2), (4, 7, 2),      # centre
+    (3, 11, 2), (4, 12, 2),    # right shoulder
+    (5, 4, 2),                 # one last catch, low on the body
 )
 
 # The bolt, as inclusive x spans per row. One continuous path top to bottom;

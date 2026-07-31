@@ -1,3 +1,6 @@
 {
-  "parent": "minecraft:item/heart_of_the_sea"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bertie_s1:item/abyssal_core"
+  }
 }

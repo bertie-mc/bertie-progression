@@ -13,7 +13,7 @@ repositories {
 }
 
 base {
-    archivesName = mod_id
+    archivesName = "bertie-progression"
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -50,7 +50,7 @@ neoForge {
 // Ponder is NOT published standalone on any maven: it ships JarJar-embedded inside Create. So we pull
 // Create from Modrinth and extract the nested ponder jar onto the compile classpath. Same pattern
 // berlords_emi already uses for anvillib / l2core / confluence_magic_lib. Nothing third-party is
-// committed to the repo. All of this is compileOnly + ModList-guarded at runtime, so bertie_s1 still
+// committed to the repo. All of this is compileOnly + ModList-guarded at runtime, so bertie_progression still
 // loads fine without Create.
 configurations {
     jarJarParents

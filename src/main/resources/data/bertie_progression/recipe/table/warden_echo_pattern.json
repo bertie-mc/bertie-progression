@@ -1,0 +1,33 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "deeperdarker"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "S": {
+      "item": "minecraft:sculk"
+    },
+    "C": {
+      "item": "deeperdarker:warden_carapace"
+    },
+    "M": {
+      "item": "minecraft:phantom_membrane"
+    }
+  },
+  "pattern": [
+    "ASA",
+    "SCS",
+    "AMA"
+  ],
+  "result": {
+    "id": "bertie_progression:warden_echo_pattern",
+    "count": 1
+  }
+}

@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "": {
-      "model": "bertie_s1:block/echo_lock"
-    }
-  }
-}

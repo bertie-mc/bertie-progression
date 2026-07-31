@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
-bertie_s1 data/asset generator — single source of truth for the S1 R-ledger
-(PROGRESSION_SPEC.md §8) at demo fidelity (see s1-build/DEVIATIONS.md).
+bertie_progression data/asset generator for the work-in-progress R-ledger
+(PROGRESSION_SPEC.md §8) at current demo fidelity (see s1-build/DEVIATIONS.md).
 
 Writes into src/main/resources/:
-  data/bertie_s1/recipe/**        authored recipes
+  data/bertie_progression/recipe/**        authored recipes
   data/<other>/recipe/**          stock overrides (false-condition disables / replacements)
   data/forbidden_arcanus/forbidden_arcanus/hephaestus_forge/ritual/  augmented tier upgrades
-  data/bertie_s1/forbidden_arcanus/hephaestus_forge/ritual/          authored rituals
-  data/bertie_s1/tags/**          stripped_logs item+block tags
-  assets/bertie_s1/**             lang, item models, blockstates, block models
+  data/bertie_progression/forbidden_arcanus/hephaestus_forge/ritual/          authored rituals
+  data/bertie_progression/tags/**          stripped_logs item+block tags
+  assets/bertie_progression/**             lang, item models, blockstates, block models
 
 Run:  python texture-work/gen_data.py
 """
@@ -21,7 +21,7 @@ import shutil
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 RES = os.path.join(ROOT, "src", "main", "resources")
 
-MODID = "bertie_s1"
+MODID = "bertie_progression"
 
 # ---------------------------------------------------------------- helpers
 
@@ -47,7 +47,7 @@ DISABLED = {
 }
 
 def external_mods(*ids):
-    """Extract non-minecraft/bertie_s1 namespaces from item/tag id strings."""
+    """Extract non-minecraft/bertie_progression namespaces from item/tag id strings."""
     out = set()
     for i in ids:
         if i is None:
@@ -123,7 +123,7 @@ def ritual(main, inputs, result_id, count=1, tier=None, essences=None, xp=0):
 
     NO neoforge:conditions here: rituals are a DATAPACK REGISTRY that only exists
     when forbidden_arcanus is present (absent-FA environments ignore the folder),
-    and every referenced mod is a hard member of the S1 pack. Unconditional files
+    and every referenced mod is a hard member of the current pack. Unconditional files
     make a parse problem a loud server-boot error instead of a silent skip.
 
     HARD CONSTRAINT (verified in-game): the Forge has 8 pedestals and each input
@@ -237,16 +237,16 @@ GOLD_PLATE = {"slag:material_type": "slag:golden", "slag:part_type": "slag:plate
 
 # ---------------------------------------------------------------- recipes
 
-R = "data/bertie_s1/recipe"
+R = "data/bertie_progression/recipe"
 
 # ---- inventory 2x2 (I2) ----
 write(f"{R}/inventory_2x2/opening_mallet.json",            # R02B
-      shapeless(["berlords_carving:wood_slate", "minecraft:stick"], "bertie_s1:opening_mallet"))
+      shapeless(["berlords_carving:wood_slate", "minecraft:stick"], "bertie_progression:opening_mallet"))
 write(f"{R}/inventory_2x2/stone_crucible_blank.json",      # R02C
-      shapeless(["berlords_carving:stone_slate", "minecraft:cobblestone"], "bertie_s1:stone_crucible_blank"))
+      shapeless(["berlords_carving:stone_slate", "minecraft:cobblestone"], "bertie_progression:stone_crucible_blank"))
 write(f"{R}/inventory_2x2/stone_pour_channel.json",        # R02D
       shapeless(["berlords_carving:stone_slate", "minecraft:cobblestone", "minecraft:cobblestone"],
-                "bertie_s1:stone_pour_channel"))
+                "bertie_progression:stone_pour_channel"))
 write(f"{R}/inventory_2x2/hand_crank.json",                # R14D  (PP/PA)
       shaped(["PP", "PA"], {"P": "#minecraft:planks", "A": "create:andesite_alloy"}, "create:hand_crank"))
 # R18 (Licensed Crafting Plinth) removed — block dropped, berlord batch 4.
@@ -276,7 +276,7 @@ write(f"{R}/create/weeping_eye_mixing.json",
        "ingredients": ([{"item": "minecraft:ender_pearl"}]
                        + [{"item": "minecraft:prismarine_shard"} for _ in range(4)]
                        + [{"item": "malum:refined_brilliance"} for _ in range(6)]),
-       "results": [{"id": "bertie_s1:weeping_eye"}]})
+       "results": [{"id": "bertie_progression:weeping_eye"}]})
 # Note 7: Stonecutter (replaces stock, see override below) — shaped 2x2 fits the pre-table grid.
 write(f"{R}/inventory_2x2/stonecutter.json",
       shaped(["ID", "SS"], {"I": "minecraft:iron_ingot", "D": "slag:deep_alloy",
@@ -297,7 +297,7 @@ write(f"{R}/table/warden_echo_pattern.json",               # R31
       shaped(["ASA", "SCS", "AMA"],
              {"A": "minecraft:amethyst_shard", "S": "minecraft:sculk",
               "C": "deeperdarker:warden_carapace", "M": "minecraft:phantom_membrane"},
-             "bertie_s1:warden_echo_pattern"))
+             "bertie_progression:warden_echo_pattern"))
 
 # ---- Brick Forge double smelting (SLAG) ----
 # Ore double-smelts are 2 raw -> 1 ingot (berlord batch 5: "make all ore smelting brick forge 2->1").
@@ -322,7 +322,7 @@ write(f"{R}/slag/arcane_crystal_dust.json",
                       "forbidden_arcanus:arcane_crystal_dust", 1, 200, 0.5))
 
 # ---- Hephaestus rituals (HF1+, data-driven demo of the retained-recipe list) ----
-RIT = "data/bertie_s1/forbidden_arcanus/hephaestus_forge/ritual"
+RIT = "data/bertie_progression/forbidden_arcanus/hephaestus_forge/ritual"
 
 # R13 Electron Tubes MOVED to the Spirit Altar (berlord batch 3: "spirit crafts are better suited").
 # Same recipe feel: Natural Quartz core + Redstone + Slag-cast Gold/Iron Plates, paid in spirits.
@@ -357,7 +357,7 @@ write(f"{R}/create/brass_casing_edelwood.json", {
 write(f"{RIT}/r14b_kinetic_pattern_plates.json",
       ritual("berlords_carving:stone_big_slate",
              [("create:brass_nugget", 4), ("forbidden_arcanus:arcane_crystal_dust", 1)],
-             "bertie_s1:kinetic_pattern_plate", 4, tier=1))
+             "bertie_progression:kinetic_pattern_plate", 4, tier=1))
 # r14c gearbox-from-blank ritual REMOVED (berlord 2026-07-24): gearbox reverts to Create's default
 # recipe (andesite casing + 4 shafts), which works again now that andesite casing is restored.
 # R15 Mechanical Crafter MOVED to the Spirit Altar (berlord batch 4), now yields ONE:
@@ -419,7 +419,7 @@ write(f"{RIT}/r29_spirit_instiller.json",
 write(f"{RIT}/r30a_echoing_city_compass.json",
       ritual("minecraft:compass",
              [("pastel:onyx_shard", 1), ("minecraft:sculk", 3), ("malum:aqueous_spirit", 4)],
-             "bertie_s1:echoing_city_compass", 1, tier=2,
+             "bertie_progression:echoing_city_compass", 1, tier=2,
              essences={"aureal": 250, "blood": 0, "souls": 0}))
 write(f"{RIT}/r31a_spirit_crucible.json",
       ritual("deeperdarker:reinforced_echo_shard",
@@ -434,9 +434,9 @@ write(f"{RIT}/carving_station.json",
              "berlords_carving:carving_station", 1, tier=1,
              essences={"aureal": 100, "blood": 1000, "souls": 5}))
 write(f"{RIT}/r32_descent_anchor.json",
-      ritual("bertie_s1:spirit_focused_echo",
+      ritual("bertie_progression:spirit_focused_echo",
              [("deeperdarker:warden_carapace", 1), ("twilightforest:lich_trophy", 1), ("pastel:onyx_shard", 1)],
-             "bertie_s1:descent_anchor", 1, tier=2))
+             "bertie_progression:descent_anchor", 1, tier=2))
 write(f"{RIT}/r36a_soulbinding_brazier.json",
       ritual("betterend:aeternium_ingot",
              [("malum:soul_stained_steel_ingot", 4), ("malum:hallowed_gold_ingot", 2),
@@ -445,24 +445,24 @@ write(f"{RIT}/r36a_soulbinding_brazier.json",
 write(f"{RIT}/r37c_sovereign_seals.json",
       ritual("forbidden_arcanus:arcane_crystal",
              [("forbidden_arcanus:deorum_ingot", 4), ("malum:arcane_spirit", 4)],
-             "bertie_s1:hephaestian_sovereign_seal", 4, tier=3,
+             "bertie_progression:hephaestian_sovereign_seal", 4, tier=3,
              essences={"aureal": 1000, "blood": 2000, "souls": 0}))
 write(f"{RIT}/r37f_ignis_rematch_seal.json",
       ritual("minecraft:blaze_powder",
              [("minecraft:blaze_powder", 3), ("minecraft:nether_bricks", 3), ("malum:infernal_spirit", 2)],
-             "bertie_s1:boss_rematch_seal", 1, tier=3))
+             "bertie_progression:boss_rematch_seal", 1, tier=3))
 write(f"{RIT}/r40_convergence_matrix.json",
       ritual("minecraft:dragon_head",
-             [("bertie_s1:soulbound_authority", 1), ("bertie_s1:complex_spectrum_seal", 1),
-              ("bertie_s1:well_attunement", 1), ("bertie_s1:ignitium_lattice", 1),
-              ("bertie_s1:dragonbone_frame", 1)],
-             "bertie_s1:convergence_matrix", 2, tier=3,
+             [("bertie_progression:soulbound_authority", 1), ("bertie_progression:complex_spectrum_seal", 1),
+              ("bertie_progression:well_attunement", 1), ("bertie_progression:ignitium_lattice", 1),
+              ("bertie_progression:dragonbone_frame", 1)],
+             "bertie_progression:convergence_matrix", 2, tier=3,
              essences={"aureal": 2500, "blood": 12000, "souls": 64}))
 
 # ---- Malum spirit infusions ----
 # R19A (Spirit Altar Witness) removed — item dropped, berlord batch 4.
 write(f"{R}/malum/runewood_resonance.json",                # R20A
-      infusion("malum:refined_soulstone", 1, [], [SP("aerial", 4)], "bertie_s1:runewood_resonance"))
+      infusion("malum:refined_soulstone", 1, [], [SP("aerial", 4)], "bertie_progression:runewood_resonance"))
 # R21C Arcana Resonance REMOVED (berlord 2026-07-31): nothing ever consumed it. The Arcana Pylon
 # takes the RUNEWOOD Resonance (R20A above), which stays.
 write(f"{R}/malum/sculk_blocks.json",                      # R30S
@@ -470,22 +470,22 @@ write(f"{R}/malum/sculk_blocks.json",                      # R30S
                "minecraft:sculk", 8))
 write(f"{R}/malum/spirit_focused_echo.json",               # R31B (soul crystal consumed — demo deviation)
       infusion("deeperdarker:reinforced_echo_shard", 1, [("deeperdarker:soul_crystal", 1)],
-               [SP("arcane", 8), SP("aqueous", 8)], "bertie_s1:spirit_focused_echo"))
+               [SP("arcane", 8), SP("aqueous", 8)], "bertie_progression:spirit_focused_echo"))
 write(f"{R}/malum/soulbound_authority.json",               # R37 (Brazier band demo: altar infusion)
       infusion("minecraft:dragon_head", 1,
                [("pastel:moonstone_shard", 1), ("malum:soul_stained_steel_ingot", 4)],
-               ALL8x8, "bertie_s1:soulbound_authority", 4))
+               ALL8x8, "bertie_progression:soulbound_authority", 4))
 write(f"{R}/malum/weeping_compass.json",                   # R37D
-      infusion("bertie_s1:soulbound_authority", 1,
-               [("bertie_s1:spirit_focused_echo", 1), ("malum:refined_soulstone", 4), ("pastel:moonstone_shard", 4)],
-               [], "bertie_s1:weeping_compass"))
+      infusion("bertie_progression:soulbound_authority", 1,
+               [("bertie_progression:spirit_focused_echo", 1), ("malum:refined_soulstone", 4), ("pastel:moonstone_shard", 4)],
+               [], "bertie_progression:weeping_compass"))
 write(f"{R}/malum/well_attunement.json",                   # R37E (natural-Well offering deferred)
-      infusion("bertie_s1:weeping_compass", 1, [("bertie_s1:soulbound_authority", 1)],
-               [SP("arcane", 8)], "bertie_s1:well_attunement"))
+      infusion("bertie_progression:weeping_compass", 1, [("bertie_progression:soulbound_authority", 1)],
+               [SP("arcane", 8)], "bertie_progression:well_attunement"))
 write(f"{R}/malum/ashlord_rematch_seal.json",              # R37G
       infusion("deeperdarker:sculk_bone", 4,
-               [("minecraft:end_stone_bricks", 4), ("bertie_s1:spirit_focused_echo", 1)],
-               [SP("infernal", 16)], "bertie_s1:boss_rematch_seal"))
+               [("minecraft:end_stone_bricks", 4), ("bertie_progression:spirit_focused_echo", 1)],
+               [SP("infernal", 16)], "bertie_progression:boss_rematch_seal"))
 
 # ---- Mechanical Crafter recipes ----
 # R17 removed with the Seal. The vanilla Crafting Table currently has NO recipe (its stock one is
@@ -500,46 +500,46 @@ write(f"{R}/mechanical/exclusive/runic_workbench.json",         # R21A
 write(f"{R}/mechanical/exclusive/echo_lock.json",               # R31C
       mech(["DSD", "SOS", "DSD"],
            {"D": "minecraft:deepslate_tiles", "S": "minecraft:sculk", "O": "pastel:onyx_shard"},
-           "bertie_s1:echo_lock"))
+           "bertie_progression:echo_lock"))
 write(f"{R}/mechanical/exclusive/ignitium_lattice_5x5.json",    # R38 (x2 output — demo economy, see DEVIATIONS)
       mech(["KSSSK", "SIIIS", "SIIIS", "SIIIS", "KSSSK"],
-           {"K": "bertie_s1:kinetic_pattern_plate", "S": "malum:infernal_spirit", "I": "cataclysm:ignitium_ingot"},
-           "bertie_s1:ignitium_lattice", 2))
+           {"K": "bertie_progression:kinetic_pattern_plate", "S": "malum:infernal_spirit", "I": "cataclysm:ignitium_ingot"},
+           "bertie_progression:ignitium_lattice", 2))
 write(f"{R}/mechanical/exclusive/ignitium_struts_3x3.json",     # R38A (single run -> 8)
       mech(["KBK", "BLB", "KBK"],
-           {"K": "bertie_s1:kinetic_pattern_plate", "B": "create:brass_sheet", "L": "bertie_s1:ignitium_lattice"},
-           "bertie_s1:ignitium_strut", 8))
+           {"K": "bertie_progression:kinetic_pattern_plate", "B": "create:brass_sheet", "L": "bertie_progression:ignitium_lattice"},
+           "bertie_progression:ignitium_strut", 8))
 write(f"{R}/mechanical/exclusive/dragonbone_frame_5x5.json",    # R39 (x2 output)
       mech(["ABMBA", "BBBBB", "MBEBM", "BBBBB", "ABMBA"],
            {"A": "betterend:aeternium_ingot", "B": "block_factorys_bosses:dragon_bone",
-            "M": "pastel:moonstone_chiseled_calcite", "E": "bertie_s1:spirit_focused_echo"},
-           "bertie_s1:dragonbone_frame", 2))
+            "M": "pastel:moonstone_chiseled_calcite", "E": "bertie_progression:spirit_focused_echo"},
+           "bertie_progression:dragonbone_frame", 2))
 write(f"{R}/mechanical/exclusive/dragonbone_braces_3x3.json",   # R39A (single run -> 8)
       mech(["MAM", "AFA", "MAM"],
            {"M": "pastel:moonstone_chiseled_calcite", "A": "betterend:aeternium_ingot",
-            "F": "bertie_s1:dragonbone_frame"},
-           "bertie_s1:dragonbone_brace", 8))
+            "F": "bertie_progression:dragonbone_frame"},
+           "bertie_progression:dragonbone_brace", 8))
 write(f"{R}/mechanical/exclusive/avaritia_nether_crafting_table.json",  # R41
       mech(["IPEPD", "PRIDP", "EIMDE", "PRDIP", "RPEPR"],
-           {"I": "bertie_s1:ignitium_strut", "D": "bertie_s1:dragonbone_brace",
+           {"I": "bertie_progression:ignitium_strut", "D": "bertie_progression:dragonbone_brace",
             "E": "minecraft:end_stone_bricks", "R": "deeperdarker:reinforced_echo_shard",
-            "P": "pastel:moonstone_glass", "M": "bertie_s1:convergence_matrix"},
+            "P": "pastel:moonstone_glass", "M": "bertie_progression:convergence_matrix"},
            "avaritia:nether_crafting_table"))
 
 # ---- Pastel ----
 write(f"{R}/pastel/complex_spectrum_seals.json",           # R37A
       pedestal(["DR"], {"D": "minecraft:dragon_breath", "R": "deeperdarker:reinforced_echo_shard"},
                {"pastel:cyan": 4, "pastel:magenta": 4, "pastel:yellow": 4, "pastel:black": 4, "pastel:white": 4},
-               "bertie_s1:complex_spectrum_seal", 4))
+               "bertie_progression:complex_spectrum_seal", 4))
 write(f"{R}/pastel/moonstone_synthesis.json",              # R32A
       instiller("pastel:moonstone_shard", 1, "pastel:bismuth_flake", "pastel:onyx_powder",
                 "pastel:moonstone_shard", 4, 400, 4.0))
 write(f"{R}/pastel/warden_reinforced_echo_batch.json",     # R31R (one 32-batch — demo economy)
-      instiller("bertie_s1:warden_echo_pattern", 1, "minecraft:amethyst_shard", "minecraft:sculk",
+      instiller("bertie_progression:warden_echo_pattern", 1, "minecraft:amethyst_shard", "minecraft:sculk",
                 "deeperdarker:reinforced_echo_shard", 32, 600, 8.0))
 write(f"{R}/pastel/concordant_moonsteel.json",             # R37B
       instiller("betterend:terminite_ingot", 4, "pastel:moonstone_powder", "forbidden_arcanus:arcane_crystal_dust",
-                "bertie_s1:concordant_moonsteel_ingot", 4, 400, 4.0))
+                "bertie_progression:concordant_moonsteel_ingot", 4, 400, 4.0))
 
 # (R25 proof-replication family removed with the proof items — berlord 2026-07-22.)
 
@@ -549,16 +549,16 @@ write(f"{R}/avaritia/mekanism_access_core.json", {         # R42 — exact §8.5
     "type": "avaritia:shaped_table",
     "tier": 2,
     "key": {
-        "I": {"item": "bertie_s1:ignitium_strut"},
-        "D": {"item": "bertie_s1:dragonbone_brace"},
-        "P": {"item": "bertie_s1:complex_spectrum_seal"},
-        "B": {"item": "bertie_s1:soulbound_authority"},
-        "O": {"item": "bertie_s1:concordant_moonsteel_ingot"},
-        "S": {"item": "bertie_s1:hephaestian_sovereign_seal"},
-        "C": {"item": "bertie_s1:convergence_matrix"},
+        "I": {"item": "bertie_progression:ignitium_strut"},
+        "D": {"item": "bertie_progression:dragonbone_brace"},
+        "P": {"item": "bertie_progression:complex_spectrum_seal"},
+        "B": {"item": "bertie_progression:soulbound_authority"},
+        "O": {"item": "bertie_progression:concordant_moonsteel_ingot"},
+        "S": {"item": "bertie_progression:hephaestian_sovereign_seal"},
+        "C": {"item": "bertie_progression:convergence_matrix"},
     },
     "pattern": ["IDPDI", "BOSOB", "PSCSP", "BOSOB", "IDPDI"],
-    "result": {"id": "bertie_s1:mekanism_access_core", "count": 1},
+    "result": {"id": "bertie_progression:mekanism_access_core", "count": 1},
 })
 
 # ---------------------------------------------------------------- stock overrides
@@ -686,7 +686,7 @@ write(f"{R}/malum/twilight_concord.json",
                 ("create:andesite_alloy", 27), ("malum:soul_stained_steel_ingot", 3)],
                [(f"malum:{s}", 27) for s in ("aerial", "aqueous", "arcane", "earthen",
                                              "eldritch", "infernal", "sacred", "wicked")],
-               "bertie_s1:twilight_concord", 1))
+               "bertie_progression:twilight_concord", 1))
 write(f"{R}/malum/arcane_ingot.json",
       infusion("forbidden_arcanus:deorum_ingot", 1, [("irons_spellbooks:arcane_essence", 8)],
                [("malum:arcane", 4)], "irons_spellbooks:arcane_ingot", 1))
@@ -697,7 +697,7 @@ write(f"{R}/malum/soulstained_steel.json",
 
 # --- Note 12: Twilight Forest portal reconfig (tag overrides; replace=true drops the vanilla entries) ---
 write("data/twilightforest/tags/item/portal/activator.json",
-      {"replace": True, "values": ["bertie_s1:twilight_concord"]})
+      {"replace": True, "values": ["bertie_progression:twilight_concord"]})
 write("data/twilightforest/tags/block/portal/fluid.json",
       {"replace": True, "values": ["slag:molten_prismarine"]})
 write("data/twilightforest/tags/block/portal/decoration.json",
@@ -819,11 +819,11 @@ write(f"{R}/ignitium_ingot_from_clibano_combustion.json", {
     "fire_type": "soul_fire",
     "ingredients": {"first": {"item": "malum:hallowed_gold_ingot"},
                     "second": {"item": "malum:soul_stained_steel_ingot"}},
-    "residue": {"type": "bertie_s1:ignitium", "chance": 0.1},
+    "residue": {"type": "bertie_progression:ignitium", "chance": 0.1},
     "result": {"count": 1, "id": "mythsandlegends:bound_soul_ingot"},
 })
 # Slow-clibano residue is Arcane Crystal Dust (berlord's explicit exception to "secondary = primary").
-write("data/bertie_s1/forbidden_arcanus/residue_type/ignitium.json", {
+write("data/bertie_progression/forbidden_arcanus/residue_type/ignitium.json", {
     "combine_info": {"required_amount": 1, "result": {"count": 1, "id": "forbidden_arcanus:arcane_crystal_dust"}},
     "name": {"text": "Arcane Crystal Residue"},
 })
@@ -858,7 +858,7 @@ for _piece in ["helmet", "chestplate", "leggings", "boots"]:
 write("data/malum/recipe/spirit_infusion/arcana_pylon.json",
       infusion("malum:runewood_obelisk", 1,
                [("malum:refined_soulstone", 8), ("malum:hex_ash", 4), ("malum:soulwood_planks", 2),
-                ("bertie_s1:runewood_resonance", 1)],
+                ("bertie_progression:runewood_resonance", 1)],
                EARLY8, "malum:arcana_pylon"))
 write("data/malum/recipe/spirit_infusion/spirit_catalyzer.json",
       infusion("pastel:onyx_shard", 1,
@@ -884,10 +884,10 @@ write("data/irons_spellbooks/recipe/inscription_table.json",
 write("data/forbidden_arcanus/forbidden_arcanus/hephaestus_forge/ritual/upgrade_tier_2.json", {
     "essences": {"aureal": 1000, "blood": 10000, "souls": 10, "experience": 900},
     "inputs": [
-        {"amount": 2, "ingredient": {"item": "bertie_s1:abyssal_core"}},
-        {"amount": 2, "ingredient": {"item": "bertie_s1:desert_core"}},
-        {"amount": 2, "ingredient": {"item": "bertie_s1:cursed_core"}},
-        {"amount": 2, "ingredient": {"item": "bertie_s1:storm_core"}},
+        {"amount": 2, "ingredient": {"item": "bertie_progression:abyssal_core"}},
+        {"amount": 2, "ingredient": {"item": "bertie_progression:desert_core"}},
+        {"amount": 2, "ingredient": {"item": "bertie_progression:cursed_core"}},
+        {"amount": 2, "ingredient": {"item": "bertie_progression:storm_core"}},
         # berlord 2026-07-31: "double all cores required". 2x4 = 8 pedestals, the hard cap - so the
         # 4 Arcane Crystal that used to fill the last four slots had to come out. There is no
         # arrangement of doubled cores that keeps them: 2+2+2+2+4 = 12 > 8.
@@ -1197,7 +1197,7 @@ def _seq_assembly(path, transitional, ingredient, steps, results, mods=(), loops
                  "sequence": [_step(s) for s in steps], "transitional_item": {"id": transitional}})
 
 # Structural Beam: shaft -> 16-step sequence -> 70% x1 / 30% x2.
-_seq_assembly(f"{R}/create/structural_beam_assembly.json", "bertie_s1:incomplete_structural_beam", "create:shaft",
+_seq_assembly(f"{R}/create/structural_beam_assembly.json", "bertie_progression:incomplete_structural_beam", "create:shaft",
               [("deploy", "create:brass_nugget"), ("deploy", "create:brass_nugget"), ("press",),
                ("deploy", "minecraft:vine"), ("deploy", "malum:earthen_spirit"),
                ("deploy", "minecraft:armadillo_scute"), ("deploy", "minecraft:armadillo_scute"),
@@ -1205,16 +1205,16 @@ _seq_assembly(f"{R}/create/structural_beam_assembly.json", "bertie_s1:incomplete
                ("fill", "slag:molten_quartz", 144),
                ("deploy", "create:copper_sheet"), ("deploy", "create:copper_sheet"), ("deploy", "create:copper_sheet"),
                ("deploy", "born_in_chaos_v1:diamond_termite_shard"), ("saw",)],
-              [{"chance": 0.7, "id": "bertie_s1:kinetic_vane", "count": 1},
-               {"chance": 0.3, "id": "bertie_s1:kinetic_vane", "count": 2}],
+              [{"chance": 0.7, "id": "bertie_progression:kinetic_vane", "count": 1},
+               {"chance": 0.3, "id": "bertie_progression:kinetic_vane", "count": 2}],
               mods=("malum", "slag", "born_in_chaos_v1"))
 # Small Water Wheel: bound soul ingot + 8x deploy structural beam.
-_seq_assembly(f"{R}/create/small_water_wheel_assembly.json", "bertie_s1:incomplete_small_water_wheel",
-              "mythsandlegends:bound_soul_ingot", [("deploy", "bertie_s1:kinetic_vane")] * 8,
+_seq_assembly(f"{R}/create/small_water_wheel_assembly.json", "bertie_progression:incomplete_small_water_wheel",
+              "mythsandlegends:bound_soul_ingot", [("deploy", "bertie_progression:kinetic_vane")] * 8,
               [{"id": "create:water_wheel", "count": 1}], mods=("mythsandlegends",))
 # Large Water Wheel: small water wheel + 8x deploy structural beam.
-_seq_assembly(f"{R}/create/large_water_wheel_assembly.json", "bertie_s1:incomplete_large_water_wheel",
-              "create:water_wheel", [("deploy", "bertie_s1:kinetic_vane")] * 8,
+_seq_assembly(f"{R}/create/large_water_wheel_assembly.json", "bertie_progression:incomplete_large_water_wheel",
+              "create:water_wheel", [("deploy", "bertie_progression:kinetic_vane")] * 8,
               [{"id": "create:large_water_wheel", "count": 1}])
 
 # --- Shield Maiden (berlord batch 8): Hephaestus ritual on a Naga Trophy (grants Lich access). 8 pedestals. ---
@@ -1224,7 +1224,7 @@ write(f"{RIT}/shield_maiden.json",
               ("mythsandlegends:bound_soul_ingot", 1), ("iceandfire:hippocampus_fin", 1),
               ("born_in_chaos_v1:fangofthe_hound_leader", 1), ("born_in_chaos_v1:nightmare_claw", 1),
               ("born_in_chaos_v1:permafrost_shard", 1)],
-             "bertie_s1:shield_maiden", 1, tier=1,   # berlord 2026-07-29: was tier=2
+             "bertie_progression:shield_maiden", 1, tier=1,   # berlord 2026-07-29: was tier=2
              essences={"aureal": 100, "blood": 3000, "souls": 10}, xp=100))
 
 # --- Naga Trophy dupe (berlord batch 8): Spirit Infusion -> 2 trophies ("dupe it if you have friends"). ---
@@ -1322,9 +1322,9 @@ write(f"{RIT}/crafting_license.json",
       ritual("minecraft:crafting_table",
              [("twilightforest:exanimate_essence", 1), ("create:precision_mechanism", 1),
               ("mythsandlegends:bound_soul_ingot", 1), ("l2complements:totemic_gold_ingot", 1),
-              ("create:electron_tube", 1), ("bertie_s1:kinetic_vane", 1),
+              ("create:electron_tube", 1), ("bertie_progression:kinetic_vane", 1),
               ("irons_spellbooks:blank_rune", 1), ("minecraft:writable_book", 1)],
-             "bertie_s1:crafting_license", 1,
+             "bertie_progression:crafting_license", 1,
              essences={"aureal": 1000, "blood": 10000, "souls": 10}, xp=900))
 
 # --- Lich Trophy dupe (berlord): Spirit Infusion, 1 trophy -> 2, same shape as the Naga dupe. ---
@@ -1375,7 +1375,7 @@ write(f"{RIT}/compass.json",
 write(f"{RIT}/aureal_bottle.json",
       {**ritual("minecraft:potion",
                 [("forbidden_arcanus:arcane_crystal_dust", 4), ("minecraft:rotten_flesh", 2),
-                 ("#bertie_s1:meat", 2)],
+                 ("#bertie_progression:meat", 2)],
                 "forbidden_arcanus:aureal_bottle", 1),
        "main_ingredient": {"type": "neoforge:components", "items": "minecraft:potion",
                            "components": {"minecraft:potion_contents": {"potion": "minecraft:water"}}}})
@@ -1493,7 +1493,7 @@ write(f"{RIT}/acolyte_of_deflection.json",
              [("iceandfire:dragonbone", 2), ("malum:hallowed_gold_ingot", 2),
               ("born_in_chaos_v1:shattered_skull", 1), ("create:precision_mechanism", 1),
               ("mythsandlegends:bound_soul_ingot", 1), ("twilightforest:magic_map_focus", 1)],
-             "bertie_s1:acolyte_of_deflection", 1, tier=1,
+             "bertie_progression:acolyte_of_deflection", 1, tier=1,
              essences={"aureal": 100, "blood": 6000, "souls": 10}, xp=400))
 
 # --- Deep Waters Key: was a plain 3x3 (clay/sand/cobbled deepslate, deepwaters:hovaport). berlord
@@ -1533,26 +1533,26 @@ write(f"{R}/malum/snow_queen_trophy_dupe.json",
 
 # --- Sirok's Nest map (berlord 2026-07-29, note 1 of the finder series). A FINDER item, not a map:
 #     a recipe result cannot be a structure map (Recipe.assemble gets no level/position), so the craft
-#     yields bertie_s1:sirok_nest_map and FinderItem resolves it. See FinderItem's class comment.
+#     yields bertie_progression:sirok_nest_map and FinderItem resolves it. See FinderItem's class comment.
 #     The Gorgon Head is a CATALYST - matched, required, returned to the grid - which is why this uses
-#     our own bertie_s1:catalyst_shaped serializer instead of minecraft:crafting_shaped. ---
+#     our own bertie_progression:catalyst_shaped serializer instead of minecraft:crafting_shaped. ---
 # "any type of chitin works": Ice and Fire ships three and NO chitin tag exists in any pack jar
 # (checked all 109), so we ship our own rather than trust a tag we do not control.
-write("data/bertie_s1/tags/item/deathworm_chitin.json",
+write("data/bertie_progression/tags/item/deathworm_chitin.json",
       {"values": ["iceandfire:deathworm_chitin_red", "iceandfire:deathworm_chitin_yellow",
                   "iceandfire:deathworm_chitin_white"]})
 
 write(f"{R}/sirok_nest_map.json",
       {"neoforge:conditions": conds("iceandfire", "irons_spellbooks", "block_factorys_bosses"),
-       "type": "bertie_s1:catalyst_shaped",
+       "type": "bertie_progression:catalyst_shaped",
        "category": "misc",
-       "key": {"c": {"tag": "bertie_s1:deathworm_chitin"},
+       "key": {"c": {"tag": "bertie_progression:deathworm_chitin"},
                "g": {"item": "iceandfire:gorgon_head"},
                "i": {"item": "minecraft:glow_ink_sac"},
                "m": {"item": "minecraft:map"},
                "r": {"item": "irons_spellbooks:rare_ink"}},
        "pattern": ["cgc", "imi", "crc"],
-       "result": {"id": "bertie_s1:sirok_nest_map", "count": 1},
+       "result": {"id": "bertie_progression:sirok_nest_map", "count": 1},
        "catalyst": {"item": "iceandfire:gorgon_head"}})
 
 # --- The four Cataclysm eyes: Hephaestus rituals REPLACING Cataclysm's own 3x3 crafts (berlord
@@ -1562,7 +1562,7 @@ write(f"{R}/sirok_nest_map.json",
 #     any-tier, as specified; flagged to him. ---
 # "any coral - not block, not dead, not fan": #minecraft:coral_plants is exactly that set, but vanilla
 # ships it only as a BLOCK tag (verified against the 1.21.1 client jar), so we ship the item tag.
-write("data/bertie_s1/tags/item/corals.json",
+write("data/bertie_progression/tags/item/corals.json",
       {"values": ["minecraft:tube_coral", "minecraft:brain_coral", "minecraft:bubble_coral",
                   "minecraft:fire_coral", "minecraft:horn_coral"]})
 
@@ -1586,7 +1586,7 @@ write(f"{RIT}/storm_eye.json",
              "cataclysm:storm_eye", 1))
 write(f"{RIT}/abyss_eye.json",
       ritual("deepwaters:blackpearl",
-             [("block_factorys_bosses:kraken_tooth", 2), ("#bertie_s1:corals", 2),
+             [("block_factorys_bosses:kraken_tooth", 2), ("#bertie_progression:corals", 2),
               ("iceandfire:sea_serpent_fang", 2), ("minecraft:crying_obsidian", 2)],
              "cataclysm:abyss_eye", 1))
 
@@ -1595,27 +1595,27 @@ write(f"{RIT}/abyss_eye.json",
 # already lists all seven scale colours; no bertie tag needed here.
 write(f"{R}/kraken_ship_map.json",
       {"neoforge:conditions": conds("iceandfire", "irons_spellbooks", "deepwaters", "block_factorys_bosses"),
-       "type": "bertie_s1:catalyst_shaped", "category": "misc",
+       "type": "bertie_progression:catalyst_shaped", "category": "misc",
        "key": {"s": {"tag": "iceandfire:scales/sea_serpent"},
                "p": {"item": "deepwaters:blackpearl"},
                "i": {"item": "minecraft:glow_ink_sac"},
                "m": {"item": "minecraft:map"},
                "r": {"item": "irons_spellbooks:rare_ink"}},
        "pattern": ["sps", "imi", "srs"],
-       "result": {"id": "bertie_s1:kraken_ship_map", "count": 1},
+       "result": {"id": "bertie_progression:kraken_ship_map", "count": 1},
        "catalyst": {"item": "deepwaters:blackpearl"}})
 
 # Skor hideout map: Snow Queen Trophy is the catalyst (so the trophy is HELD, not spent).
 write(f"{R}/yeti_hideout_map.json",
       {"neoforge:conditions": conds("twilightforest", "irons_spellbooks", "block_factorys_bosses"),
-       "type": "bertie_s1:catalyst_shaped", "category": "misc",
+       "type": "bertie_progression:catalyst_shaped", "category": "misc",
        "key": {"f": {"item": "twilightforest:alpha_yeti_fur"},
                "q": {"item": "twilightforest:snow_queen_trophy"},
                "i": {"item": "minecraft:glow_ink_sac"},
                "m": {"item": "minecraft:map"},
                "r": {"item": "irons_spellbooks:rare_ink"}},
        "pattern": ["fqf", "imi", "frf"],
-       "result": {"id": "bertie_s1:yeti_hideout_map", "count": 1},
+       "result": {"id": "bertie_progression:yeti_hideout_map", "count": 1},
        "catalyst": {"item": "twilightforest:snow_queen_trophy"}})
 
 # --- The four elemental cores. 7x7 mechanical-crafter walls, transcribed from berlord's screenshots
@@ -1628,26 +1628,26 @@ write(f"{R}/mechanical/abyssal_core.json",
             "O": "deepwaters:fopal", "A": "deepwaters:aquamarine_block",
             "D": "minecraft:diamond_block", "C": "cataclysm:coral_chunk",
             "B": "deepwaters:blackpearl"},
-           "bertie_s1:abyssal_core", 2))
+           "bertie_progression:abyssal_core", 2))
 write(f"{R}/mechanical/desert_core.json",
       mech(["SSSGSSS", "SCRKRCS", "SRCKCRS", "GKKMKKG", "SRCKCRS", "SCRKRCS", "SSSGSSS"],
            {"S": "create:brass_sheet", "G": "armageddon_mod:gilded_plate",
             "C": "malum:cthonic_gold", "R": "slag:rose_gold_block",
             "K": "iceandfire:dragonbone", "M": "cataclysm:ancient_metal_block"},
-           "bertie_s1:desert_core", 2))
+           "bertie_progression:desert_core", 2))
 write(f"{R}/mechanical/cursed_core.json",
       mech(["DDFDFDD", "DFSSSFD", "FSBBBSF", "DSBCBSD", "FSBBBSF", "DFSSSFD", "DDFDFDD"],
            {"D": "slag:deep_alloy_block", "F": "malum:imitation_flesh",
             "S": "malum:cursed_sapball", "B": "cataclysm:black_steel_ingot",
             "C": "cataclysm:cursium_ingot"},
-           "bertie_s1:cursed_core", 2))
+           "bertie_progression:cursed_core", 2))
 write(f"{R}/mechanical/storm_core.json",
       mech(["BLBLBLB", "LPNINPL", "BNEPENB", "LIPHPIL", "BNEPENB", "LPNINPL", "BLBLBLB"],
            {"B": "irons_spellbooks:lightning_bottle", "L": "cataclysm:lacrima",
             "P": "minecraft:lapis_block", "N": "malum:wind_nucleus",
             "I": "elemental_metals:lightning_infused_iron_ingot",
             "E": "cataclysm:essence_of_the_storm", "H": "minecraft:heart_of_the_sea"},
-           "bertie_s1:storm_core", 2))
+           "bertie_progression:storm_core", 2))
 
 # ================================================================ batch 18 (berlord 2026-07-29)
 # Dark Arts textile/pouch/scythe branch and Imitation Heart rewrite.
@@ -1715,11 +1715,11 @@ write("data/malum/recipe/spirit_infusion/soul_stained_steel_scythe.json",
 #     block round-trip (living_flesh_from_block) is LEFT ALONE - killing it would strand any
 #     Block of Living Flesh a player already owns. ---
 # "dragon flesh (any of 3)": the three share no stem and no mod ships a tag, so we ship one.
-write("data/bertie_s1/tags/item/dragon_flesh.json",
+write("data/bertie_progression/tags/item/dragon_flesh.json",
       {"values": ["iceandfire:fire_dragon_flesh", "iceandfire:ice_dragon_flesh",
                   "iceandfire:lightning_dragon_flesh"]})
 write("data/malum/recipe/spirit_infusion/living_flesh.json",
-      infusion("#bertie_s1:dragon_flesh", 1,
+      infusion("#bertie_progression:dragon_flesh", 1,
                [("minecraft:rotten_flesh", 64), ("irons_spellbooks:blood_vial", 8),
                 ("born_in_chaos_v1:monster_flesh", 4)],
                [SP("sacred", 6), SP("wicked", 6), SP("aqueous", 6)],
@@ -1773,7 +1773,7 @@ write(f"{RIT}/netherly_meal.json",
              [("iceandfire:fire_dragon_heart", 1), ("cataclysm:koboleton_bone", 1),
               ("malum:living_flesh", 1), ("iceandfire:fire_dragon_blood", 1),
               ("#iceandfire:scales/dragon/fire", 2), ("minecraft:lava_bucket", 1)],
-             "bertie_s1:netherly_meal", 1, tier=2,
+             "bertie_progression:netherly_meal", 1, tier=2,
              essences={"aureal": 0, "blood": 15000, "souls": 50}))
 
 # ================================================================ REMOVED ITEMS (berlord 2026-07-30)
@@ -2019,7 +2019,7 @@ SHRINE_BLOCKS = {
 
 def _assert_shrine_matches_java():
     """Parse LAYERS out of the handler and fail loudly if it has drifted from SHRINE_LAYERS."""
-    java = os.path.join(ROOT, "src", "main", "java", "com", "berlord", "bertie_s1",
+    java = os.path.join(ROOT, "src", "main", "java", "com", "berlord", "bertie_progression",
                         "shrine", "DeepWatersShrineHandler.java")
     if not os.path.isfile(java):
         return
@@ -2092,7 +2092,7 @@ def _write_shrine_nbt():
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with gzip.open(path, "wb") as f:
         f.write(root)
-    written.append("assets/bertie_s1/ponder/deepwaters_shrine.nbt")
+    written.append("assets/bertie_progression/ponder/deepwaters_shrine.nbt")
 
 _write_shrine_nbt()
 
@@ -2101,14 +2101,14 @@ _write_shrine_nbt()
 STRIPPED = [f"minecraft:stripped_{w}_log" for w in
             ["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry"]] + \
            ["minecraft:stripped_crimson_stem", "minecraft:stripped_warped_stem", "minecraft:stripped_bamboo_block"]
-write("data/bertie_s1/tags/item/stripped_logs.json", {"replace": False, "values": STRIPPED})
-write("data/bertie_s1/tags/block/stripped_logs.json", {"replace": False, "values": STRIPPED})
+write("data/bertie_progression/tags/item/stripped_logs.json", {"replace": False, "values": STRIPPED})
+write("data/bertie_progression/tags/block/stripped_logs.json", {"replace": False, "values": STRIPPED})
 
 # Natural in-world logs only (no stripped/wood variants) — quest-1 detection tag
 NATURAL_LOGS = [f"minecraft:{w}_log" for w in
                 ["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry"]] + \
                ["minecraft:crimson_stem", "minecraft:warped_stem"]
-write("data/bertie_s1/tags/item/natural_logs.json", {"replace": False, "values": NATURAL_LOGS})
+write("data/bertie_progression/tags/item/natural_logs.json", {"replace": False, "values": NATURAL_LOGS})
 
 # "Any meat" for the Aureal ritual. NOT #minecraft:meat — jar-checked, that tag holds ONLY modded
 # meats in this pack (jerkies, dragon flesh, meef, crab) and not one vanilla cut, so a player holding
@@ -2117,17 +2117,17 @@ write("data/bertie_s1/tags/item/natural_logs.json", {"replace": False, "values":
 MEATS = [f"minecraft:{m}" for m in
          ["beef", "cooked_beef", "porkchop", "cooked_porkchop", "chicken", "cooked_chicken",
           "mutton", "cooked_mutton", "rabbit", "cooked_rabbit"]]
-write("data/bertie_s1/tags/item/meat.json",
+write("data/bertie_progression/tags/item/meat.json",
       {"replace": False,
        "values": MEATS + [{"id": t, "required": False} for t in
                           ("#minecraft:meat", "#c:foods/raw_meat", "#c:foods/cooked_meat")]})
 
 # Hidden advancement fired by holding 8+ natural logs — the FTB "Get wood" quest task
-write("data/bertie_s1/advancement/got_wood.json", {
+write("data/bertie_progression/advancement/got_wood.json", {
     "criteria": {
         "got_wood": {
             "trigger": "minecraft:inventory_changed",
-            "conditions": {"items": [{"items": "#bertie_s1:natural_logs", "count": {"min": 8}}]},
+            "conditions": {"items": [{"items": "#bertie_progression:natural_logs", "count": {"min": 8}}]},
         }
     }
 })
@@ -2145,7 +2145,7 @@ COPPER_TIER_ORES = ["forbidden_arcanus:arcane_crystal_ore", "forbidden_arcanus:d
 write("data/minecraft/tags/block/needs_iron_tool.json",
       {"replace": False, "values": [], "remove": COPPER_TIER_ORES})
 write("data/minecraft/tags/block/needs_stone_tool.json", {"replace": False, "values": COPPER_TIER_ORES})
-write("data/bertie_s1/tags/block/needs_copper_tool.json", {"replace": False, "values": COPPER_TIER_ORES})
+write("data/bertie_progression/tags/block/needs_copper_tool.json", {"replace": False, "values": COPPER_TIER_ORES})
 
 # Ch1 gear quests detect the wooden PARTS (decision 2026-07-22: assembled modular gear has
 # no stable predicate surface — no Slag triggers/advancements exist, and assembled component
@@ -2160,12 +2160,12 @@ def _wooden_part(part):
         }]},
     }
 
-write("data/bertie_s1/advancement/wooden_armor_set.json", {
+write("data/bertie_progression/advancement/wooden_armor_set.json", {
     "criteria": {part: _wooden_part(part) for part in ["helmet", "chestplate", "leggings", "boots"]},
     "requirements": [[part] for part in ["helmet", "chestplate", "leggings", "boots"]],
 })
 
-write("data/bertie_s1/advancement/wooden_pickaxe_head.json", {
+write("data/bertie_progression/advancement/wooden_pickaxe_head.json", {
     "criteria": {"head": _wooden_part("pickaxe_head")},
 })
 
@@ -2178,14 +2178,14 @@ def _mat_part(material, part):
             "components": {"slag:material_type": f"slag:{material}", "slag:part_type": f"slag:{part}"},
         }]},
     }
-write("data/bertie_s1/advancement/copper_pickaxe_head.json", {
+write("data/bertie_progression/advancement/copper_pickaxe_head.json", {
     "criteria": {"flint": _mat_part("flint", "pickaxe_head"), "bone": _mat_part("bone", "pickaxe_head")},
     "requirements": [["flint", "bone"]],
 })
 
 # §5.5/R30: the Twilight portal accepts ONLY the Twilight Concord (stock tag = diamonds).
 write("data/twilightforest/tags/item/portal/activator.json",
-      {"replace": True, "values": [{"id": "bertie_s1:twilight_concord", "required": False}]})
+      {"replace": True, "values": [{"id": "bertie_progression:twilight_concord", "required": False}]})
 
 # ================================================================ batch 19 (berlord 2026-07-31)
 
@@ -2252,84 +2252,84 @@ BLOCKS = {
 
 # item models
 for item_id in ITEMS:
-    write(f"assets/bertie_s1/models/item/{item_id}.json",
-          {"parent": "minecraft:item/generated", "textures": {"layer0": f"bertie_s1:item/{item_id}"}})
+    write(f"assets/bertie_progression/models/item/{item_id}.json",
+          {"parent": "minecraft:item/generated", "textures": {"layer0": f"bertie_progression:item/{item_id}"}})
 # Weeping Eye reuses vanilla's Eye of Ender model/texture (no bespoke texture needed).
-write("assets/bertie_s1/models/item/weeping_eye.json", {"parent": "minecraft:item/ender_eye"})
+write("assets/bertie_progression/models/item/weeping_eye.json", {"parent": "minecraft:item/ender_eye"})
 # Crafting License borrows vanilla's paper model (no bespoke texture yet).
-write("assets/bertie_s1/models/item/crafting_license.json", {"parent": "minecraft:item/paper"})
+write("assets/bertie_progression/models/item/crafting_license.json", {"parent": "minecraft:item/paper"})
 # Sirok's Nest Map borrows vanilla's empty-map model (no bespoke texture yet - berlord has not sent one).
 for _m in ("sirok_nest_map", "kraken_ship_map", "yeti_hideout_map"):
-    write(f"assets/bertie_s1/models/item/{_m}.json", {"parent": "minecraft:item/map"})
+    write(f"assets/bertie_progression/models/item/{_m}.json", {"parent": "minecraft:item/map"})
 # The four cores have no bespoke texture yet either - each borrows a vanilla item that reads
 # close to its element, so they are at least distinguishable on sight.
 for _c, _par in (("abyssal_core", "minecraft:item/heart_of_the_sea"),
                  ("desert_core", "minecraft:item/brick"),
                  ("cursed_core", "minecraft:item/echo_shard"),
                  ("storm_core", "minecraft:item/amethyst_shard")):
-    write(f"assets/bertie_s1/models/item/{_c}.json", {"parent": _par})
+    write(f"assets/bertie_progression/models/item/{_c}.json", {"parent": _par})
 # Transitional sequenced-assembly items: beam reuses a vanilla stick; water-wheel incompletes reuse the
 # real wheel item models (berlord: "incomplete [large/small] water wheel uses [large/small] water wheel").
-write("assets/bertie_s1/models/item/incomplete_structural_beam.json",
+write("assets/bertie_progression/models/item/incomplete_structural_beam.json",
       {"parent": "minecraft:item/generated", "textures": {"layer0": "minecraft:item/stick"}})
-write("assets/bertie_s1/models/item/incomplete_small_water_wheel.json", {"parent": "create:item/water_wheel"})
-write("assets/bertie_s1/models/item/incomplete_large_water_wheel.json", {"parent": "create:item/large_water_wheel"})
+write("assets/bertie_progression/models/item/incomplete_small_water_wheel.json", {"parent": "create:item/water_wheel"})
+write("assets/bertie_progression/models/item/incomplete_large_water_wheel.json", {"parent": "create:item/large_water_wheel"})
 
 # block models + blockstates + block items
 for block_id in BLOCKS:
-    write(f"assets/bertie_s1/models/block/{block_id}.json",
-          {"parent": "minecraft:block/cube_all", "textures": {"all": f"bertie_s1:block/{block_id}"}})
-    write(f"assets/bertie_s1/blockstates/{block_id}.json",
-          {"variants": {"": {"model": f"bertie_s1:block/{block_id}"}}})
-    write(f"assets/bertie_s1/models/item/{block_id}.json",
-          {"parent": f"bertie_s1:block/{block_id}"})
+    write(f"assets/bertie_progression/models/block/{block_id}.json",
+          {"parent": "minecraft:block/cube_all", "textures": {"all": f"bertie_progression:block/{block_id}"}})
+    write(f"assets/bertie_progression/blockstates/{block_id}.json",
+          {"variants": {"": {"model": f"bertie_progression:block/{block_id}"}}})
+    write(f"assets/bertie_progression/models/item/{block_id}.json",
+          {"parent": f"bertie_progression:block/{block_id}"})
 
 # lang
-lang = {"itemGroup.bertie_s1": "Bertie S1 Progression"}
+lang = {"itemGroup.bertie_progression": "Bertie Progression"}
 for item_id, name in ITEMS.items():
-    lang[f"item.bertie_s1.{item_id}"] = name
+    lang[f"item.bertie_progression.{item_id}"] = name
 for block_id, name in BLOCKS.items():
-    lang[f"block.bertie_s1.{block_id}"] = name
+    lang[f"block.bertie_progression.{block_id}"] = name
 lang.update({
-    "message.bertie_s1.table_unlicensed": "You do not know how to use a crafting grid yet - consume a Crafting License first.",
-    "message.bertie_s1.crafting_licensed": "The crafting language settles into your hands. The 3x3 grid is yours.",
-    "message.bertie_s1.already_licensed": "You already hold the crafting language.",
-    "message.bertie_s1.forge_formed": "The Brick Forge roars to life!",
-    "message.bertie_s1.pedestal_formed": "The darkstone column settles into a pedestal.",
+    "message.bertie_progression.table_unlicensed": "You do not know how to use a crafting grid yet - consume a Crafting License first.",
+    "message.bertie_progression.crafting_licensed": "The crafting language settles into your hands. The 3x3 grid is yours.",
+    "message.bertie_progression.already_licensed": "You already hold the crafting language.",
+    "message.bertie_progression.forge_formed": "The Brick Forge roars to life!",
+    "message.bertie_progression.pedestal_formed": "The darkstone column settles into a pedestal.",
     # Ponder scene text. Ponder does NOT fall back to the literal passed to .text(...) — it looks up
     # "<modid>.ponder.<sceneId>.header" / ".text_N", numbered in the order the showText calls run.
     # Without these the scene shows raw lang keys. Keep in step with ShrinePonderPlugin.
-    "bertie_s1.ponder.deepwaters_shrine.header": "Raising the Deep Waters Shrine",
-    "bertie_s1.ponder.deepwaters_shrine.text_1": "Seven by seven of Mossy Stone Bricks. Build it underwater, in the Deep Waters - nowhere else works.",
-    "bertie_s1.ponder.deepwaters_shrine.text_2": "A Flaming Opal Pillar at the centre, wrapped in a solid three by three, with four posts on the diagonals.",
-    "bertie_s1.ponder.deepwaters_shrine.text_3": "Aquamarine crystals ring the edge - Small at the corners of each face, a Bundle in the middle.",
-    "bertie_s1.ponder.deepwaters_shrine.text_4": "The Conduit sits at the very centre, held in a diagonal lattice. This is the heart of the shrine.",
-    "bertie_s1.ponder.deepwaters_shrine.text_5": "Above the Conduit, the pillar and the posts repeat - but no crystals this time.",
-    "bertie_s1.ponder.deepwaters_shrine.text_6": "Cap it with a second seven by seven roof.",
-    "bertie_s1.ponder.deepwaters_shrine.text_7": "Crown it with crystals. This layer is NOT symmetrical - copy it exactly. The centre stays empty.",
-    "bertie_s1.ponder.deepwaters_shrine.text_8": "Any rotation works. Leave water around the shrine and a clear column above it, or nothing will happen.",
-    "bertie_s1.ponder.deepwaters_shrine.text_9": "Use a Crowned Jelly on the Conduit.",
-    "bertie_s1.ponder.deepwaters_shrine.text_10": "The shrine floods, and a Stormcall Altar rises on a pyramid of Polished Azure Seastone where the Conduit stood.",
-    "message.bertie_s1.shrine_no_space": "not enough space",
-    "message.bertie_s1.shrine_formed": "The shrine floods, and the Stormcall Altar rises.",
-    "message.bertie_s1.paper_need_cane": "You need at least 3 Sugar Cane to press paper.",
-    "message.bertie_s1.paper_need_slates": "You need two Wood Slates in your inventory to press paper.",
-    "message.bertie_s1.no_imbrifer": "Imbrifer (pastel:deeper_down) is not present in this world.",
-    "message.bertie_s1.descended": "The anchor drags you down into Imbrifer.",
-    "message.bertie_s1.locator_searching": "The needle spins, searching...",
-    "message.bertie_s1.locator_missing": "Target structure %s is not present in this world.",
-    "message.bertie_s1.locator_none": "No target found within range.",
-    "message.bertie_s1.locator_found": "%s located near X=%s, Z=%s.",
+    "bertie_progression.ponder.deepwaters_shrine.header": "Raising the Deep Waters Shrine",
+    "bertie_progression.ponder.deepwaters_shrine.text_1": "Seven by seven of Mossy Stone Bricks. Build it underwater, in the Deep Waters - nowhere else works.",
+    "bertie_progression.ponder.deepwaters_shrine.text_2": "A Flaming Opal Pillar at the centre, wrapped in a solid three by three, with four posts on the diagonals.",
+    "bertie_progression.ponder.deepwaters_shrine.text_3": "Aquamarine crystals ring the edge - Small at the corners of each face, a Bundle in the middle.",
+    "bertie_progression.ponder.deepwaters_shrine.text_4": "The Conduit sits at the very centre, held in a diagonal lattice. This is the heart of the shrine.",
+    "bertie_progression.ponder.deepwaters_shrine.text_5": "Above the Conduit, the pillar and the posts repeat - but no crystals this time.",
+    "bertie_progression.ponder.deepwaters_shrine.text_6": "Cap it with a second seven by seven roof.",
+    "bertie_progression.ponder.deepwaters_shrine.text_7": "Crown it with crystals. This layer is NOT symmetrical - copy it exactly. The centre stays empty.",
+    "bertie_progression.ponder.deepwaters_shrine.text_8": "Any rotation works. Leave water around the shrine and a clear column above it, or nothing will happen.",
+    "bertie_progression.ponder.deepwaters_shrine.text_9": "Use a Crowned Jelly on the Conduit.",
+    "bertie_progression.ponder.deepwaters_shrine.text_10": "The shrine floods, and a Stormcall Altar rises on a pyramid of Polished Azure Seastone where the Conduit stood.",
+    "message.bertie_progression.shrine_no_space": "not enough space",
+    "message.bertie_progression.shrine_formed": "The shrine floods, and the Stormcall Altar rises.",
+    "message.bertie_progression.paper_need_cane": "You need at least 3 Sugar Cane to press paper.",
+    "message.bertie_progression.paper_need_slates": "You need two Wood Slates in your inventory to press paper.",
+    "message.bertie_progression.no_imbrifer": "Imbrifer (pastel:deeper_down) is not present in this world.",
+    "message.bertie_progression.descended": "The anchor drags you down into Imbrifer.",
+    "message.bertie_progression.locator_searching": "The needle spins, searching...",
+    "message.bertie_progression.locator_missing": "Target structure %s is not present in this world.",
+    "message.bertie_progression.locator_none": "No target found within range.",
+    "message.bertie_progression.locator_found": "%s located near X=%s, Z=%s.",
     # FinderItem (batch 17). Separate keys from the locator's: a finder consumes itself into a map.
-    "message.bertie_s1.finder_searching": "The chart darkens, reading the land...",
-    "message.bertie_s1.finder_missing": "Nothing like %s exists in this world.",
-    "message.bertie_s1.finder_none": "Nothing within range. Carry the chart further and try again.",
-    "message.bertie_s1.finder_found": "The chart is now a map. X=%s, Z=%s.",
-    "message.bertie_s1.nether_locked": "The heat refuses you. Eat a Netherly Meal first.",
-    "item.bertie_s1.sirok_nest_map.filled": "Map to Sirok's Nest",
-    "item.bertie_s1.kraken_ship_map.filled": "Map to the Kraken's Ship",
-    "item.bertie_s1.yeti_hideout_map.filled": "Map to Skor's Hideout",
+    "message.bertie_progression.finder_searching": "The chart darkens, reading the land...",
+    "message.bertie_progression.finder_missing": "Nothing like %s exists in this world.",
+    "message.bertie_progression.finder_none": "Nothing within range. Carry the chart further and try again.",
+    "message.bertie_progression.finder_found": "The chart is now a map. X=%s, Z=%s.",
+    "message.bertie_progression.nether_locked": "The heat refuses you. Eat a Netherly Meal first.",
+    "item.bertie_progression.sirok_nest_map.filled": "Map to Sirok's Nest",
+    "item.bertie_progression.kraken_ship_map.filled": "Map to the Kraken's Ship",
+    "item.bertie_progression.yeti_hideout_map.filled": "Map to Skor's Hideout",
 })
-write("assets/bertie_s1/lang/en_us.json", lang)
+write("assets/bertie_progression/lang/en_us.json", lang)
 
 print(f"Wrote {len(written)} files under {RES}")

@@ -1,0 +1,64 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "cataclysm"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "elemental_metals"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "irons_spellbooks"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "irons_spellbooks:lightning_bottle"
+    },
+    "L": {
+      "item": "cataclysm:lacrima"
+    },
+    "P": {
+      "item": "minecraft:lapis_block"
+    },
+    "N": {
+      "item": "malum:wind_nucleus"
+    },
+    "I": {
+      "item": "elemental_metals:lightning_infused_iron_ingot"
+    },
+    "E": {
+      "item": "cataclysm:essence_of_the_storm"
+    },
+    "H": {
+      "item": "minecraft:heart_of_the_sea"
+    }
+  },
+  "pattern": [
+    "BLBLBLB",
+    "LPNINPL",
+    "BNEPENB",
+    "LIPHPIL",
+    "BNEPENB",
+    "LPNINPL",
+    "BLBLBLB"
+  ],
+  "result": {
+    "id": "bertie_progression:storm_core",
+    "count": 2
+  },
+  "show_notification": true
+}

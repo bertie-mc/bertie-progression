@@ -1,0 +1,54 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "cataclysm"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "slag"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "slag:deep_alloy_block"
+    },
+    "F": {
+      "item": "malum:imitation_flesh"
+    },
+    "S": {
+      "item": "malum:cursed_sapball"
+    },
+    "B": {
+      "item": "cataclysm:black_steel_ingot"
+    },
+    "C": {
+      "item": "cataclysm:cursium_ingot"
+    }
+  },
+  "pattern": [
+    "DDFDFDD",
+    "DFSSSFD",
+    "FSBBBSF",
+    "DSBCBSD",
+    "FSBBBSF",
+    "DFSSSFD",
+    "DDFDFDD"
+  ],
+  "result": {
+    "id": "bertie_progression:cursed_core",
+    "count": 2
+  },
+  "show_notification": true
+}

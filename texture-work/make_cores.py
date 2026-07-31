@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-bertie_s1 texture generator — the four elemental cores (16x16), hand-placed.
+bertie_progression texture generator — the four elemental cores (16x16), hand-placed.
 
 The cores are the four 7x7 mechanical-crafter walls that feed the Hephaestus
 Forge tier 2 ritual, one per Cataclysm boss domain. Each one is a glass sphere
@@ -34,7 +34,7 @@ import os
 from PIL import Image
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-TEX_ITEM = os.path.join(ROOT, "src", "main", "resources", "assets", "bertie_s1", "textures", "item")
+TEX_ITEM = os.path.join(ROOT, "src", "main", "resources", "assets", "bertie_progression", "textures", "item")
 
 SIZE = 16
 C = 8.0          # sphere centre, in pixel-corner coordinates

@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "pastel"
+    }
+  ],
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:deepslate_tiles"
+    },
+    "S": {
+      "item": "minecraft:sculk"
+    },
+    "O": {
+      "item": "pastel:onyx_shard"
+    }
+  },
+  "pattern": [
+    "DSD",
+    "SOS",
+    "DSD"
+  ],
+  "result": {
+    "id": "bertie_progression:echo_lock",
+    "count": 1
+  },
+  "show_notification": true
+}

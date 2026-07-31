@@ -15,7 +15,7 @@
   ],
   "type": "malum:spirit_infusion",
   "input": {
-    "tag": "bertie_s1:dragon_flesh",
+    "tag": "bertie_progression:dragon_flesh",
     "count": 1
   },
   "extraInputs": [

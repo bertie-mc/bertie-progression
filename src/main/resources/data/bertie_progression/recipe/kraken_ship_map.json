@@ -1,0 +1,51 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "block_factorys_bosses"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "deepwaters"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "iceandfire"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "irons_spellbooks"
+    }
+  ],
+  "type": "bertie_progression:catalyst_shaped",
+  "category": "misc",
+  "key": {
+    "s": {
+      "tag": "iceandfire:scales/sea_serpent"
+    },
+    "p": {
+      "item": "deepwaters:blackpearl"
+    },
+    "i": {
+      "item": "minecraft:glow_ink_sac"
+    },
+    "m": {
+      "item": "minecraft:map"
+    },
+    "r": {
+      "item": "irons_spellbooks:rare_ink"
+    }
+  },
+  "pattern": [
+    "sps",
+    "imi",
+    "srs"
+  ],
+  "result": {
+    "id": "bertie_progression:kraken_ship_map",
+    "count": 1
+  },
+  "catalyst": {
+    "item": "deepwaters:blackpearl"
+  }
+}

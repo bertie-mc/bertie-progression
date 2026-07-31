@@ -1,0 +1,93 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "iceandfire"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "irons_spellbooks"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "iceandfire:cyclops_eye",
+    "count": 1
+  },
+  "extraInputs": [
+    {
+      "item": "malum:mnemonic_fragment",
+      "count": 27
+    },
+    {
+      "item": "malum:null_slate",
+      "count": 9
+    },
+    {
+      "item": "irons_spellbooks:arcane_ingot",
+      "count": 3
+    },
+    {
+      "item": "minecraft:ender_pearl",
+      "count": 3
+    },
+    {
+      "item": "iceandfire:stymphalian_bird_feather",
+      "count": 3
+    },
+    {
+      "item": "create:andesite_alloy",
+      "count": 27
+    },
+    {
+      "item": "malum:soul_stained_steel_ingot",
+      "count": 3
+    }
+  ],
+  "spirits": [
+    {
+      "type": "malum:aerial",
+      "count": 27
+    },
+    {
+      "type": "malum:aqueous",
+      "count": 27
+    },
+    {
+      "type": "malum:arcane",
+      "count": 27
+    },
+    {
+      "type": "malum:earthen",
+      "count": 27
+    },
+    {
+      "type": "malum:eldritch",
+      "count": 27
+    },
+    {
+      "type": "malum:infernal",
+      "count": 27
+    },
+    {
+      "type": "malum:sacred",
+      "count": 27
+    },
+    {
+      "type": "malum:wicked",
+      "count": 27
+    }
+  ],
+  "result": {
+    "id": "bertie_progression:twilight_concord",
+    "count": 1
+  }
+}

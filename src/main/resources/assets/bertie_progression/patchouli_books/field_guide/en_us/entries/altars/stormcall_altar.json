@@ -1,0 +1,90 @@
+{
+  "name": "Stormcall Altar",
+  "icon": "deepwaters:stormcall_altar",
+  "category": "bertie_progression:altars",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "The Deep Waters Shrine",
+      "text": "Raise this shrine on the seabed of the Deep Waters, then use a $(item)Crowned Jelly$() on the Conduit at its heart. The shrine floods and a $(item)Stormcall Altar$() rises on a pyramid where the Conduit stood."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "name": "Deep Waters Shrine",
+      "multiblock": {
+        "pattern": [
+          [
+            "__BEB__",
+            "____B__",
+            "B_B___B",
+            "E_____E",
+            "B_BB__B",
+            "_C__B__",
+            "__BEB__"
+          ],
+          [
+            "AAAAAAA",
+            "AAAAAAA",
+            "AAAAAAA",
+            "AAAAAAA",
+            "AAAAAAA",
+            "AAAAAAA",
+            "AAAAAAA"
+          ],
+          [
+            "_______",
+            "_A___A_",
+            "__AAA__",
+            "__ADA__",
+            "__AAA__",
+            "_A___A_",
+            "_______"
+          ],
+          [
+            "_______",
+            "_A___A_",
+            "__A_A__",
+            "___0___",
+            "__A_A__",
+            "_A___A_",
+            "_______"
+          ],
+          [
+            "__BCB__",
+            "_A___A_",
+            "B_AAA_B",
+            "C_ADA_C",
+            "B_AAA_B",
+            "_A___A_",
+            "__BCB__"
+          ],
+          [
+            "AAAAAAA",
+            "AAAAAAA",
+            "AAAAAAA",
+            "AAAAAAA",
+            "AAAAAAA",
+            "AAAAAAA",
+            "AAAAAAA"
+          ]
+        ],
+        "mapping": {
+          "0": "minecraft:conduit",
+          "A": "minecraft:mossy_stone_bricks",
+          "B": "deepwaters:cryssmaquamarine",
+          "C": "deepwaters:crysmeaquamarine",
+          "D": "deepwaters:fopal_pillar",
+          "E": "deepwaters:cryslaaquamarine"
+        },
+        "symmetrical": false
+      },
+      "text": "Any rotation works. The crystal crown on the top layer is $(o)not$() symmetric - copy it exactly."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Clearance",
+      "text": "The preview cannot show it, but the shrine also needs $(o)water$() around it - six blocks out, one below and five above - holding nothing but shrine blocks, and a clear column of water or air five blocks above that."
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-bertie_s1 texture generator — original procedural 16x16 pixel art.
+bertie_progression texture generator — original procedural 16x16 pixel art.
 Shared silhouette families per CUSTOM_CONTENT_PLAN §5: proofs share a tablet
 family with boss-specific centers; portal keys share a threshold notch; table
 keys share a grid motif. No third-party art is copied.
@@ -12,8 +12,8 @@ import random
 from PIL import Image
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-TEX_ITEM = os.path.join(ROOT, "src", "main", "resources", "assets", "bertie_s1", "textures", "item")
-TEX_BLOCK = os.path.join(ROOT, "src", "main", "resources", "assets", "bertie_s1", "textures", "block")
+TEX_ITEM = os.path.join(ROOT, "src", "main", "resources", "assets", "bertie_progression", "textures", "item")
+TEX_BLOCK = os.path.join(ROOT, "src", "main", "resources", "assets", "bertie_progression", "textures", "block")
 os.makedirs(TEX_ITEM, exist_ok=True)
 os.makedirs(TEX_BLOCK, exist_ok=True)
 

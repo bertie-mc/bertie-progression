@@ -1,10 +1,12 @@
-# Bertie S1 Progression (`bertie_s1`)
+# Bertie Progression (`bertie_progression`)
 
-Stage-1 progression content for the **bertie** modpack. NeoForge **1.21.1** / Java **21**.
+Work-in-progress progression content for the **bertie** modpack. NeoForge **1.21.1** /
+Java **21**.
 
-This is the content mod that implements the canonical S1 design — the gated crafting
-progression, the custom items that open each gate, the Hephaestus Forge shaping rules,
-and the recipe ledger that redirects the pack's early game through them.
+Development currently focuses on integrating the pack's early-to-mid game across its
+exploration, technology and magic mods. This mod contains the custom items, gated
+crafting, Hephaestus Forge shaping rules and recipe changes used to connect those
+systems. Its mechanics and balance remain provisional while that integration develops.
 
 > **Scope.** This mod is written for the bertie modpack. It assumes the pack's mod list is
 > present and is not intended as a standalone drop-in. It targets no other Minecraft version.
@@ -22,9 +24,9 @@ and the recipe ledger that redirects the pack's early game through them.
 | `weeping_eye` | locator for the weeping structures |
 | `finder` / `locator` | structure-finding items |
 
-Plus the S1 material chain — dragonbone frames and braces, ignitium struts and lattices,
+Plus the current material chain — dragonbone frames and braces, ignitium struts and lattices,
 kinetic vanes and pattern plates, seals, resonances and attunements — each with its own
-texture under `assets/bertie_s1/textures/item/`.
+texture under `assets/bertie_progression/textures/item/`.
 
 ### Blocks
 
@@ -37,7 +39,7 @@ texture under `assets/bertie_s1/textures/item/`.
 - **Catalyst recipes** (`recipe/CatalystShapedRecipe`) — a shaped recipe that requires a
   catalyst item present but does not consume it.
 - **Hephaestus Forge integration** (`forge/`) — bed recipes, forge bed handling and
-  pedestal formation rules layered onto Forbidden & Arcanus.
+  pedestal formation rules integrated with Forbidden & Arcanus.
 - **Deep Waters shrine** (`shrine/`) — the shrine handler plus a Ponder scene describing it.
 - **Allay corruption** (`AllayCorruptionHandler`).
 - **Removed items** (`RemovedItems`) — items withdrawn from the pack's progression.
@@ -48,7 +50,7 @@ Roughly 1,500 JSON files: the R01–R42 recipe ledger, ~250 darkstone stonecutti
 31 Hephaestus Forge rituals, and recipe additions or overrides in the namespaces of the
 pack's other mods (Create kinetics, Malum spirit infusion, Ice and Fire, Immersive Armors,
 Twilight Forest equipment, Avaritia, Cataclysm, Deeper Darker, L2 Hostility loot modifiers
-and others). A Patchouli field guide documents the progression in game.
+and others). A Patchouli field guide documents the current progression in game.
 
 ---
 
@@ -68,7 +70,7 @@ Gradle `8.8`. A `server()` run is wired for headless boot tests.
 Bump `mod_version` in `gradle.properties`, then tag:
 
 ```bash
-git tag v0.21.0 && git push origin v0.21.0
+git tag v0.25.0 && git push origin v0.25.0
 ```
 
 `release.yml` builds the jar and attaches it to a GitHub Release.

@@ -1,0 +1,51 @@
+{
+  "essences": {
+    "aureal": 2500,
+    "blood": 12000,
+    "souls": 64
+  },
+  "inputs": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "bertie_progression:soulbound_authority"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "bertie_progression:complex_spectrum_seal"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "bertie_progression:well_attunement"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "bertie_progression:ignitium_lattice"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "bertie_progression:dragonbone_frame"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "minecraft:dragon_head"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "bertie_progression:convergence_matrix",
+      "count": 2
+    }
+  },
+  "forge_tier": 3
+}

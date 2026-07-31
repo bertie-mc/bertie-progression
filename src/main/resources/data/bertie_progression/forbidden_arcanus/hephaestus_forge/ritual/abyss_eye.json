@@ -1,0 +1,44 @@
+{
+  "essences": {
+    "aureal": 0,
+    "blood": 0,
+    "souls": 0
+  },
+  "inputs": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "block_factorys_bosses:kraken_tooth"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "tag": "bertie_progression:corals"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "iceandfire:sea_serpent_fang"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "item": "minecraft:crying_obsidian"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "deepwaters:blackpearl"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "cataclysm:abyss_eye",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "criteria": {
+    "got_wood": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "#bertie_progression:natural_logs",
+            "count": {
+              "min": 8
+            }
+          }
+        ]
+      }
+    }
+  }
+}

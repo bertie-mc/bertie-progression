@@ -1,0 +1,39 @@
+{
+  "essences": {
+    "aureal": 250,
+    "blood": 0,
+    "souls": 0
+  },
+  "inputs": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "pastel:onyx_shard"
+      }
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "item": "minecraft:sculk"
+      }
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "item": "malum:aqueous_spirit"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "minecraft:compass"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "bertie_progression:echoing_city_compass",
+      "count": 1
+    }
+  },
+  "forge_tier": 2
+}

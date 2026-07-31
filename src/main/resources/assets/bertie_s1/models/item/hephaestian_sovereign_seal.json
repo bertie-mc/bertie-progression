@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "bertie_s1:item/hephaestian_sovereign_seal"
-  }
-}

@@ -2,24 +2,35 @@
 """
 bertie_progression texture generator — storm_core (16x16), hand-placed pixel art.
 
-A dark grey storm cloud with a bolt driven straight through it. The bolt comes
-in over the cloud's right shoulder, kinks once inside the mass, and runs out of
-the base to the lower left, so the two shapes read as one object rather than as
-a bolt parked in front of a cloud:
+A dark grey storm cloud with a yellow bolt passing through it. The bolt is one
+continuous path from the top of the sprite to the bottom, but it is only drawn
+where it is in open air — the cloud occludes the middle of it. That is the
+whole trick: paint the stroke across the cloud's face and it reads as a bolt
+lying in front of a cloud, so instead the cloud swallows it and only a warm
+glow marks where it is running behind:
 
-    cloud   rows 2..8, scalloped along the top into two crowns with a valley
-            between them, sides and base rounded in by a pixel. Shading is by
-            each column's depth below its own top edge, so every crown keeps
-            its own lit cap and the mass stays lumpy instead of collapsing
-            into one grey slab.
-    bolt    a 2px stroke, steep above and below, with a flat jog to the right
-            at row 6 — the kink is what makes it read as lightning at 16px
-            rather than as a bent streak. Where it crosses open air it takes a
-            near-black outline, so the item still has a clean silhouette in an
-            inventory slot; where it crosses the cloud that same ring becomes
-            cold light spilling into the grey, with a fainter second ring
-            beyond it. That spill is what sells the bolt as being *inside* the
-            cloud rather than painted on top of it.
+    cloud   rows 1..8: two crowns, each two rows tall, over a body that rounds
+            in at the sides and the base. Shaded by each column's depth below
+            its own top edge, so every crown keeps a lit cap and the mass stays
+            lumpy rather than settling into one grey slab.
+    bolt    a 2px stroke. The tip clears the skyline through the valley between
+            the crowns (rows 0..2), the middle is hidden behind the cloud
+            (rows 3..8), and the whole glyph — down-left, one row that juts
+            right, down-left again to a point — hangs clear of the base in
+            rows 9..15 where nothing covers it. The kink has to be below the
+            cloud: it is the only part of the outline that says lightning, and
+            buried in the grey there is nothing left to read.
+    glow    yellow mixed into the grey the hidden run passes through, plus one
+            faint ring. Strongest where the bolt enters and leaves the cloud
+            and falling away with depth, so it reads as light at the two holes
+            it went through rather than as an even channel from skyline to
+            base — that channel is a seam, and it splits the cloud in two
+            however faint it is.
+
+Tip and glyph share the same columns on purpose. Entering at a corner instead
+frees up the whole skyline for the cloud, but then the two yellow pieces sit
+too far apart to read as one bolt and it just looks like a cloud next to a
+lightning bolt.
 
 storm_core used to be the fourth of the glass-sphere cores in make_cores.py.
 It is generated here instead, and make_cores.py now covers the other three.
@@ -40,7 +51,8 @@ TEX_ITEM = os.path.join(ROOT, "src", "main", "resources", "assets", "bertie_prog
 SIZE = 16
 
 OUTLINE = "#0A0C11"
-# Cloud greys, by depth below the column's own top edge. Dark, faintly blue.
+# Cloud greys, by depth below the column's own top edge. Dark, faintly blue so
+# they stay cold against the yellow.
 CLOUD_RAMP = [
     "#7C8794",   # lit cap
     "#606A77",
@@ -50,55 +62,56 @@ CLOUD_RAMP = [
     "#262B33",
     "#1E222A",   # the base, in its own shadow
 ]
-SEAM = "#22262E"      # billow undersides
 
-CORE = "#FFFFFF"      # the stroke
-CORE_EDGE = "#DCE6FF"
-SPILL = "#BFD0F5"     # cold light thrown into the cloud
-AIR_EDGE = "#0A0C12"  # the stroke's outline, where it crosses open air
+BOLT_HI = "#FFE870"   # leading edge of the stroke
+BOLT = "#FFB800"      # the stroke
+AIR_EDGE = "#2E1D04"  # its outline, which only exists in open air
+# What the cloud mixes towards where the bolt runs behind it. Deliberately a
+# mid amber and not a pale one: a bright glow sits at a much higher luminance
+# than the surrounding grey, and the band of it splits the cloud into two dark
+# lobes with a light waist. This warms the grey without lifting it.
+GLOW = "#C89020"
 
-# The cloud, as inclusive x spans per row. Two crowns at row 3 with a valley
-# between them at x=5..6, then a shoulder sloping away to the lower right. The
-# bolt comes down over that shoulder rather than through the valley: put it in
-# the valley and it fills the one concave dip in the skyline, and the whole
-# thing stops reading as a cloud and starts reading as a hammer head.
+# The cloud, as inclusive x spans per row. Two crowns, each two rows tall so
+# they read as lobes rather than one-pixel bumps, with a valley between them
+# that the tip of the bolt clears the skyline through. The sides taper in
+# above and below the widest rows so the body is not a full-width bar.
 CLOUD = {
-    2: [(1, 3), (6, 9), (12, 14)],
-    3: [(0, 10), (12, 15)],
-    4: [(0, 15)],
-    5: [(0, 15)],
-    6: [(0, 15)],
-    7: [(1, 14)],
-    8: [(1, 14)],
-    9: [(2, 13)],
+    1: [(3, 6), (10, 12)],
+    2: [(2, 7), (10, 13)],
+    3: [(1, 13)],
+    4: [(1, 14)],
+    5: [(1, 14)],
+    6: [(1, 13)],
+    7: [(2, 12)],
+    8: [(4, 11)],
 }
 
-# Billow undersides, as (row, first column, run length). Left empty: the depth
-# ramp already darkens each column away from its own cap, and any run long
-# enough to see turns into a belt across the cloud and splits it in two.
-SEAMS = []
-
-# The bolt path, as inclusive x spans per row: down-left over the shoulder to
-# row 6, a flat jog right at row 7, then down-left again and out of the frame.
-# The jog is what makes it read as lightning at 16px rather than as a bent
-# streak, and it has to kick *against* the drift to register as a kink.
-BOLT = {
-    0:  (12, 12),
-    1:  (11, 12),
-    2:  (10, 11),
-    3:  (9, 10),
-    4:  (9, 10),
+# The bolt, as inclusive x spans per row. One continuous path top to bottom;
+# rows 4..8 land inside the cloud and are never drawn, only glowed. Rows 9..15
+# carry the whole glyph clear of the cloud: down-left to row 11, one row that
+# juts right at row 12, then down-left again to a point.
+#
+# That jut is only two columns wider than the stroke on purpose. An earlier
+# pass kicked five columns and the two strokes stopped reading as one bolt —
+# with that much offset the shape curves and lands as a dollar sign.
+BOLT_PATH = {
+    0:  (9, 9),
+    1:  (8, 9),
+    2:  (8, 9),
+    3:  (8, 9),
+    4:  (8, 9),
     5:  (8, 9),
     6:  (8, 9),
-    7:  (8, 11),
-    8:  (10, 11),
-    9:  (9, 10),
-    10: (8, 9),
-    11: (7, 8),
-    12: (6, 7),
-    13: (5, 6),
-    14: (4, 5),
-    15: (3, 3),
+    7:  (8, 9),
+    8:  (8, 9),
+    9:  (8, 9),
+    10: (7, 8),
+    11: (6, 7),
+    12: (6, 9),
+    13: (7, 8),
+    14: (6, 7),
+    15: (6, 6),
 }
 
 ORTHO = ((1, 0), (-1, 0), (0, 1), (0, -1))
@@ -134,7 +147,9 @@ def spans(table):
 
 def paint():
     cloud = spans(CLOUD)
-    bolt = spans(BOLT)
+    bolt = spans(BOLT_PATH)
+    visible = bolt - cloud   # in open air: drawn
+    hidden = bolt & cloud    # behind the cloud: glow only
 
     # Depth below each column's own top edge, so every crown keeps a lit cap.
     tops = {}
@@ -145,34 +160,34 @@ def paint():
     for (x, y) in cloud:
         grid[(x, y)] = hexcol(CLOUD_RAMP[min(y - tops[x], len(CLOUD_RAMP) - 1)])
 
-    for row, x0, run in SEAMS:
-        for x in range(x0, x0 + run):
-            if (x, row) in cloud:
-                grid[(x, row)] = hexcol(SEAM)
-
     # Inset outline: any cloud pixel with an orthogonal neighbour outside it.
     for (x, y) in cloud:
         if any((x + dx, y + dy) not in cloud for dx, dy in ORTHO):
             grid[(x, y)] = hexcol(OUTLINE)
 
-    ring1 = grow(bolt)
-    ring2 = grow(bolt | ring1)
-
-    # Second ring: a faint lift on the grey already there. Inside the cloud
-    # only — in open air a second ring would just bloat the bolt.
-    for p in ring2 & cloud:
-        grid[p] = mix(grid[p], hexcol(SPILL), 0.10)
-
-    # First ring: light spilling into the cloud, a dark edge in open air. Kept
-    # well under half — push it further and the spill bleaches a band right
-    # through the middle of the cloud and the billows stop reading.
+    # Light coming through the cloud. Applied after the outline, so the edge
+    # warms too where the bolt crosses it.
+    # Strongest where the bolt enters and leaves the cloud, falling away with
+    # depth. A flat strength down the whole hidden run lifts an even channel of
+    # grey from the skyline to the base, and that seam cuts the cloud into two
+    # lobes however faint it is — the falloff is what keeps it one mass.
+    lit_rows = sorted({y for (x, y) in visible})
+    ring1 = (grow(bolt) & cloud) - bolt
     for p in ring1:
-        grid[p] = mix(grid[p], hexcol(SPILL), 0.35) if p in cloud else hexcol(AIR_EDGE)
+        grid[p] = mix(grid[p], hexcol(GLOW), 0.06)
+    for (x, y) in hidden:
+        depth = max(1, min(abs(y - ly) for ly in lit_rows))
+        grid[(x, y)] = mix(grid[(x, y)], hexcol(GLOW), (0.34, 0.20, 0.09)[min(depth - 1, 2)])
 
-    # The stroke: white down its leading edge, a hair cooler behind it.
-    for y, (x0, x1) in BOLT.items():
+    # The stroke, only where it is in open air, with its own outline. The
+    # outline stops at the cloud: run it over the grey and the bolt would
+    # look cut out of the cloud instead of passing behind it.
+    for p in grow(visible) - cloud - bolt:
+        grid[p] = hexcol(AIR_EDGE)
+    for y, (x0, x1) in BOLT_PATH.items():
         for x in range(x0, x1 + 1):
-            grid[(x, y)] = hexcol(CORE if x == x0 else CORE_EDGE)
+            if (x, y) in visible:
+                grid[(x, y)] = hexcol(BOLT_HI if x == x0 else BOLT)
 
     img = Image.new("RGBA", (SIZE, SIZE), (0, 0, 0, 0))
     px = img.load()

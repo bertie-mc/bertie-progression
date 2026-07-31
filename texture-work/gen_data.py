@@ -1413,12 +1413,14 @@ write("data/malum/recipe/spirit_infusion/hex_ash.json",
 write("data/malum/recipe/spirit_infusion/arcane_charcoal.json",
       infusion("#minecraft:coals", 1, [], [SP("infernal", 1)], "malum:arcane_charcoal", 1))
 
-# --- Tainted / Twisted Rock: both were 16 stone -> 16. berlord: 1 -> 1, and each now takes its own
-#     stone - Tainted from DIORITE, Twisted from GRANITE. Spirits unchanged. ---
+# --- Tainted / Twisted Rock: 16 stone -> 16, then 1 -> 1, and now (berlord 2026-07-31) a bulk
+#     64 -> 8, with an Earthen spirit added to both and every spirit count raised to 4. Each still
+#     takes its own stone - Tainted from DIORITE, Twisted from GRANITE. ---
 for _rock, _sp, _stone in (("tainted", "sacred", "minecraft:diorite"),
                            ("twisted", "wicked", "minecraft:granite")):
     write(f"data/malum/recipe/spirit_infusion/{_rock}_rock.json",
-          infusion(_stone, 1, [], [SP(_sp, 1), SP("arcane", 1)], f"malum:{_rock}_rock", 1))
+          infusion(_stone, 64, [], [SP(_sp, 4), SP("arcane", 4), SP("earthen", 4)],
+                   f"malum:{_rock}_rock", 8))
 
 # --- Spirit Jar: Malum's 1x2 is Hallowed Gold over glass; berlord swaps in a Create brass sheet. ---
 write("data/malum/recipe/spirit_jar.json",
@@ -1787,7 +1789,12 @@ write(f"{RIT}/netherly_meal.json",
 
 REMOVED_DOCS = os.path.normpath(os.path.join(ROOT, "..", "..", "docs", "removed"))
 INSTANCE_MODS = os.path.join(os.environ.get("APPDATA", ""), "PrismLauncher", "instances",
-                             "bertie demo", ".minecraft", "mods")
+                             # This is a FILESYSTEM PATH, not prose - the Prism instance really is
+                             # called "s1 demo". A wording sweep renamed it to "bertie demo"
+                             # (322e5a7), an instance that does not exist, and the generator then
+                             # scanned only the vanilla jar and died claiming a real item was
+                             # unregistered. berlord ruled 2026-08-01: put it back.
+                             "s1 demo", ".minecraft", "mods")
 
 def _parse_removed(path, modid):
     """Strict pipe-table parser. A malformed row is a build error, never a silent skip."""

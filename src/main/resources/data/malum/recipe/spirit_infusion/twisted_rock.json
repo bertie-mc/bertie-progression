@@ -8,21 +8,25 @@
   "type": "malum:spirit_infusion",
   "input": {
     "item": "minecraft:granite",
-    "count": 1
+    "count": 64
   },
   "extraInputs": [],
   "spirits": [
     {
       "type": "malum:wicked",
-      "count": 1
+      "count": 4
     },
     {
       "type": "malum:arcane",
-      "count": 1
+      "count": 4
+    },
+    {
+      "type": "malum:earthen",
+      "count": 4
     }
   ],
   "result": {
     "id": "malum:twisted_rock",
-    "count": 1
+    "count": 8
   }
 }

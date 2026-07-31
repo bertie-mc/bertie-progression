@@ -99,5 +99,6 @@
   "data/twilightforest/recipe/equipment/yeti_boots.json",
   "data/twilightforest/recipe/equipment/yeti_chestplate.json",
   "data/twilightforest/recipe/equipment/yeti_helmet.json",
-  "data/twilightforest/recipe/equipment/yeti_leggings.json"
+  "data/twilightforest/recipe/equipment/yeti_leggings.json",
+  "data/twilightforest/recipe/uncrafting_table.json"
 ]

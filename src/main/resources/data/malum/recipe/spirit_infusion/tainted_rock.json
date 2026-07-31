@@ -8,21 +8,25 @@
   "type": "malum:spirit_infusion",
   "input": {
     "item": "minecraft:diorite",
-    "count": 1
+    "count": 64
   },
   "extraInputs": [],
   "spirits": [
     {
       "type": "malum:sacred",
-      "count": 1
+      "count": 4
     },
     {
       "type": "malum:arcane",
-      "count": 1
+      "count": 4
+    },
+    {
+      "type": "malum:earthen",
+      "count": 4
     }
   ],
   "result": {
     "id": "malum:tainted_rock",
-    "count": 1
+    "count": 8
   }
 }

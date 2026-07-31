@@ -6,8 +6,8 @@ The Hephaestus ritual folds a fire dragon heart, a koboleton bone, living flesh,
 dragon blood, fire scales and a bucket of lava into a plain bowl, so the item
 shows all of that: the vanilla bowl silhouette pixel-for-pixel but plated in
 black dragon scale, a koboleton bone jutting out to the right, a chunk of fire
-dragon heart hanging off the left rim, and the molten brew drooling over the
-front lip.
+dragon heart sitting in the middle of the meal, and the molten brew drooling
+over the front lip.
 
 The bowl reuses minecraft:item/bowl's exact outline and its shading structure,
 with the vanilla brown ramp remapped onto a black-scale ramp; the belly band is
@@ -84,11 +84,11 @@ LAYERS = [
     (5, 10, "nwcn"),
     (6,  9, "ncbn"),
     # --- fire dragon heart, out to the left ---
-    (3, 2, "php"),
-    (4, 1, "pehhp"),
-    (5, 0, "pfeeep"),
-    (6, 0, "pegep"),
-    (7, 1, "eph"),
+    (3, 6, "php"),
+    (4, 5, "pehhp"),
+    (5, 4, "pfeeep"),
+    (6, 4, "pegep"),
+    (7, 5, "eph"),
 ]
 
 

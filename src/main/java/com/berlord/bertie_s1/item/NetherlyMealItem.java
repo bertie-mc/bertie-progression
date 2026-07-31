@@ -24,8 +24,18 @@ import net.minecraft.world.level.block.Blocks;
  */
 public class NetherlyMealItem extends Item {
 
-    /** Ticks of lava the eater must survive before the reward lands. */
-    public static final int SURVIVE_TICKS = 4;
+    /**
+     * Game ticks the eater must survive before the reward lands: long enough for FOUR lava hits but
+     * not a fifth.
+     *
+     * <p>Derived from the jar, not from feel. {@code Entity.baseTick} calls {@code lavaHurt()} every
+     * tick you are in lava, but {@code LivingEntity.hurt} rejects equal damage while
+     * {@code invulnerableTime > 10}, and a landed hit sets it to 20 (NeoForge's
+     * {@code DamageContainer.invulnerabilityTicksAfterAttack} default) decrementing once per tick.
+     * So lava connects every <b>10</b> ticks: hits at t=0, 10, 20, 30, and the fifth at t=40.
+     * 35 sits between the fourth and fifth.
+     */
+    public static final int SURVIVE_TICKS = 35;
     /** Fire Resistance duration on success: one minute. */
     public static final int REWARD_TICKS = 20 * 60;
 

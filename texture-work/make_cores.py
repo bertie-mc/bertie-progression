@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-bertie_progression texture generator — the four elemental cores (16x16), hand-placed.
+bertie_progression texture generator — three elemental cores (16x16), hand-placed.
 
-The cores are the four 7x7 mechanical-crafter walls that feed the Hephaestus
-Forge tier 2 ritual, one per Cataclysm boss domain. Each one is a glass sphere
+The cores are the 7x7 mechanical-crafter walls that feed the Hephaestus Forge
+tier 2 ritual, one per Cataclysm boss domain. The three here are glass spheres
 holding a single primary essence, and they are meant to read as a set at
-inventory size, so the glass is identical on all four and only what is trapped
+inventory size, so the glass is identical on all three and only what is trapped
 inside changes:
 
     glass   a 14px sphere: a dark tinted silhouette ring, a shell ring that
@@ -17,11 +17,15 @@ inside changes:
                        and the pearl that settled out of it
               desert   sand, wind ripples across the grain, gold and pebbles
               cursed   a skull with lit sockets, adrift in green miasma
-              storm    a branching bolt, sparks scattered around the arc
 
 Each essence carries a few off-palette flecks — coral in the water, gold in the
-sand, crimson in the miasma, warm sparks in the storm — so a 10px interior
-still looks alive instead of like a flat tinted fill.
+sand, crimson in the miasma — so a 10px interior still looks alive instead of
+like a flat tinted fill.
+
+storm_core was the fourth sphere in this set. It is now a dark grey storm cloud
+pierced by a bolt, drawn by texture-work/make_storm_core.py, and deliberately
+does not share the glass — do not add it back here or that art gets overwritten
+the next time this script runs.
 
 No third-party art is copied; Cataclysm, Deepwaters, Malum and Slag ingredient
 items were looked at for each domain's palette only. Nothing here needs a
@@ -97,12 +101,6 @@ CORES = {
         "N": "#06170E",   # nose and mouth
         "m": "#A6FFB8",   # motes drifting in the miasma
         "v": "#C1264A",   # cursed flesh
-    },
-    "storm_core": {
-        "edge": "#120E36", "mid": "#332C8A", "hi": "#D2D6FF", "rim": "#5A5ED8",
-        "0": "#14103C", "1": "#241D68", "2": "#3C36A8", "3": "#8E92F0",
-        "W": "#FFFFFF",   # the arc
-        "s": "#FFFAC8",   # sparks thrown off it
     },
 }
 
@@ -207,34 +205,7 @@ ESSENCE = {
         (7,  3, "v"),
         (8, 12, "v"),
     ],
-    # A bolt branching across the sphere, sparks thrown off the arc.
-    "storm_core": [
-        (3,  6, "0000"),
-        (4,  4, "00011000"),
-        (5,  4, "00111100"),
-        (6,  3, "0011111100"),
-        (7,  3, "0011221100"),
-        (8,  3, "0011221100"),
-        (9,  3, "0011111100"),
-        (10, 4, "00111100"),
-        (11, 4, "00011000"),
-        (12, 6, "0000"),
-        # the arc, with a spur left at row 6 and right at row 9
-        (3,  9, "W"),
-        (4,  8, "W"),
-        (5,  8, "W"),
-        (6,  5, "WWW"),
-        (7,  7, "WW"),
-        (8,  6, "WW"),
-        (9,  7, "WWW"),
-        (10, 6, "W"),
-        (11, 7, "W"),
-        (12, 7, "W"),
-    ],
 }
-
-# Sparks are placed after the bolt glow so the glow does not swallow them.
-STORM_SPARKS = [(5, 4), (11, 5), (4, 10), (10, 11)]
 
 
 def paint(name):
@@ -255,17 +226,6 @@ def paint(name):
             p = (x0 + i, row)
             if p in IN:
                 grid[p] = pal[ch]
-
-    # Bleed the bolt's light into the cloud around it. The field is dark enough
-    # that a full four-neighbour glow reads as brightness, not as a fatter bolt.
-    if name == "storm_core":
-        bolt = {(x0 + i, row) for row, x0, run in ESSENCE[name]
-                for i, ch in enumerate(run) if ch == "W"}
-        for (x, y) in IN - bolt:
-            if any((x + dx, y + dy) in bolt for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))):
-                grid[(x, y)] = pal["2"]
-        for p in STORM_SPARKS:
-            grid[p] = pal["s"]
 
     for p in SPECULAR:
         grid[p] = pal["hi"]

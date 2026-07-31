@@ -9,31 +9,29 @@ whole trick: paint the stroke across the cloud's face and it reads as a bolt
 lying in front of a cloud, so instead the cloud swallows it and only a warm
 glow marks where it is running behind:
 
-    cloud   rows 1..8: two crowns, each two rows tall, over a body that rounds
-            in at the sides and the base. Shaded by each column's depth below
-            its own top edge, so every crown keeps a lit cap and the mass stays
-            lumpy rather than settling into one grey slab.
-    bolt    a 2px stroke. The tip clears the skyline through the valley between
-            the crowns (rows 0..2), running down-left a column per row — a tip
-            dropped straight down is a pole standing on the cloud, not a bolt,
-            and the valley is cut wide enough to let the diagonal through. The
-            middle is hidden behind the cloud (rows 3..8), and the whole glyph
-            — down-left, one row that juts right, down-left again to a point —
-            hangs clear of the base in rows 9..15 where nothing covers it. The
-            kink has to be below the cloud: it is the only part of the outline
-            that says lightning, and buried in the grey there is nothing left
-            to read.
-    glow    yellow mixed into the grey the hidden run passes through, plus one
-            faint ring. Strongest where the bolt enters and leaves the cloud
-            and falling away with depth, so it reads as light at the two holes
-            it went through rather than as an even channel from skyline to
-            base — that channel is a seam, and it splits the cloud in two
-            however faint it is.
+    cloud   rows 2..9: three crowns over a body that swells to the full width
+            and settles on a near-flat base. Shaded by each column's depth
+            below its own top edge, so every crown keeps a lit cap and the
+            mass stays lumpy rather than settling into one grey slab.
+    bolt    a 2px stroke leaning down-left the whole way down, never vertical
+            on any stretch long enough to notice. The tip clears the skyline
+            through the notch between the second and third crowns (rows 0..2),
+            the middle is hidden behind the cloud (rows 3..9), and the glyph —
+            down-left, one row that juts right, down-left again to a point —
+            hangs clear of the base in rows 10..15 where nothing covers it.
+            The kink has to be below the cloud: it is the only part of the
+            outline that says lightning, and buried in the grey there is
+            nothing left to read.
+    glow    yellow mixed into the grey along the hidden run, with a halo where
+            the bolt punches in and out and nothing else. The run gets no
+            falloff rings of its own — give it any and the diagonal stops
+            reading as a line and turns into a smudge across the cloud.
 
-Tip and glyph share the same columns on purpose. Entering at a corner instead
-frees up the whole skyline for the cloud, but then the two yellow pieces sit
-too far apart to read as one bolt and it just looks like a cloud next to a
-lightning bolt.
+The lean matters more than it looks. The hidden run carries the eye from the
+tip down to the glyph, and if it drops straight the whole bolt reads as a pole
+through a cloud however diagonal its two ends are. The tip and the glyph do
+not share columns for the same reason — they sit at the two ends of one slant,
+and the glow trail is what joins them up.
 
 storm_core used to be the fourth of the glass-sphere cores in make_cores.py.
 It is generated here instead, and make_cores.py now covers the other three.
@@ -75,22 +73,21 @@ AIR_EDGE = "#2E1D04"  # its outline, which only exists in open air
 # lobes with a light waist. This warms the grey without lifting it.
 GLOW = "#C89020"
 
-# The cloud, as inclusive x spans per row. Two crowns, each two rows tall so
-# they read as lobes rather than one-pixel bumps, with a valley between them
-# that the tip of the bolt clears the skyline through. The valley is five
-# columns at row 1 and three at row 2 — it has to be wider than the stroke,
-# because the tip crosses it on a diagonal and a narrower gap would clip it.
-# The sides taper in above and below the widest rows so the body is not a
-# full-width bar.
+# The cloud, as inclusive x spans per row: three crowns over a body that
+# swells to the full width and settles on a near-flat base. Two crowns over a
+# narrower body reads as a bean — it takes the third crown, and a body wide
+# enough to carry all three, before the silhouette is unmistakably a cloud.
+# The bolt clears the skyline through the notch between the second and third
+# crowns at x=10..11.
 CLOUD = {
-    1: [(2, 5), (11, 13)],
-    2: [(1, 6), (10, 14)],
-    3: [(1, 14)],
-    4: [(1, 14)],
-    5: [(1, 14)],
-    6: [(1, 13)],
-    7: [(2, 12)],
-    8: [(4, 11)],
+    2: [(1, 3), (6, 9), (12, 14)],
+    3: [(0, 10), (12, 15)],
+    4: [(0, 15)],
+    5: [(0, 15)],
+    6: [(0, 15)],
+    7: [(1, 14)],
+    8: [(1, 14)],
+    9: [(2, 13)],
 }
 
 # The bolt, as inclusive x spans per row. One continuous path top to bottom;
@@ -102,16 +99,16 @@ CLOUD = {
 # pass kicked five columns and the two strokes stopped reading as one bolt —
 # with that much offset the shape curves and lands as a dollar sign.
 BOLT_PATH = {
-    0:  (10, 11),
-    1:  (9, 10),
-    2:  (8, 9),
-    3:  (8, 9),
-    4:  (8, 9),
-    5:  (8, 9),
+    0:  (12, 13),
+    1:  (11, 12),
+    2:  (10, 11),
+    3:  (10, 11),
+    4:  (9, 10),
+    5:  (9, 10),
     6:  (8, 9),
     7:  (8, 9),
-    8:  (8, 9),
-    9:  (8, 9),
+    8:  (7, 8),
+    9:  (7, 8),
     10: (7, 8),
     11: (6, 7),
     12: (6, 9),
@@ -177,13 +174,16 @@ def paint():
     # depth. A flat strength down the whole hidden run lifts an even channel of
     # grey from the skyline to the base, and that seam cuts the cloud into two
     # lobes however faint it is — the falloff is what keeps it one mass.
-    lit_rows = sorted({y for (x, y) in visible})
-    ring1 = (grow(bolt) & cloud) - bolt
-    for p in ring1:
-        grid[p] = mix(grid[p], hexcol(GLOW), 0.06)
-    for (x, y) in hidden:
-        depth = max(1, min(abs(y - ly) for ly in lit_rows))
-        grid[(x, y)] = mix(grid[(x, y)], hexcol(GLOW), (0.34, 0.20, 0.09)[min(depth - 1, 2)])
+    near = grow(visible) & cloud
+    far = (grow(visible | near) & cloud) - near
+    for p in far:
+        grid[p] = mix(grid[p], hexcol(GLOW), 0.10)
+    for p in near:
+        grid[p] = mix(grid[p], hexcol(GLOW), 0.28)
+    # The hidden run itself, and nothing around it. Give this a ring or two of
+    # falloff and the diagonal stops reading as a line and becomes a smudge.
+    for p in hidden:
+        grid[p] = mix(grid[p], hexcol(GLOW), 0.30)
 
     # The stroke, only where it is in open air, with its own outline. The
     # outline stops at the cloud: run it over the grey and the bolt would

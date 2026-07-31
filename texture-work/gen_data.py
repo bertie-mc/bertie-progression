@@ -2261,12 +2261,13 @@ write("assets/bertie_progression/models/item/crafting_license.json", {"parent": 
 # Sirok's Nest Map borrows vanilla's empty-map model (no bespoke texture yet - berlord has not sent one).
 for _m in ("sirok_nest_map", "kraken_ship_map", "yeti_hideout_map"):
     write(f"assets/bertie_progression/models/item/{_m}.json", {"parent": "minecraft:item/map"})
-# The four cores have no bespoke texture yet either - each borrows a vanilla item that reads
-# close to its element, so they are at least distinguishable on sight.
+# These cores have no bespoke texture yet - each borrows a vanilla item that reads close to
+# its element, so they are at least distinguishable on sight. storm_core is NOT in this list:
+# it has real art (texture-work/make_storm_core.py) and takes the generated model written by
+# the ITEMS loop above. Re-adding it here would hide that texture behind an amethyst shard.
 for _c, _par in (("abyssal_core", "minecraft:item/heart_of_the_sea"),
                  ("desert_core", "minecraft:item/brick"),
-                 ("cursed_core", "minecraft:item/echo_shard"),
-                 ("storm_core", "minecraft:item/amethyst_shard")):
+                 ("cursed_core", "minecraft:item/echo_shard")):
     write(f"assets/bertie_progression/models/item/{_c}.json", {"parent": _par})
 # Transitional sequenced-assembly items: beam reuses a vanilla stick; water-wheel incompletes reuse the
 # real wheel item models (berlord: "incomplete [large/small] water wheel uses [large/small] water wheel").

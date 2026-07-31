@@ -23,19 +23,24 @@ being a bolt in a cloud and becomes a bolt lying in front of one.
             again to a point. The kink has to be below the cloud: it is the
             only part of the outline that says lightning, and buried in the
             grey there is nothing left to read.
-    glow    yellow mixed into the grey along the hidden run, with a halo where
-            the bolt breaks out of the underside and nothing else. The run
-            gets no falloff rings of its own — give it any and the diagonal
-            stops reading as a line and turns into a smudge across the cloud.
+    glow    yellow mixed into the grey along the hidden run, plus an aura
+            scattering out of it ring by ring — a cloud diffuses what is lit
+            inside it rather than holding the light in a line. The falloff has
+            to be long and shallow: one strong ring lands as a smudge with a
+            hard edge, several faint ones land as light in fog. Brighter and
+            tighter where the bolt actually breaks out of the underside, since
+            there the light is escaping rather than diffusing.
 
     pulse   a white charge running the length of the bolt, from its top end
             inside the cloud down and off the tail. Behind the grey it is a
-            bloom rather than a stroke — the run plus a ring of the cloud
-            around it, lifted towards white. It breaks out of the base one
-            frame oversized, with a white halo and a second ring, then drops
-            back to the stroke's own width at full strength and rides the
-            glyph down. Held longest going in and quickest coming out: three
-            ticks a row through the cloud, one a row below it.
+            bloom rather than a stroke, scattering the same way the resting
+            glow does but brighter and reaching further. It swells on the last
+            row still behind the cloud, then clears the base at its own width
+            and full strength and rides the glyph down. Every pulse frame
+            holds one tick, the engine minimum and the same for all of them —
+            holding the swell longer reads as the pulse slowing to grow, and
+            holding the run through the cloud longer than the run below it
+            reads as the tail end sprinting.
 
 The lean matters more than it looks. The hidden run is what carries the eye
 down to the glyph, and if it drops straight the bolt reads as a pole hung off
@@ -43,8 +48,7 @@ the cloud however diagonal the part below it is.
 
 This writes a vertical strip of 16x16 frames plus storm_core.png.mcmeta, which
 is how Minecraft animates a sprite. Frame 0 carries no pulse — it is the
-fallback for a client with animation off, so it has to stand on its own, and
-it is pixel-for-pixel the sprite this file produced before the pulse existed.
+fallback for a client with animation off, so it has to stand on its own.
 
 storm_core used to be the fourth of the glass-sphere cores in make_cores.py.
 It is generated here instead, and make_cores.py now covers the other three.
@@ -86,6 +90,10 @@ AIR_EDGE = "#2E1D04"  # its outline, which only exists in open air
 # than the surrounding grey, and the band of it splits the cloud into two dark
 # lobes with a light waist. This warms the grey without lifting it.
 GLOW = "#C89020"
+# Ring-by-ring falloff of that light out through the grey: the aura around the
+# hidden run, and the tighter, brighter spot where it breaks out of the base.
+GLOW_AURA = (0.13, 0.075, 0.04)
+GLOW_BREAK = (0.28, 0.12, 0.05)
 
 # The cloud, as inclusive x spans per row. This is the three-crown silhouette
 # turned through 180 degrees, so the deep lobes now carry the base and the
@@ -153,30 +161,40 @@ PULSE_FALLOFF = (
     (BOLT_HI,    0.20),
 )
 
+# How the pulse's light scatters out through the grey, ring by ring. Brighter
+# and reaching further than the resting aura, and further again on the swell.
+PULSE_AURA = (0.30, 0.17, 0.09)
+PULSE_AURA_BURST = (0.50, 0.30, 0.16, 0.08)
+
 # (pulse, hold in ticks). `pulse` is (phase, head row) or None for the rest
 # frame. Phases: "veiled" while the head is still behind the cloud, "burst" for
-# the frame it breaks out on, "open" for the rest of the run.
+# the swell, "open" for the run below the cloud.
+#
+# The burst sits on row 8, the last row still behind the cloud, so the swell
+# lands the frame *before* the pulse clears the base rather than the frame
+# after. Every pulse frame holds one tick — the minimum, and the same for all
+# of them. Holding the swell longer than its neighbours reads as the pulse
+# slowing down to grow, and holding the run through the cloud longer than the
+# run below it reads as the tail end sprinting.
 #
 # The heads at rows 16 and 17 are past the end of the bolt on purpose — no head
 # is drawn, only the tail behind it, so the pulse runs off the tail rather than
-# vanishing on the last row. The gather inside the cloud is held longer than
-# the strike below it: three ticks a row going in, one coming out.
+# vanishing on the last row.
 FRAMES = [
-    (None,             30),
-    (("veiled",  5),    3),
-    (("veiled",  6),    3),
-    (("veiled",  7),    3),
-    (("veiled",  8),    3),
-    (("burst",   9),    2),
-    (("open",    9),    2),
+    (None,             12),
+    (("veiled",  5),    1),
+    (("veiled",  6),    1),
+    (("veiled",  7),    1),
+    (("burst",   8),    1),
+    (("open",    9),    1),
     (("open",   10),    1),
     (("open",   11),    1),
     (("open",   12),    1),
     (("open",   13),    1),
     (("open",   14),    1),
     (("open",   15),    1),
-    (("open",   16),    2),
-    (("open",   17),    3),
+    (("open",   16),    1),
+    (("open",   17),    1),
 ]
 
 
@@ -198,6 +216,21 @@ def grow(pixels):
             if 0 <= p[0] < SIZE and 0 <= p[1] < SIZE:
                 out.add(p)
     return out - set(pixels)
+
+
+def disperse(grid, source, cloud, colour, strengths):
+    """Bleed `colour` outward from `source` through the cloud, a ring per entry
+    in `strengths`. The source itself is left alone — whatever set it, set it
+    for a reason."""
+    seen = set(source)
+    front = set(source)
+    for t in strengths:
+        front = (grow(front) & cloud) - seen
+        if not front:
+            return
+        seen |= front
+        for p in front:
+            grid[p] = mix(grid[p], hexcol(colour), t)
 
 
 def spans(table):
@@ -238,22 +271,18 @@ def paint(pulse=None):
 
     # Light coming through the cloud. Applied after the outline, so the edge
     # warms too where the bolt crosses it.
-    # Strongest where the bolt enters and leaves the cloud, falling away with
-    # depth. A flat strength down the whole hidden run lifts an even channel of
-    # grey from the skyline to the base, and that seam cuts the cloud into two
-    # lobes however faint it is — the falloff is what keeps it one mass.
-    near = grow(visible) & cloud
-    far = (grow(visible | near) & cloud) - near
-    for p in far:
-        grid[p] = mix(grid[p], hexcol(GLOW), 0.10)
-    for p in near:
-        grid[p] = mix(grid[p], hexcol(GLOW), 0.28)
-    # The hidden run itself, and nothing around it. Give this a ring or two of
-    # falloff and the diagonal stops reading as a line and becomes a smudge;
-    # push the strength much past this and it does the same on its own, since
-    # amber into blue-grey lands on brown long before it lands on light.
     for p in hidden:
         grid[p] = mix(grid[p], hexcol(GLOW), 0.22)
+    # A cloud does not hold light in a line — it scatters it — so the hidden
+    # run carries an aura out into the grey around it. This wants a long
+    # shallow falloff and nothing steeper: one strong ring lands as a smudge
+    # with a hard edge, several faint ones land as light in fog. Amber into
+    # blue-grey reaches brown well before it reaches light, so the outer rings
+    # have to stay very low or the whole cloud goes dirty.
+    disperse(grid, hidden, cloud, GLOW, GLOW_AURA)
+    # Where the bolt actually leaves the cloud the light is escaping rather
+    # than diffusing, so that spot runs brighter and tighter than the aura.
+    disperse(grid, visible, cloud, GLOW, GLOW_BREAK)
 
     # The stroke, only where it is in open air, with its own outline. The
     # outline stops at the cloud: run it over the grey and the bolt would
@@ -270,28 +299,36 @@ def paint(pulse=None):
 
         # Head and the two rows of tail behind it. Behind the cloud this only
         # lifts the grey; in open air it replaces the stroke outright.
+        veiled = set()
         for i, (air, veil) in enumerate(PULSE_FALLOFF):
             row = bolt_row(head - i)
-            # Behind the cloud the pulse bleeds a ring into the surrounding
-            # grey. Confined to the two stroke pixels it is far too small to
-            # register at 16px, and the whole approach into the cloud plays as
-            # nothing happening until the burst.
-            for p in (grow(row) & cloud) - bolt:
-                grid[p] = mix(grid[p], hexcol(PULSE_VEIL), veil * 0.45)
             for p in row & visible:
                 grid[p] = hexcol(air)
             for p in row & cloud:
                 grid[p] = mix(grid[p], hexcol(PULSE_VEIL), veil)
+            veiled |= row & cloud
 
-        # The halo, only where the head is already in open air. On the frame it
-        # breaks out of the cloud the halo goes white and takes a second ring,
-        # which is the whole "bigger" beat; the frame after drops back to one
-        # ring and the pulse carries on at its own width.
-        crown = bolt_row(head) & visible
-        if crown:
-            ring = grow(crown) - bolt - cloud
+        crown = bolt_row(head)
+        lit = crown & visible
+
+        # The swell happens on the last row still behind the cloud, so on that
+        # frame it has to read as a bloom widening in the grey — there is no
+        # open air up there to put a halo in.
+        if phase == "burst" and not lit:
+            for p in crown & cloud:
+                grid[p] = mix(grid[p], hexcol(PULSE_VEIL), 0.62)
+
+        # The pulse's own light scattering out through the cloud, same idea as
+        # the resting aura but brighter and reaching further, and further again
+        # on the swell. Without this the pulse is two lit pixels behind an
+        # opaque cloud, which is not how a cloud lit from inside looks.
+        disperse(grid, veiled, cloud, PULSE_VEIL,
+                 PULSE_AURA_BURST if phase == "burst" else PULSE_AURA)
+
+        if lit:
+            ring = grow(lit) - bolt - cloud
             if phase == "burst":
-                for p in grow(crown | ring) - bolt - cloud - ring:
+                for p in grow(lit | ring) - bolt - cloud - ring:
                     grid[p] = hexcol(PULSE_EDGE)
                 for p in ring:
                     grid[p] = hexcol(PULSE_CORE)

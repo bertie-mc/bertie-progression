@@ -4,7 +4,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EquipmentSlot;
+import com.berlord.bertie_s1.item.NetherlyMealItem;
 import net.minecraft.world.entity.animal.allay.Allay;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -42,7 +44,15 @@ public final class AllayCorruptionHandler {
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
-        if (!(event.getEntity() instanceof Allay allay) || allay.level().isClientSide) {
+        if (event.getEntity().level().isClientSide) {
+            return;
+        }
+        // Netherly Meal shares this tick hook rather than adding a second one.
+        if (event.getEntity() instanceof Player player) {
+            NetherlyMealItem.tickCountdown(player);
+            return;
+        }
+        if (!(event.getEntity() instanceof Allay allay)) {
             return;
         }
         Integer doom = allay.getData(ModAttachments.ALLAY_DOOM);

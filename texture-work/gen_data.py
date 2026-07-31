@@ -1717,6 +1717,57 @@ write("data/malum/recipe/spirit_infusion/living_flesh.json",
                [SP("sacred", 6), SP("wicked", 6), SP("aqueous", 6)],
                "malum:living_flesh", 1))
 
+# --- Sturdy Sheet + Powdered Obsidian (berlord 2026-07-30) -------------------------------------
+# Sheet: the assembly now starts from an Obsidiansteel Ingot instead of obsidian dust, with two
+# deploy steps applying Powdered Obsidian in front of Create's original fill/press/press. Written out
+# by hand rather than through _seq_assembly so the absence of `loops` matches stock exactly - the
+# stock recipe omits it, and writing an explicit value would be a silent behaviour change.
+_UOS = "create:unprocessed_obsidian_sheet"
+_deploy = lambda item: {"type": "create:deploying",
+                        "ingredients": [{"item": _UOS}, {"item": item}],
+                        "results": [{"id": _UOS}]}
+write("data/create/recipe/sequenced_assembly/sturdy_sheet.json", {
+    "neoforge:conditions": conds("create", "forbidden_arcanus"),
+    "type": "create:sequenced_assembly",
+    "ingredient": {"item": "forbidden_arcanus:obsidiansteel_ingot"},
+    "results": [{"id": "create:sturdy_sheet"}],
+    "sequence": [
+        _deploy("create:powdered_obsidian"),
+        _deploy("create:powdered_obsidian"),
+        {"type": "create:filling",
+         "ingredients": [{"item": _UOS},
+                         {"type": "neoforge:single", "amount": 500, "fluid": "minecraft:lava"}],
+         "results": [{"id": _UOS}]},
+        {"type": "create:pressing", "ingredients": [{"item": _UOS}], "results": [{"id": _UOS}]},
+        {"type": "create:pressing", "ingredients": [{"item": _UOS}], "results": [{"id": _UOS}]},
+    ],
+    "transitional_item": {"id": _UOS},
+})
+
+# Crushing obsidian: was 1 dust + 75% obsidian back. Now a second dust at 25% and the obsidian
+# return cut to 10%, so crushing is a real conversion rather than a near-free duplicator.
+write("data/create/recipe/crushing/obsidian.json", {
+    "neoforge:conditions": conds("create"),
+    "type": "create:crushing",
+    "ingredients": [{"item": "minecraft:obsidian"}],
+    "processing_time": 500,
+    "results": [{"id": "create:powdered_obsidian"},
+                {"chance": 0.25, "id": "create:powdered_obsidian"},
+                {"chance": 0.1, "id": "minecraft:obsidian"}],
+})
+
+# --- Netherly Meal (berlord 2026-07-31): Hephaestus T2, Bowl core, 7 pedestals.
+#     "max souls, max blood" = the TIER II ceiling (50 / 15000), jar-verified from HephaestusForgeLevel
+#     - the ritual runs ON a T2 forge, so those are the most it can hold. Aureal and ink unspecified,
+#     so both are zero. ---
+write(f"{RIT}/netherly_meal.json",
+      ritual("minecraft:bowl",
+             [("iceandfire:fire_dragon_heart", 1), ("cataclysm:koboleton_bone", 1),
+              ("malum:living_flesh", 1), ("iceandfire:fire_dragon_blood", 1),
+              ("#iceandfire:scales/dragon/fire", 2), ("minecraft:lava_bucket", 1)],
+             "bertie_s1:netherly_meal", 1, tier=2,
+             essences={"aureal": 0, "blood": 15000, "souls": 50}))
+
 # ================================================================ REMOVED ITEMS (berlord 2026-07-30)
 # Source of truth: docs/removed/<modid>.md, hand-edited. See docs/removed/README.md.
 # This section does three things:
@@ -2141,6 +2192,7 @@ ITEMS = {
     "incomplete_large_water_wheel": "Incomplete Large Water Wheel",
     "shield_maiden": "Shield Maiden",
     "acolyte_of_deflection": "Acolyte of Deflection",
+    "netherly_meal": "Netherly Meal",
     "sirok_nest_map": "Sirok's Nest Map",
     "kraken_ship_map": "Kraken Ship Map",
     "yeti_hideout_map": "Skor's Hideout Map",
@@ -2186,6 +2238,8 @@ for item_id in ITEMS:
 write("assets/bertie_s1/models/item/weeping_eye.json", {"parent": "minecraft:item/ender_eye"})
 # Crafting License borrows vanilla's paper model (no bespoke texture yet).
 write("assets/bertie_s1/models/item/crafting_license.json", {"parent": "minecraft:item/paper"})
+# Netherly Meal: vanilla mushroom stew stands in until berlord's texture arrives.
+write("assets/bertie_s1/models/item/netherly_meal.json", {"parent": "minecraft:item/mushroom_stew"})
 # Sirok's Nest Map borrows vanilla's empty-map model (no bespoke texture yet - berlord has not sent one).
 for _m in ("sirok_nest_map", "kraken_ship_map", "yeti_hideout_map"):
     write(f"assets/bertie_s1/models/item/{_m}.json", {"parent": "minecraft:item/map"})

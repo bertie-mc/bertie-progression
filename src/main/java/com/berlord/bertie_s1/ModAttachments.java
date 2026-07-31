@@ -35,5 +35,12 @@ public final class ModAttachments {
                     .serialize(Codec.INT)
                     .build());
 
+    /** Ticks of lava a Netherly Meal eater must still survive before Fire Resistance lands. */
+    public static final Supplier<AttachmentType<Integer>> MEAL_COUNTDOWN =
+            ATTACHMENTS.register("meal_countdown", () -> AttachmentType
+                    .builder(() -> 0)
+                    .serialize(Codec.INT)
+                    .build());
+
     private ModAttachments() {}
 }

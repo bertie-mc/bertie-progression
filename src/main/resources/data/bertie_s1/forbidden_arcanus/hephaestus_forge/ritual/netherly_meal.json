@@ -1,0 +1,57 @@
+{
+  "essences": {
+    "aureal": 0,
+    "blood": 15000,
+    "souls": 50
+  },
+  "inputs": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "iceandfire:fire_dragon_heart"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "cataclysm:koboleton_bone"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "malum:living_flesh"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "iceandfire:fire_dragon_blood"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "tag": "iceandfire:scales/dragon/fire"
+      }
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "item": "minecraft:lava_bucket"
+      }
+    }
+  ],
+  "magic_circle": "forbidden_arcanus:create_item",
+  "main_ingredient": {
+    "item": "minecraft:bowl"
+  },
+  "result": {
+    "type": "forbidden_arcanus:create_item",
+    "result_item": {
+      "id": "bertie_s1:netherly_meal",
+      "count": 1
+    }
+  },
+  "forge_tier": 2
+}

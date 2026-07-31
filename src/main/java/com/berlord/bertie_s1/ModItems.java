@@ -4,6 +4,7 @@ import com.berlord.bertie_s1.item.CraftingLicenseItem;
 import com.berlord.bertie_s1.item.DescentAnchorItem;
 import com.berlord.bertie_s1.item.FinderItem;
 import com.berlord.bertie_s1.item.LocatorItem;
+import com.berlord.bertie_s1.item.NetherlyMealItem;
 import com.berlord.bertie_s1.item.WeepingEyeItem;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.GlobalPos;
@@ -16,6 +17,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -108,6 +110,14 @@ public final class ModItems {
                     ResourceLocation.parse("malum:weeping_well"), FinderItem.STANDARD_RADIUS));
     public static final DeferredItem<Item> WELL_ATTUNEMENT = rare("well_attunement", 1, Rarity.RARE);
 
+    /**
+     * Netherly Meal: 8 nutrition, saturation 20. Vanilla stores saturation as a MODIFIER, and the
+     * real value is nutrition * modifier * 2 - so 20 saturation off 8 nutrition needs 1.25f, not 20f.
+     */
+    public static final DeferredItem<NetherlyMealItem> NETHERLY_MEAL = ITEMS.register(
+            "netherly_meal", () -> new NetherlyMealItem(new Item.Properties().stacksTo(16)
+                    .food(new FoodProperties.Builder().nutrition(8).saturationModifier(1.25F).build())));
+
     // --- Finders (batch 17): craftable charts that resolve into a real exploration map. See FinderItem. ---
     public static final DeferredItem<FinderItem> SIROK_NEST_MAP = ITEMS.register(
             "sirok_nest_map", () -> new FinderItem(new Item.Properties().stacksTo(16),
@@ -155,6 +165,7 @@ public final class ModItems {
                 out.accept(ECHOING_CITY_COMPASS.get());
                 out.accept(WEEPING_COMPASS.get());
                 out.accept(WEEPING_EYE.get());
+                out.accept(NETHERLY_MEAL.get());
                 out.accept(SIROK_NEST_MAP.get());
                 out.accept(KRAKEN_SHIP_MAP.get());
                 out.accept(YETI_HIDEOUT_MAP.get());

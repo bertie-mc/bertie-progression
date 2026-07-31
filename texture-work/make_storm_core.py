@@ -9,23 +9,24 @@ is only drawn where it is in open air; the stretch still inside the cloud is
 occluded and marked by a glow alone. Paint that stretch on top and it stops
 being a bolt in a cloud and becomes a bolt lying in front of one.
 
-    cloud   rows 0..7, drawn so no edge moves more than a pixel per row. That
-            rule is the whole of why it reads as soft: two shallow crowns
-            widening a pixel a row into the body, sides rounding in over four
-            rows, and a base dipping into two broad lobes. The skyline takes a
-            lighter outline than the sides and base — near-black all the way
-            round draws a cut-out, not a cloud. Shaded by each column's depth
-            below its own top edge, so the mass stays lumpy rather than
-            settling into one grey slab.
+    cloud   a union of seven circles, rows 0..7: three crowns, two shoulders
+            rounding the sides in, and two low ones hanging the base into
+            lumps. Only the outer perimeter of that union survives as an
+            outline; every arc inside another circle is gone. Spurs where two
+            arcs almost meet get pruned, and the skyline takes a lighter
+            outline than the sides and base — near-black all the way round
+            draws a cut-out, not a cloud. Shaded by each column's depth below
+            its own top edge, so the mass stays lumpy.
     bolt    a 2px stroke leaning down-left the whole way, never vertical on
             any stretch long enough to notice. It gathers inside the cloud
             (rows 3..6, hidden), drops through the gap between the two base
-            lobes at row 7, and runs to row 15 — down-left, one row that juts
-            right, down-left again, then two rows of single pixel for the
-            point. The kink has to be below the cloud: it is the only part of
-            the outline that says lightning, and buried in the grey there is
-            nothing left to read. The point matters too — cut the stroke off
-            at its full width and the bolt looks snapped rather than tapered.
+            lumps at row 7, and runs to a single-pixel point at row 14 —
+            down-left, one row that juts right, down-left again, then the tip.
+            The kink has to be below the cloud: it is the only part of the
+            outline that says lightning, and buried in the grey there is
+            nothing left to read. The point is closed off by two outline
+            pixels on row 15, one under the tip and one down-left of it, so it
+            tapers along the lean of the stroke instead of ending flat.
     glow    yellow mixed into the grey along the hidden run, plus an aura
             scattering out of it ring by ring — a cloud diffuses what is lit
             inside it rather than holding the light in a line. The falloff has
@@ -103,28 +104,24 @@ GLOW = "#C89020"
 GLOW_AURA = (0.13, 0.075, 0.04)
 GLOW_BREAK = (0.28, 0.12, 0.05)
 
-# The cloud, as inclusive x spans per row. Drawn to one rule: no edge moves
-# more than a pixel per row. That rule is what makes it read as soft, and
-# breaking it is what made the version before this read as rigid — it jumped
-# from three-pixel lumps straight to a thirteen-wide body in a single step,
-# then held the full width dead straight for four rows and hung its base off
-# in detached lumps. No amount of shading rescues a silhouette that turns
-# that hard.
+# The cloud, as a union of circles — the way you would draw one by hand. Every
+# arc that falls inside another circle disappears; only the outer perimeter of
+# the union survives, and that perimeter becomes the outline with the interior
+# shaded as cloud.
 #
-# So: two shallow crowns at the skyline, each widening a pixel a row into the
-# body, sides rounding in over four rows rather than dropping, and a base that
-# dips into two broad lobes rather than hanging separate ones. The bolt drops
-# clear through the gap between those lobes.
-CLOUD = {
-    0: [(5, 6), (10, 11)],
-    1: [(3, 7), (9, 12)],
-    2: [(2, 13)],
-    3: [(1, 14)],
-    4: [(0, 15)],
-    5: [(0, 15)],
-    6: [(1, 13)],
-    7: [(3, 6), (9, 11)],
-}
+# Spacing is the whole game. Circles closer together than roughly twice their
+# radius merge with no dip between them and the union comes out a slab — that
+# is what went wrong with every earlier attempt at this, hand-drawn or not.
+# These sit far enough apart that each crown keeps its own arc.
+CLOUD_CIRCLES = (
+    (4.0, 3.9, 2.5),     # left crown
+    (8.0, 3.1, 2.8),     # centre crown, the tallest
+    (12.0, 3.9, 2.5),    # right crown
+    (2.6, 5.0, 1.7),     # shoulders, rounding the sides in rather than
+    (13.4, 5.0, 1.7),    #   letting them drop straight
+    (5.9, 6.1, 1.9),     # base lumps; the bolt drops through the gap
+    (10.1, 6.1, 1.9),    #   left between them
+)
 
 # The bolt, as inclusive x spans per row. One continuous path top to bottom;
 # rows 4..8 land inside the cloud and are never drawn, only glowed. Rows 9..15
@@ -147,7 +144,6 @@ BOLT_PATH = {
     12: (6, 7),
     13: (5, 6),
     14: (5, 5),
-    15: (4, 4),
 }
 
 ORTHO = ((1, 0), (-1, 0), (0, 1), (0, -1))
@@ -210,7 +206,6 @@ FRAMES = [
     (("open",   14),    1),
     (("open",   15),    1),
     (("open",   16),    1),
-    (("open",   17),    1),
 ]
 
 
@@ -249,6 +244,33 @@ def disperse(grid, source, cloud, colour, strengths):
             grid[p] = mix(grid[p], hexcol(colour), t)
 
 
+def circle_union(circles):
+    return {(x, y) for y in range(SIZE) for x in range(SIZE)
+            if any((x + 0.5 - cx) ** 2 + (y + 0.5 - cy) ** 2 <= r * r
+                   for cx, cy, r in circles)}
+
+
+def declutter(pixels):
+    """Drop anything hanging off the union by a single orthogonal neighbour.
+    Where two arcs almost meet they leave one-pixel spurs, and at 16px those
+    read as grit on the outline rather than as cloud."""
+    px = set(pixels)
+    while True:
+        spurs = {p for p in px
+                 if sum((p[0] + dx, p[1] + dy) in px for dx, dy in ORTHO) <= 1}
+        if not spurs:
+            return px
+        px -= spurs
+
+
+def tip_edge():
+    """The outline pixel down-left of the bolt's point. The ring pass only
+    reaches orthogonally, so without this the point closes off flat underneath
+    and the taper stops reading as a taper."""
+    row = max(BOLT_PATH)
+    return {(BOLT_PATH[row][0] - 1, row + 1)}
+
+
 def spans(table):
     out = set()
     for y, rows in table.items():
@@ -266,7 +288,7 @@ def bolt_row(row):
 
 
 def paint(pulse=None):
-    cloud = spans(CLOUD)
+    cloud = declutter(circle_union(CLOUD_CIRCLES))
     bolt = spans(BOLT_PATH)
     visible = bolt - cloud   # in open air: drawn
     hidden = bolt & cloud    # behind the cloud: glow only
@@ -306,8 +328,9 @@ def paint(pulse=None):
     # The stroke, only where it is in open air, with its own outline. The
     # outline stops at the cloud: run it over the grey and the bolt would
     # look cut out of the cloud instead of passing behind it.
-    for p in grow(visible) - cloud - bolt:
-        grid[p] = hexcol(AIR_EDGE)
+    for p in (grow(visible) | tip_edge()) - cloud - bolt:
+        if 0 <= p[0] < SIZE and 0 <= p[1] < SIZE:
+            grid[p] = hexcol(AIR_EDGE)
     for y, (x0, x1) in BOLT_PATH.items():
         for x in range(x0, x1 + 1):
             if (x, y) in visible:

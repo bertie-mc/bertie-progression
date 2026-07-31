@@ -2238,8 +2238,6 @@ for item_id in ITEMS:
 write("assets/bertie_s1/models/item/weeping_eye.json", {"parent": "minecraft:item/ender_eye"})
 # Crafting License borrows vanilla's paper model (no bespoke texture yet).
 write("assets/bertie_s1/models/item/crafting_license.json", {"parent": "minecraft:item/paper"})
-# Netherly Meal: vanilla mushroom stew stands in until berlord's texture arrives.
-write("assets/bertie_s1/models/item/netherly_meal.json", {"parent": "minecraft:item/mushroom_stew"})
 # Sirok's Nest Map borrows vanilla's empty-map model (no bespoke texture yet - berlord has not sent one).
 for _m in ("sirok_nest_map", "kraken_ship_map", "yeti_hideout_map"):
     write(f"assets/bertie_s1/models/item/{_m}.json", {"parent": "minecraft:item/map"})

@@ -47,6 +47,9 @@ PALETTE = {
     "e": "#9E2246",
     "f": "#D9436B",
     "g": "#FF9A2E",
+    # heart/brew transition: mean of the heart pixel at (5,6) and the three lava
+    # cells it touches - o #F0600C, a #FFA61C, y #FFE24E
+    "m": "#E3822F",
     # koboleton bone
     "n": "#1E0F08",
     "b": "#5F473F",
@@ -77,8 +80,8 @@ LAYERS = [
     (11, 6, "l"),
     (9, 10, "o"),
     # --- koboleton bone, out to the right ---
-    (1, 14, "nn"),
-    (2, 13, "nww"),
+    (1, 14, "n"),
+    (2, 13, "nwn"),
     (3, 12, "nwcn"),
     (4, 11, "nwcn"),
     (5, 10, "nwcn"),
@@ -87,7 +90,7 @@ LAYERS = [
     (3, 6, "php"),
     (4, 5, "pehhp"),
     (5, 4, "pfeeep"),
-    (6, 4, "pegep"),
+    (6, 4, "pmgep"),
 ]
 
 

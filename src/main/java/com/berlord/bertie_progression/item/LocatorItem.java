@@ -27,7 +27,7 @@ import java.util.Optional;
 public class LocatorItem extends Item {
 
     private final ResourceLocation structureId;
-    /** Chunks. berlord 2026-07-29: 500 is the standard; kept per-item so one can be tuned alone. */
+    /** Chunks. Kept per item so each locator can be tuned independently. */
     private final int searchRadius;
 
     public LocatorItem(Properties properties, ResourceLocation structureId, int searchRadius) {

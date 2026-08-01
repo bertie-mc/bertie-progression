@@ -15,8 +15,8 @@ import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 
 /**
- * A shaped recipe with a CATALYST ingredient: an input that is matched and required, but returned to
- * the grid instead of being consumed (berlord 2026-07-29, the Gorgon Head in the Sirok's Nest map).
+ * A shaped recipe with a catalyst ingredient: an input that is matched and required, but returned to
+ * the grid instead of being consumed.
  *
  * <p>This has to be a recipe class rather than data because "is this item consumed" is decided by
  * {@code Recipe.getRemainingItems}, whose vanilla implementation defers to the ITEM's own crafting

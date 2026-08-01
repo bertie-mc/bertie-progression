@@ -66,30 +66,9 @@ public final class BedRecipes {
     private static Input in(String id, int count) { return new Input(item(id), count); }
 
     public static final List<BedRecipe> RECIPES = List.of(
-            // R06B (chiseled deepslate) REMOVED 2026-07-24 (berlord note 7).
-            // R06C removed (berlord 2026-07-22): Arcane Crystal Dust now via Brick Forge double-smelt
-            // (2 crystal -> 1 dust). See gen_data slag/arcane_crystal_dust.
-            // R05A (melter bed route) REMOVED 2026-07-24 (berlord note 19): melter is now a Hephaestus ritual.
-            // R05B (mallet casting-table route) REMOVED 2026-07-24 (berlord note batch 7).
-            // R07B/K/C/L/M (mallet darkstone routes) REMOVED 2026-07-24 (berlord note 7): gilded/arcane/
-            // chiseled darkstone + slab/pillar now come from Forbidden Arcanus's own recipes.
-            // R12A (mallet brass-sheet route) REMOVED 2026-07-24 (berlord note batch 7).
-            // R29A removed (berlord 2026-07-26) with the Serpent Scale Blank item.
-            // R09A removed (berlord 2026-07-22): Darkstone Pedestal now WORLD-FORMED
-            // (pillar+wall+slab column + Mundabitur Dust). See PedestalFormationHandler.
-            // R07J removed (berlord batch 4) with the Crafting Language Slate/Seal.
-            // R07H (stripped_casing_blank) REMOVED 2026-07-24: custom andesite-casing chain scrapped;
-            // create:andesite_casing restored to Create's default item-application.
-            // R07G removed (berlord batch 8): Kinetic Vane -> renamed "Structural Beam", now made via a
-            // Create sequenced-assembly recipe (data/bertie_progression/recipe/create/structural_beam_assembly.json).
-            // Utrem Jar (berlord 2026-07-22): 8 Glass held + 1 Edelwood Planks carried -> Utrem Jar
             BedRecipe.of("utrem_jar", in("minecraft:glass", 8),
                     in("forbidden_arcanus:edelwood_planks", 1), null,
                     false, "forbidden_arcanus:utrem_jar", 1)
-            // Compass bed recipe REMOVED (berlord 2026-07-25): the Compass is now a Hephaestus ritual
-            // (Redstone core + 4 Iron), and Iron's Spellbooks' 3x3 Wayward Compass recipe is disabled.
-            // Refined Soulstone bed recipe REMOVED (berlord 2026-07-25): it is now a plain Brick-Forge
-            // double-smelt, 1 Diamond + 1 Raw Soulstone (the 2-ingredient shape double_smelting wants).
     );
 
     public static StackPredicate tag(String tagId) {

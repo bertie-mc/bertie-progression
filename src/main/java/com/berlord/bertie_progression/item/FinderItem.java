@@ -53,8 +53,7 @@ import java.util.Optional;
  */
 public class FinderItem extends Item {
 
-    /** Chunks, not blocks. berlord 2026-07-29: "500 is good for most stuff" - so it is the
-     *  standard every locator now takes, but each item carries its own so one can be tuned alone. */
+    /** Chunks, not blocks. Each item carries its own radius so it can be tuned independently. */
     public static final int STANDARD_RADIUS = 500;
 
     private final ResourceLocation structureId;

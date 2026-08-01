@@ -8,6 +8,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.language.jvm.tasks.ProcessResources
+import org.gradle.api.tasks.testing.Test
 import java.util.zip.ZipFile
 
 @CacheableTask
@@ -108,14 +109,14 @@ neoForge {
             sourceSet(sourceSets.main.get())
         }
     }
+
+    unitTest {
+        enable()
+        testedMod = mods.getByName(mod_id)
+    }
 }
 
-// --- Ponder (the Deep Waters Shrine scene) -------------------------------------------------------
-// Ponder is NOT published standalone on any maven: it ships JarJar-embedded inside Create. So we pull
-// Create from Modrinth and extract the nested ponder jar onto the compile classpath. Same pattern
-// berlords_emi already uses for anvillib / l2core / confluence_magic_lib. Nothing third-party is
-// committed to the repo. All of this is compileOnly + ModList-guarded at runtime, so bertie_progression still
-// loads fine without Create.
+// Ponder is embedded inside Create rather than published separately.
 val jarJarParents by configurations.creating
 val extractedLibsDir = layout.buildDirectory.dir("extracted-jarjar-libs").get().asFile
 
@@ -130,6 +131,15 @@ dependencies {
     compileOnly("maven.modrinth:create:6.0.10+mc1.21.1")
     add(jarJarParents.name, "maven.modrinth:create:6.0.10+mc1.21.1") // -> ponder-neoforge-1.0.82+mc1.21.1
     compileOnly(fileTree(extractedLibsDir) { include("*.jar") }.builtBy(extractJarJarLibs))
+
+    testImplementation(platform("org.junit:junit-bom:6.1.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.named<Test>("test") {
+    useJUnitPlatform()
+    systemProperty("bertie.projectDir", layout.projectDirectory.asFile.absolutePath)
 }
 
 tasks.named("compileJava") {

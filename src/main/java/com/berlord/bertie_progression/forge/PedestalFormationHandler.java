@@ -17,10 +17,9 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 /**
- * Darkstone Pedestal world-formation (berlord 2026-07-22, replaces the R09A bed recipe).
- * Build a 3-high column — Arcane Polished Darkstone Pillar (bottom) + Wall + Slab (top) — and
- * apply Mundabitur Dust to the pillar (the same dust the Hephaestus Forge formation uses). The
- * column collapses into a Darkstone Pedestal at the pillar's position.
+ * Forms a Darkstone Pedestal from a 3-high column: Arcane Polished Darkstone Pillar (bottom),
+ * Wall, and Slab (top). Apply Mundabitur Dust to the pillar (the same dust the Hephaestus Forge
+ * formation uses), and the column collapses into a Darkstone Pedestal at the pillar's position.
  */
 public final class PedestalFormationHandler {
 

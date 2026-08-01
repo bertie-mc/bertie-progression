@@ -21,8 +21,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Deep Waters Shrine (berlord 2026-07-27). Build the 7x7 shrine around a Conduit in the Deep
- * Waters dimension, then use a Crowned Jelly on the Conduit: the shrine collapses into a
+ * Build the 7x7 Deep Waters Shrine around a Conduit in the Deep Waters dimension, then use a
+ * Crowned Jelly on the Conduit: the shrine collapses into a
  * Stormcall Altar pyramid and everything else inside the box floods.
  *
  * <p>Six block-layers tall. The "7x7x7" the design talks about counts the top crystal layer as two
@@ -106,7 +106,7 @@ public final class DeepWatersShrineHandler {
     private static final int CONDUIT_LAYER = 2;   // L3, zero-indexed
     private static final int CENTRE = 3;          // d4, zero-indexed
 
-    // Cuboid centred on the conduit that may contain ONLY shrine blocks and water (berlord).
+    // Cuboid centred on the conduit that may contain only shrine blocks and water.
     private static final int WATER_DOWN = 1;
     private static final int WATER_HORIZONTAL = 6;
     private static final int WATER_UP = 5;
@@ -220,8 +220,8 @@ public final class DeepWatersShrineHandler {
     // ------------------------------------------------------------------ space checks
 
     /**
-     * Water/clearance around the conduit. berlord 2026-07-27: these numbers describe a <b>CUBOID
-     * centred on the conduit that may contain nothing but shrine blocks and water</b> — not runs
+     * Water/clearance around the conduit. These numbers describe a <b>CUBOID centred on the
+     * conduit that may contain nothing but shrine blocks and water</b> — not runs
      * or rays outward along each axis.
      *
      * <ul>

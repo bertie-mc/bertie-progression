@@ -43,7 +43,7 @@ texture under `assets/bertie_progression/textures/item/`.
 
 ### Data
 
-Roughly 1,500 JSON files: the R01–R42 recipe ledger, ~250 darkstone stonecutting recipes,
+About 750 JSON files: the R01–R42 recipe ledger, darkstone stonecutting recipes,
 31 Hephaestus Forge rituals, and recipe additions or overrides in the namespaces of the
 pack's other mods (Create kinetics, Malum spirit infusion, Ice and Fire, Immersive Armors,
 Twilight Forest equipment, Avaritia, Cataclysm, Deeper Darker, L2 Hostility loot modifiers
@@ -59,8 +59,11 @@ gradle build
 
 Requires **JDK 21**. The jar lands in `build/libs/`.
 
+`gradle test` validates every JSON resource and local model texture reference, the current Brick
+Forge bed table, and catalyst recipe remainder behavior.
+
 Toolchain is the shared bertie harness: NeoForge `21.1.217`, ModDevGradle `2.0.134`,
-Gradle `8.14.4` from Nixpkgs. A `server()` run is wired for headless boot tests.
+Gradle `8.14.4` from Nixpkgs.
 
 ## Releasing
 

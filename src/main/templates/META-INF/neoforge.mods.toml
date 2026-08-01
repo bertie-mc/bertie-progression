@@ -79,11 +79,7 @@ versionRange="[0,)"
 ordering="AFTER"
 side="BOTH"
 
-# Every mod whose data/<ns>/ we OVERRIDE needs ordering="AFTER" here, or its own file wins and the
-# override silently does nothing - no error, no log line. Mod datapacks are ordered by mod load
-# order, which ties-breaks alphabetically by modId, so any modId sorting AFTER "bertie_progression" beats us
-# unless it is listed here. (deepwaters lost exactly this way: berlord 2026-07-29, the 2x2 Block of
-# Flaming Opal recipe shipped and changed nothing in game.)
+# Mods whose data namespaces we override must load first so our datapack wins.
 [[dependencies.${mod_id}]]
 modId="deepwaters"
 type="optional"
@@ -91,8 +87,6 @@ versionRange="[0,)"
 ordering="AFTER"
 side="BOTH"
 
-# We now override data/cataclysm/recipe/*_eye.json. It currently sorts before us anyway, but that is
-# incidental - declare it so a future pack reshuffle cannot silently revert the override.
 [[dependencies.${mod_id}]]
 modId="cataclysm"
 type="optional"
@@ -100,9 +94,6 @@ versionRange="[0,)"
 ordering="AFTER"
 side="BOTH"
 
-# We now disable data/armageddon_mod/recipe/{iron_remote,strange_coin}_recipe.json (berlord
-# 2026-07-31). "armageddon_mod" sorts before "bertie_progression" alphabetically so we would win anyway -
-# declare it so a future reshuffle cannot silently restore both stock 3x3 recipes.
 [[dependencies.${mod_id}]]
 modId="armageddon_mod"
 type="optional"

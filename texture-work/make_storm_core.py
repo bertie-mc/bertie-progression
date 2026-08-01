@@ -46,12 +46,22 @@ being a bolt in a cloud and becomes a bolt lying in front of one.
             holding the swell longer reads as the pulse slowing to grow, and
             holding the run through the cloud longer than the run below it
             reads as the tail end sprinting.
-    rain    two-pixel dashes falling out of the base in three staggered
-            columns, blue-grey so they do not read as cloud breaking off. They
-            fall a row every second frame and repeat every four rows, and the
-            columns are placed to stay clear of the bolt at every row of the
-            path. The rain is why nothing can be held any more: a long rest
-            frame would freeze it mid-air, so the gap between strikes is ten
+    rain    streaks blown down-left on the bolt's own lean, blue-grey so they
+            do not read as cloud breaking off, with a brighter pixel at the
+            leading end. Each is a staircase rather than a true 45 line: a
+            diagonal that only touches at the corners reads as a row of
+            separate dots at this size. They share a slope and vary in length
+            instead — three or four pixels is not enough line for an angle to
+            survive being different from its neighbours, so the gusting has to
+            come from somewhere that reads, and length does.
+
+            Seeds are tiled along the wind so the field stays full as streaks
+            blow off the bottom left, which means each one lands two or three
+            times over. Three seeds is the ceiling before the copies start
+            running into each other and clumping.
+
+            The rain is also why nothing can be held any more: a long rest
+            frame freezes it mid-air, so the gap between strikes is ten
             one-tick frames of rain instead. The frame count has to stay a
             whole number of rain cycles or the loop jumps at the wrap — there
             is an assert on that.
@@ -191,17 +201,41 @@ PULSE_AURA_BURST = (0.50, 0.30, 0.16, 0.08)
 
 # --- rain ---------------------------------------------------------------------
 #
-# Two-pixel dashes falling out of the cloud's base, in columns that stay clear
-# of the bolt and its outline at every row. Blue-grey rather than any of the
-# cloud's own greys, so they do not read as bits of cloud breaking off.
+# Streaks blown down-left out of the cloud's base, on the same lean as the
+# bolt. Blue-grey rather than any of the cloud's own greys, so they do not read
+# as bits of cloud breaking off.
 RAIN = "#7E97B2"
-RAIN_TOP = 8            # first row below the cloud
-RAIN_PERIOD = 4         # rows between one dash and the next in a column
-RAIN_TICKS_PER_ROW = 2  # frames a dash spends on each row
+RAIN_TAIL = "#5B6E85"    # trailing pixels, so a streak reads as having a head
+RAIN_TOP = 8             # first row below the cloud
+RAIN_PERIOD = 4          # the wind carries a streak this far before repeating
+RAIN_TICKS_PER_ROW = 2   # frames a streak spends on each step
 
-# (column, phase). The phases are staggered so the columns do not fall in step
-# — three dashes moving as one line reads as a comb, not as rain.
-RAIN_COLUMNS = ((2, 0), (10, 2), (13, 1))
+# Streak shapes, listed tail first so the last offset is the leading end. Each
+# is a staircase down-left, alternating a step down and a step left, because a
+# true 45 line only touches at the corners and at this size reads as a row of
+# separate dots rather than as a streak.
+#
+# They all share that slope. Mixing slopes was tried first and the streaks
+# stopped reading as lines at all — three or four pixels is not enough line for
+# an angle to survive being different from its neighbours. The gusting comes
+# from length instead, which does read at this size.
+RAIN_SHAPES = {
+    "gust":  ((2, -2), (1, -2), (1, -1), (0, -1), (0, 0)),
+    "long":  ((1, -2), (1, -1), (0, -1), (0, 0)),
+    "short": ((1, -1), (0, -1), (0, 0)),
+}
+
+# Leading ends, tiled along the wind by (-RAIN_PERIOD, +RAIN_PERIOD) so the
+# field stays full as streaks blow off the bottom left. Scattered by hand — an
+# even lattice reads as hatching rather than as weather.
+# Three is enough. Each one tiles into two or three copies, so five seeds put
+# roughly thirty pixels of rain into the frame and the copies started running
+# into each other and clumping.
+RAIN_STREAKS = (
+    (11, 12, "gust"),
+    (2, 12, "long"),
+    (14, 15, "short"),
+)
 
 # (pulse, hold in ticks). `pulse` is (phase, head row) or None for the rest
 # frame. Phases: "veiled" while the head is still behind the cloud, "burst" for
@@ -274,17 +308,21 @@ def disperse(grid, source, cloud, colour, strengths):
 
 
 def rain_pixels(frame):
-    """The dashes for one frame. `frame` steps them down a row every
-    RAIN_TICKS_PER_ROW frames and wraps at RAIN_PERIOD."""
-    fallen = (frame // RAIN_TICKS_PER_ROW) % RAIN_PERIOD
-    out = set()
-    for x, phase in RAIN_COLUMNS:
-        y = RAIN_TOP + ((fallen + phase) % RAIN_PERIOD)
-        while y < SIZE:
-            out.add((x, y))
-            if y + 1 < SIZE:
-                out.add((x, y + 1))
-            y += RAIN_PERIOD
+    """Rain for one frame, as {pixel: is_head}. The wind carries each streak
+    one step down-left every RAIN_TICKS_PER_ROW frames; because the seeds are
+    tiled by exactly the distance travelled in RAIN_PERIOD steps, the field is
+    identical again after that and the loop closes."""
+    blown = (frame // RAIN_TICKS_PER_ROW) % RAIN_PERIOD
+    out = {}
+    for sx, sy, shape in RAIN_STREAKS:
+        for k in range(-3, 4):
+            hx = sx - blown - k * RAIN_PERIOD
+            hy = sy + blown + k * RAIN_PERIOD
+            shape_px = RAIN_SHAPES[shape]
+            for i, (dx, dy) in enumerate(shape_px):
+                p = (hx + dx, hy + dy)
+                if 0 <= p[0] < SIZE and RAIN_TOP <= p[1] < SIZE:
+                    out[p] = i == len(shape_px) - 1
     return out
 
 
@@ -352,11 +390,11 @@ def paint(pulse=None, frame=0):
     disperse(grid, visible, cloud, GLOW, GLOW_BREAK)
 
     # Rain goes down before the bolt does, so the bolt and its outline win
-    # anywhere the two would land on the same pixel. The columns are picked to
-    # keep clear of it, but a later change to the path should not put a dash
-    # through the middle of the stroke.
-    for p in rain_pixels(frame) - cloud:
-        grid[p] = hexcol(RAIN)
+    # anywhere the two would land on the same pixel — a streak crossing behind
+    # the stroke is fine, one drawn over it is not.
+    for p, head in rain_pixels(frame).items():
+        if p not in cloud:
+            grid[p] = hexcol(RAIN if head else RAIN_TAIL)
 
     # The stroke, only where it is in open air, with its own outline. The
     # outline stops at the cloud: run it over the grey and the bolt would

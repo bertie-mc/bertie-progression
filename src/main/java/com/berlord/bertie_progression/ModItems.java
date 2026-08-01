@@ -133,11 +133,6 @@ public final class ModItems {
     public static final DeferredItem<Item> CURSED_CORE = simple("cursed_core", 16);
     public static final DeferredItem<Item> STORM_CORE = simple("storm_core", 16);
 
-    // Carries the other cloud colouring from texture-work/make_storm_core.py so the
-    // two can be held side by side in an inventory. No recipe, no use — delete this
-    // and its ITEMS entry in gen_data.py once a colouring is settled on.
-    public static final DeferredItem<Item> STORM_CORE_TEST = simple("storm_core_test", 16);
-
     // --- Final altars / capstone ---
     public static final DeferredItem<Item> COMPLEX_SPECTRUM_SEAL = rare("complex_spectrum_seal", 16, Rarity.RARE);
     public static final DeferredItem<Item> SOULBOUND_AUTHORITY = rare("soulbound_authority", 16, Rarity.RARE);

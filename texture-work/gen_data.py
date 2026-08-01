@@ -2227,10 +2227,6 @@ ITEMS = {
     "desert_core": "Desert Core",
     "cursed_core": "Cursed Core",
     "storm_core": "Storm Core",
-    # Dummy, carrying the other cloud colouring so the two can be compared in
-    # game. No recipe and no use; drop it and ModItems.STORM_CORE_TEST once a
-    # colouring is settled on.
-    "storm_core_test": "Storm Core Test",
     "kinetic_pattern_plate": "Kinetic Pattern Plate",
     "crafting_license": "Crafting License",
     "twilight_concord": "Twilight Concord",

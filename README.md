@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> Development has moved to [`bertie-mc/bertie`](https://github.com/bertie-mc/bertie/tree/main/mods/bertie-progression). This repository is retained read-only for historical tags, releases, and issues.
+
 # Bertie Progression (`bertie_progression`)
 
 The progression mod for the **bertie** modpack. NeoForge **1.21.1** / Java **21**.

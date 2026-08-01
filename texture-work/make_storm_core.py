@@ -10,14 +10,20 @@ occluded and marked by a glow alone. Paint that stretch on top and it stops
 being a bolt in a cloud and becomes a bolt lying in front of one.
 
     cloud   rows 0..7, two crowns over a body on a flat base, after berlord's
-            reference. Not shaded as a gradient: a flat mid-grey fill, compact
-            lighter blocks scattered through the upper body, and a darker band
-            along the underside. A per-column ramp reads as a shaded ball, and
-            single-row highlights read as stripes; it takes two-row blocks,
-            one under each crown and each shoulder, before the mass breaks up
-            into puffs. The edge is one colour all the way round and only a
-            couple of steps darker than the fill — a near-black ring turns the
-            whole thing into a cut-out.
+            reference. Two colourings of that one silhouette, chosen with
+            --variant, and v1 is what ships:
+
+              v1  flat mid-grey fill, compact lighter blocks scattered through
+                  the upper body, a darker band along the underside, one edge
+                  colour all the way round. Single-row highlights read as
+                  stripes across the body, so the blocks are two rows each,
+                  one under every crown and shoulder; that is what breaks the
+                  mass into puffs. The edge stays a couple of steps off the
+                  fill — a near-black ring makes a cut-out of it.
+              v2  a per-column gradient from a lit cap down to a shadowed
+                  base, with a lighter outline along the skyline than round
+                  the sides. This is the treatment from before the reference
+                  arrived; kept so the two can be compared directly.
     bolt    a 2px stroke leaning down-left the whole way, never vertical on
             any stretch long enough to notice. It gathers inside the cloud
             (rows 3..7, hidden), drops clear of the flat base at row 8 just
@@ -86,7 +92,11 @@ It is generated here instead, and make_cores.py now covers the other three.
 Every pixel is placed here — nothing is copied from another mod, so there is
 no NOTICE carve-out.
 
-Run:  python texture-work/make_storm_core.py [--ascii]
+Run:  python texture-work/make_storm_core.py [--variant v1|v2] [--ascii]
+
+Both variants write to the same place, so whichever was run last is the one in
+the tree. v1 is the default and the one that should be committed unless
+berlord says otherwise.
 """
 import json
 import os
@@ -99,14 +109,37 @@ TEX_ITEM = os.path.join(ROOT, "src", "main", "resources", "assets", "bertie_prog
 
 SIZE = 16
 
-# Cloud greys. Not a smooth ramp: a flat mid fill, irregular lighter clusters
-# scattered through the upper body, and a darker band along the underside. A
-# per-column gradient reads as a shaded ball; the clusters are what make it
-# read as cloud.
+# Two ways of colouring the same silhouette, picked with --variant.
+#
+#   v1  berlord's reference, and the default. Not a ramp: a flat mid fill,
+#       compact lighter blocks scattered through the upper body, a darker band
+#       along the underside, one edge colour all the way round.
+#   v2  the treatment used before that reference arrived. A per-column
+#       gradient from a lit cap down to a shadowed base, with a lighter
+#       outline along the skyline than round the sides and bottom.
+#
+# Silhouette, bolt, rain and animation are identical either way — this is only
+# how the grey is laid on.
+CLOUD_VARIANTS = ("v1", "v2")
+
 CLOUD_FILL = "#4E555F"
 CLOUD_LIGHT = "#79828E"
 CLOUD_DARK = "#383D45"    # the underside, in its own shadow
 CLOUD_EDGE = "#22262D"    # darker than the fill, well short of black
+
+# v2: indexed by a pixel's depth below its own column's top edge, so every
+# crown keeps a lit cap instead of the whole cloud fading top to bottom.
+CLOUD_RAMP = (
+    "#7C8794",
+    "#606A77",
+    "#4B5360",
+    "#3C424D",
+    "#2F343E",
+    "#262B33",
+    "#1E222A",
+)
+OUTLINE = "#0A0C11"
+OUTLINE_TOP = "#252C38"   # the skyline, where the light is coming from
 
 BOLT_HI = "#FFE870"   # leading edge of the stroke
 BOLT = "#FFB800"      # the stroke
@@ -364,29 +397,46 @@ def bolt_row(row):
     return {(x, row) for x in range(x0, x1 + 1)}
 
 
-def paint(pulse=None, frame=0):
-    cloud = spans(CLOUD)
-    bolt = spans(BOLT_PATH)
-    visible = bolt - cloud   # in open air: drawn
-    hidden = bolt & cloud    # behind the cloud: glow only
+def shade_cloud(grid, cloud, variant):
+    if variant == "v2":
+        # Depth below each column's own top edge.
+        tops = {}
+        for (x, y) in cloud:
+            tops[x] = min(y, tops.get(x, SIZE))
+        for (x, y) in cloud:
+            grid[(x, y)] = hexcol(CLOUD_RAMP[min(y - tops[x], len(CLOUD_RAMP) - 1)])
+        for (x, y) in cloud:
+            open_sides = [d for d in ORTHO if (x + d[0], y + d[1]) not in cloud]
+            if open_sides:
+                skyline = open_sides == [(0, -1)]
+                grid[(x, y)] = hexcol(OUTLINE_TOP if skyline else OUTLINE)
+        return
 
-    grid = {p: hexcol(CLOUD_FILL) for p in cloud}
-
+    for p in cloud:
+        grid[p] = hexcol(CLOUD_FILL)
     for row, x0, run in CLOUD_LIGHTS:
         for x in range(x0, x0 + run):
             if (x, row) in cloud and row < CLOUD_UNDERSIDE:
                 grid[(x, row)] = hexcol(CLOUD_LIGHT)
-
     for (x, y) in cloud:
         if y >= CLOUD_UNDERSIDE:
             grid[(x, y)] = hexcol(CLOUD_DARK)
-
     # Inset edge: any cloud pixel with an orthogonal neighbour outside it. One
     # colour all the way round, and only a step or two darker than the fill —
     # a near-black ring turns the whole thing into a cut-out.
     for (x, y) in cloud:
         if any((x + dx, y + dy) not in cloud for dx, dy in ORTHO):
             grid[(x, y)] = hexcol(CLOUD_EDGE)
+
+
+def paint(pulse=None, frame=0, variant="v1"):
+    cloud = spans(CLOUD)
+    bolt = spans(BOLT_PATH)
+    visible = bolt - cloud   # in open air: drawn
+    hidden = bolt & cloud    # behind the cloud: glow only
+
+    grid = {}
+    shade_cloud(grid, cloud, variant)
 
     # Light coming through the cloud. Applied after the outline, so the edge
     # warms too where the bolt crosses it.
@@ -482,9 +532,9 @@ def dump(img):
         print(row)
 
 
-def build_strip():
+def build_strip(variant="v1"):
     """The frames stacked top to bottom, which is the layout Minecraft wants."""
-    frames = [paint(spec, i) for i, spec in enumerate(FRAMES)]
+    frames = [paint(spec, i, variant) for i, spec in enumerate(FRAMES)]
     strip = Image.new("RGBA", (SIZE, SIZE * len(frames)), (0, 0, 0, 0))
     for i, frame in enumerate(frames):
         strip.paste(frame, (0, i * SIZE))
@@ -497,12 +547,20 @@ def build_mcmeta():
 
 
 if __name__ == "__main__":
+    variant = "v1"
+    if "--variant" in sys.argv:
+        variant = sys.argv[sys.argv.index("--variant") + 1]
+    if variant not in CLOUD_VARIANTS:
+        sys.exit("unknown variant %r; expected one of %s"
+                 % (variant, ", ".join(CLOUD_VARIANTS)))
+
     os.makedirs(TEX_ITEM, exist_ok=True)
-    strip, frames = build_strip()
+    strip, frames = build_strip(variant)
     strip.save(os.path.join(TEX_ITEM, "storm_core.png"))
     with open(os.path.join(TEX_ITEM, "storm_core.png.mcmeta"), "w", newline="\n") as fh:
         json.dump(build_mcmeta(), fh, indent=2)
         fh.write("\n")
-    print("wrote storm_core.png (%d frames) and storm_core.png.mcmeta" % len(frames))
+    print("wrote storm_core.png (%s, %d frames) and storm_core.png.mcmeta"
+          % (variant, len(frames)))
     if "--ascii" in sys.argv:
         dump(frames[0])

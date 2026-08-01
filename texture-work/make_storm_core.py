@@ -46,6 +46,15 @@ being a bolt in a cloud and becomes a bolt lying in front of one.
             holding the swell longer reads as the pulse slowing to grow, and
             holding the run through the cloud longer than the run below it
             reads as the tail end sprinting.
+    rain    two-pixel dashes falling out of the base in three staggered
+            columns, blue-grey so they do not read as cloud breaking off. They
+            fall a row every second frame and repeat every four rows, and the
+            columns are placed to stay clear of the bolt at every row of the
+            path. The rain is why nothing can be held any more: a long rest
+            frame would freeze it mid-air, so the gap between strikes is ten
+            one-tick frames of rain instead. The frame count has to stay a
+            whole number of rain cycles or the loop jumps at the wrap — there
+            is an assert on that.
 
 The lean matters more than it looks. The hidden run is what carries the eye
 down to the glyph, and if it drops straight the bolt reads as a pole hung off
@@ -180,6 +189,20 @@ PULSE_FALLOFF = (
 PULSE_AURA = (0.30, 0.17, 0.09)
 PULSE_AURA_BURST = (0.50, 0.30, 0.16, 0.08)
 
+# --- rain ---------------------------------------------------------------------
+#
+# Two-pixel dashes falling out of the cloud's base, in columns that stay clear
+# of the bolt and its outline at every row. Blue-grey rather than any of the
+# cloud's own greys, so they do not read as bits of cloud breaking off.
+RAIN = "#7E97B2"
+RAIN_TOP = 8            # first row below the cloud
+RAIN_PERIOD = 4         # rows between one dash and the next in a column
+RAIN_TICKS_PER_ROW = 2  # frames a dash spends on each row
+
+# (column, phase). The phases are staggered so the columns do not fall in step
+# — three dashes moving as one line reads as a comb, not as rain.
+RAIN_COLUMNS = ((2, 0), (10, 2), (13, 1))
+
 # (pulse, hold in ticks). `pulse` is (phase, head row) or None for the rest
 # frame. Phases: "veiled" while the head is still behind the cloud, "burst" for
 # the swell, "open" for the run below the cloud.
@@ -194,23 +217,25 @@ PULSE_AURA_BURST = (0.50, 0.30, 0.16, 0.08)
 # The heads at rows 16 and 17 are past the end of the bolt on purpose — no head
 # is drawn, only the tail behind it, so the pulse runs off the tail rather than
 # vanishing on the last row.
-FRAMES = [
-    (None,             12),
-    (("veiled",  3),    1),
-    (("veiled",  4),    1),
-    (("veiled",  5),    1),
-    (("veiled",  6),    1),
-    (("burst",   7),    1),
-    (("open",    8),    1),
-    (("open",    9),    1),
-    (("open",   10),    1),
-    (("open",   11),    1),
-    (("open",   12),    1),
-    (("open",   13),    1),
-    (("open",   14),    1),
-    (("open",   15),    1),
-    (("open",   16),    1),
+REST_FRAMES = 10
+PULSE_FRAMES = [
+    ("veiled",  3), ("veiled",  4), ("veiled",  5), ("veiled",  6),
+    ("burst",   7),
+    ("open",    8), ("open",    9), ("open",   10), ("open",   11),
+    ("open",   12), ("open",   13), ("open",   14), ("open",   15),
+    ("open",   16),
 ]
+FRAMES = [None] * REST_FRAMES + PULSE_FRAMES
+
+# Every frame runs one tick. Nothing can be held any more: the rain falls the
+# whole time, and a held frame freezes it mid-air. So the gap between strikes
+# is ten frames of rain with no pulse in them rather than one long frame.
+#
+# The frame count has to be a whole number of rain cycles or the loop jumps
+# where it wraps.
+assert len(FRAMES) % (RAIN_PERIOD * RAIN_TICKS_PER_ROW) == 0, (
+    "frame count %d is not a whole number of %d-frame rain cycles"
+    % (len(FRAMES), RAIN_PERIOD * RAIN_TICKS_PER_ROW))
 
 
 def hexcol(s):
@@ -248,6 +273,21 @@ def disperse(grid, source, cloud, colour, strengths):
             grid[p] = mix(grid[p], hexcol(colour), t)
 
 
+def rain_pixels(frame):
+    """The dashes for one frame. `frame` steps them down a row every
+    RAIN_TICKS_PER_ROW frames and wraps at RAIN_PERIOD."""
+    fallen = (frame // RAIN_TICKS_PER_ROW) % RAIN_PERIOD
+    out = set()
+    for x, phase in RAIN_COLUMNS:
+        y = RAIN_TOP + ((fallen + phase) % RAIN_PERIOD)
+        while y < SIZE:
+            out.add((x, y))
+            if y + 1 < SIZE:
+                out.add((x, y + 1))
+            y += RAIN_PERIOD
+    return out
+
+
 def tip_edge():
     """The outline pixel down-left of the bolt's point. The ring pass only
     reaches orthogonally, so without this the point closes off flat underneath
@@ -272,7 +312,7 @@ def bolt_row(row):
     return {(x, row) for x in range(x0, x1 + 1)}
 
 
-def paint(pulse=None):
+def paint(pulse=None, frame=0):
     cloud = spans(CLOUD)
     bolt = spans(BOLT_PATH)
     visible = bolt - cloud   # in open air: drawn
@@ -310,6 +350,13 @@ def paint(pulse=None):
     # Where the bolt actually leaves the cloud the light is escaping rather
     # than diffusing, so that spot runs brighter and tighter than the aura.
     disperse(grid, visible, cloud, GLOW, GLOW_BREAK)
+
+    # Rain goes down before the bolt does, so the bolt and its outline win
+    # anywhere the two would land on the same pixel. The columns are picked to
+    # keep clear of it, but a later change to the path should not put a dash
+    # through the middle of the stroke.
+    for p in rain_pixels(frame) - cloud:
+        grid[p] = hexcol(RAIN)
 
     # The stroke, only where it is in open air, with its own outline. The
     # outline stops at the cloud: run it over the grey and the bolt would
@@ -385,7 +432,7 @@ def dump(img):
 
 def build_strip():
     """The frames stacked top to bottom, which is the layout Minecraft wants."""
-    frames = [paint(spec) for spec, _ in FRAMES]
+    frames = [paint(spec, i) for i, spec in enumerate(FRAMES)]
     strip = Image.new("RGBA", (SIZE, SIZE * len(frames)), (0, 0, 0, 0))
     for i, frame in enumerate(frames):
         strip.paste(frame, (0, i * SIZE))
@@ -393,13 +440,8 @@ def build_strip():
 
 
 def build_mcmeta():
-    return {
-        "animation": {
-            "frametime": 1,
-            "frames": [{"index": i, "time": hold}
-                       for i, (_, hold) in enumerate(FRAMES)],
-        }
-    }
+    # Every frame is one tick, so the frame list can be left implicit.
+    return {"animation": {"frametime": 1}}
 
 
 if __name__ == "__main__":

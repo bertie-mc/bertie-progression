@@ -54,13 +54,13 @@ and others). A Patchouli field guide documents the current progression in game.
 ## Building
 
 ```bash
-./gradlew build
+gradle build
 ```
 
 Requires **JDK 21**. The jar lands in `build/libs/`.
 
 Toolchain is the shared bertie harness: NeoForge `21.1.217`, ModDevGradle `2.0.134`,
-Gradle `8.8`. A `server()` run is wired for headless boot tests.
+Gradle `8.14.4` from Nixpkgs. A `server()` run is wired for headless boot tests.
 
 ## Releasing
 

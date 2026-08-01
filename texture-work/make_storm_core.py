@@ -11,19 +11,18 @@ being a bolt in a cloud and becomes a bolt lying in front of one.
 
     cloud   rows 0..7, two crowns over a body on a flat base, after berlord's
             reference. Two colourings of that one silhouette, chosen with
-            --variant, and v1 is what ships:
+            --variant, and v2 is what ships:
 
-              v1  flat mid-grey fill, compact lighter blocks scattered through
-                  the upper body, a darker band along the underside, one edge
-                  colour all the way round. Single-row highlights read as
-                  stripes across the body, so the blocks are two rows each,
-                  one under every crown and shoulder; that is what breaks the
-                  mass into puffs. The edge stays a couple of steps off the
-                  fill — a near-black ring makes a cut-out of it.
               v2  a per-column gradient from a lit cap down to a shadowed
                   base, with a lighter outline along the skyline than round
-                  the sides. This is the treatment from before the reference
-                  arrived; kept so the two can be compared directly.
+                  the sides. Predates the reference; berlord picked it over
+                  v1 once the two could be seen side by side.
+              v1  flat mid-grey fill, compact lighter blocks scattered through
+                  the upper body, a darker band along the underside, one edge
+                  colour all the way round. Follows the reference most
+                  closely. Single-row highlights read as stripes across the
+                  body, so the blocks are two rows each, one under every crown
+                  and shoulder; that is what breaks the mass into puffs.
     bolt    a 2px stroke leaning down-left the whole way, never vertical on
             any stretch long enough to notice. It gathers inside the cloud
             (rows 3..7, hidden), drops clear of the flat base at row 8 just
@@ -92,11 +91,11 @@ It is generated here instead, and make_cores.py now covers the other three.
 Every pixel is placed here — nothing is copied from another mod, so there is
 no NOTICE carve-out.
 
-Run:  python texture-work/make_storm_core.py [--variant v1|v2] [--ascii]
+Writes two sprites: storm_core itself in v2, and storm_core_test — a dummy item
+with no recipe and no use — in v1, so the two colourings can be compared in an
+inventory. Both are written every run; see OUTPUTS.
 
-Both variants write to the same place, so whichever was run last is the one in
-the tree. v1 is the default and the one that should be committed unless
-berlord says otherwise.
+Run:  python texture-work/make_storm_core.py [--ascii]
 """
 import json
 import os
@@ -111,16 +110,27 @@ SIZE = 16
 
 # Two ways of colouring the same silhouette, picked with --variant.
 #
-#   v1  berlord's reference, and the default. Not a ramp: a flat mid fill,
-#       compact lighter blocks scattered through the upper body, a darker band
-#       along the underside, one edge colour all the way round.
-#   v2  the treatment used before that reference arrived. A per-column
-#       gradient from a lit cap down to a shadowed base, with a lighter
-#       outline along the skyline than round the sides and bottom.
+#   v2  the default, and what ships. A per-column gradient from a lit cap down
+#       to a shadowed base, with a lighter outline along the skyline than
+#       round the sides and bottom.
+#   v1  closest to berlord's reference. A flat mid fill, compact lighter
+#       blocks scattered through the upper body, a darker band along the
+#       underside, one edge colour all the way round.
 #
 # Silhouette, bolt, rain and animation are identical either way — this is only
 # how the grey is laid on.
 CLOUD_VARIANTS = ("v1", "v2")
+
+# (texture name, variant). Both are written on every run, so a bare run cannot
+# leave one of them stale behind a change to the shape, the bolt or the rain —
+# which is the whole risk of keeping two sprites that share a generator.
+#
+# storm_core_test is a dummy item carrying v1, so the two colourings can be
+# held side by side in an inventory. It has no recipe and no use.
+OUTPUTS = (
+    ("storm_core", "v2"),
+    ("storm_core_test", "v1"),
+)
 
 CLOUD_FILL = "#4E555F"
 CLOUD_LIGHT = "#79828E"
@@ -547,20 +557,19 @@ def build_mcmeta():
 
 
 if __name__ == "__main__":
-    variant = "v1"
-    if "--variant" in sys.argv:
-        variant = sys.argv[sys.argv.index("--variant") + 1]
-    if variant not in CLOUD_VARIANTS:
-        sys.exit("unknown variant %r; expected one of %s"
-                 % (variant, ", ".join(CLOUD_VARIANTS)))
+    for name, variant in OUTPUTS:
+        assert variant in CLOUD_VARIANTS, "unknown variant %r for %s" % (variant, name)
 
     os.makedirs(TEX_ITEM, exist_ok=True)
-    strip, frames = build_strip(variant)
-    strip.save(os.path.join(TEX_ITEM, "storm_core.png"))
-    with open(os.path.join(TEX_ITEM, "storm_core.png.mcmeta"), "w", newline="\n") as fh:
-        json.dump(build_mcmeta(), fh, indent=2)
-        fh.write("\n")
-    print("wrote storm_core.png (%s, %d frames) and storm_core.png.mcmeta"
-          % (variant, len(frames)))
+    first = None
+    for name, variant in OUTPUTS:
+        strip, frames = build_strip(variant)
+        strip.save(os.path.join(TEX_ITEM, name + ".png"))
+        with open(os.path.join(TEX_ITEM, name + ".png.mcmeta"), "w", newline="\n") as fh:
+            json.dump(build_mcmeta(), fh, indent=2)
+            fh.write("\n")
+        print("wrote %s.png (%s, %d frames) and %s.png.mcmeta"
+              % (name, variant, len(frames), name))
+        first = first or frames[0]
     if "--ascii" in sys.argv:
-        dump(frames[0])
+        dump(first)

@@ -240,12 +240,15 @@ RAIN_SHAPES = {
 # a full cycle, so streaks on different drifts still all come back round
 # together.
 RAIN_STREAKS = (
-    (11, 12, "gust",  -1),
-    (3, 13,  "raked", -2),
-    (14, 15, "slant", -1),
-    (9, 11,  "steep",  0),
-    (15, 10, "dot",   -2),
-    (5, 15,  "split", -1),
+    (9, 12,  "gust",  -1),
+    (1, 13,  "raked", -2),
+    (12, 15, "slant", -1),
+    # Two columns left of the rest of the shift. On the shared -2 this one
+    # lands at x=7, and with no drift to carry it clear it sits behind the
+    # bolt for its whole life — three quarters of it never gets drawn.
+    (2, 11,  "steep",  0),
+    (13, 10, "dot",   -2),
+    (3, 15,  "split", -1),
 )
 
 # (pulse, hold in ticks). `pulse` is (phase, head row) or None for the rest

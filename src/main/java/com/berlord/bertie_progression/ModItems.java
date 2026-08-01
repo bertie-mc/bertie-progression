@@ -59,7 +59,7 @@ public final class ModItems {
         return it;
     }
 
-    // --- Opening / foundry (plan §2.1) ---
+    // --- Opening / foundry ---
     public static final DeferredItem<Item> OPENING_MALLET = ITEMS.registerSimpleItem(
             "opening_mallet", new Item.Properties().stacksTo(1).durability(256));
     public static final DeferredItem<Item> STONE_CRUCIBLE_BLANK = simple("stone_crucible_blank", 16);
@@ -67,34 +67,29 @@ public final class ModItems {
 
     // --- Create bridge ---
     public static final DeferredItem<Item> KINETIC_VANE = simple("kinetic_vane", 64);
-    // Transitional items for the Create sequenced-assembly recipes (batch 8): structural beam + water wheels.
+    // Transitional items for the Create sequenced-assembly recipes.
     public static final DeferredItem<Item> INCOMPLETE_STRUCTURAL_BEAM = simple("incomplete_structural_beam", 64);
     public static final DeferredItem<Item> INCOMPLETE_SMALL_WATER_WHEEL = simple("incomplete_small_water_wheel", 64);
     public static final DeferredItem<Item> INCOMPLETE_LARGE_WATER_WHEEL = simple("incomplete_large_water_wheel", 64);
-    // Shield Maiden (batch 8): naga-trophy ritual output; grants access to the Twilight Lich. Dupe-able.
+    // Naga-trophy ritual output that grants access to the Twilight Lich.
     public static final DeferredItem<Item> SHIELD_MAIDEN = simple("shield_maiden", 16);
-    // Acolyte of Deflection (batch 17): the same idea one boss on - a lich-trophy ritual output that
-    // takes over from the raw trophy as the gate to what follows the Lich.
+    // Lich-trophy ritual output that gates the progression following the Lich.
     public static final DeferredItem<Item> ACOLYTE_OF_DEFLECTION = simple("acolyte_of_deflection", 16);
     public static final DeferredItem<Item> KINETIC_PATTERN_PLATE = simple("kinetic_pattern_plate", 16);
 
     // --- Table license chain ---
-    // (Crafting Language Slate/Seal and the Spirit Altar Witness were dropped, berlord batch 4.)
     /** Consumable: permanently unlocks the 3x3 grid for the player who uses it. */
     public static final DeferredItem<CraftingLicenseItem> CRAFTING_LICENSE = ITEMS.register(
             "crafting_license", () -> new CraftingLicenseItem(
                     new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
 
     // --- Portals / dimension keys ---
-    // NETHER_LINTEL and NETHER_LINTEL_CORE removed 2026-07-31 (berlord): obsolete now the Nether is
-    // entered by eating a Netherly Meal. Nothing else consumed either item.
     public static final DeferredItem<Item> TWILIGHT_CONCORD = simple("twilight_concord", 16);
     public static final DeferredItem<DescentAnchorItem> DESCENT_ANCHOR = ITEMS.register(
             "descent_anchor", () -> new DescentAnchorItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
 
     // --- Altar witnesses / resonances ---
     public static final DeferredItem<Item> RUNEWOOD_RESONANCE = simple("runewood_resonance", 1);
-    // ARCANA_RESONANCE removed 2026-07-31 (berlord): no recipe ever consumed it.
 
     // --- Deep dark / echo chain ---
     public static final DeferredItem<Item> WARDEN_ECHO_PATTERN = rare("warden_echo_pattern", 1, Rarity.UNCOMMON);
@@ -118,7 +113,7 @@ public final class ModItems {
             "netherly_meal", () -> new NetherlyMealItem(new Item.Properties().stacksTo(16)
                     .food(new FoodProperties.Builder().nutrition(8).saturationModifier(1.25F).build())));
 
-    // --- Finders (batch 17): craftable charts that resolve into a real exploration map. See FinderItem. ---
+    // --- Finders: craftable charts that resolve into real exploration maps. ---
     public static final DeferredItem<FinderItem> SIROK_NEST_MAP = ITEMS.register(
             "sirok_nest_map", () -> new FinderItem(new Item.Properties().stacksTo(16),
                     ResourceLocation.parse("block_factorys_bosses:sandworm_nest"),
@@ -132,7 +127,7 @@ public final class ModItems {
                     ResourceLocation.parse("block_factorys_bosses:yeti_hideout"),
                     "item.bertie_progression.yeti_hideout_map.filled", FinderItem.STANDARD_RADIUS));
 
-    // --- Elemental cores (batch 17c): the four 7x7 crafter walls that converge on the Nether. ---
+    // --- Elemental cores produced by the four 7x7 mechanical-crafter recipes. ---
     public static final DeferredItem<Item> ABYSSAL_CORE = simple("abyssal_core", 16);
     public static final DeferredItem<Item> DESERT_CORE = simple("desert_core", 16);
     public static final DeferredItem<Item> CURSED_CORE = simple("cursed_core", 16);

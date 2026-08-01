@@ -16,14 +16,14 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 /**
  * Give an Allay an Arcane Crystal and it dies, leaving a Corrupted Arcane Crystal.
  *
- * <p>Why: {@code forbidden_arcanus:corrupted_arcane_crystal} has NO source in the pack. Its only six
+ * <p>{@code forbidden_arcanus:corrupted_arcane_crystal} otherwise has no source in the pack. Its
  * references are its own block round-trip and two block loot tables, so nothing in the game ever
- * creates the first one - the whole line is dead content. This is berlord's way in.
+ * creates the first one.
  *
  * <p>Deliberately NOT an interaction hook. Watching for an allay that is simply HOLDING the crystal
  * means vanilla keeps ownership of the hand-off rules for free: you cannot give an allay an item
- * while its hands are full, and giving in creative does not consume the stack. Both are berlord's
- * spec, and both are behaviour we would otherwise have to reimplement and keep in sync.
+ * while its hands are full, and giving in creative does not consume the stack. Reusing those rules
+ * avoids duplicating interaction behavior here.
  *
  * <p>Death is delayed a random 20-50 ticks, then dealt as real damage - "true death", so anything in
  * the pack that reacts to mob deaths sees it. It is generic damage with no attacker, so it credits

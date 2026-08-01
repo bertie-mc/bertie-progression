@@ -9,14 +9,12 @@ import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 /**
  * The Nether is closed until you have eaten a Netherly Meal.
  *
- * <p>berlord's rule: a player can light the portal and stand in it, but nothing happens until the
- * meal has been eaten once. The unlock is permanent and survives death - it is a milestone, not a
+ * <p>A player can light the portal and stand in it, but nothing happens until the meal has been
+ * eaten once. The unlock is permanent and survives death: it is a milestone, not a
  * buff, so the flag is a {@code copyOnDeath} attachment, the same shape the Crafting License uses.
  *
- * <p>Cancelling {@link EntityTravelToDimensionEvent} is what stops it. Note this gates travel to the
- * Nether by ANY route, not only a portal - the event carries the destination but not the cause, so a
- * teleport or a command would be refused too. That is the correct reading of "cannot enter the
- * Nether"; if berlord ever wants portals only, this needs a different hook.
+ * <p>Cancelling {@link EntityTravelToDimensionEvent} gates every route into the Nether, including
+ * teleports and commands. The event identifies the destination but not the travel method.
  *
  * <p>Only players are gated. Mobs, items and everything else travel normally, so a portal still
  * works as a portal for the rest of the world.

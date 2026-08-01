@@ -53,9 +53,8 @@ public class NetherlyMealItem extends Item {
                 level.setBlockAndUpdate(at, Blocks.LAVA.defaultBlockState());
             }
             player.setData(ModAttachments.MEAL_COUNTDOWN, SURVIVE_TICKS);
-            // The Nether opens on the FIRST BITE, not on surviving it - berlord's rule is
-            // "eaten once", and tying it to survival would strand a player who died to their
-            // own meal with no way back to the recipe's dragon heart.
+            // The unlock happens on consumption rather than survival. Otherwise dying to the meal
+            // could leave the player unable to return to the recipe's dragon-heart source.
             player.setData(ModAttachments.NETHER_UNLOCKED, Boolean.TRUE);
         }
         return result;

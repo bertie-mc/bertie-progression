@@ -46,19 +46,25 @@ being a bolt in a cloud and becomes a bolt lying in front of one.
             holding the swell longer reads as the pulse slowing to grow, and
             holding the run through the cloud longer than the run below it
             reads as the tail end sprinting.
-    rain    streaks blown down-left on the bolt's own lean, blue-grey so they
-            do not read as cloud breaking off, with a brighter pixel at the
-            leading end. Each is a staircase rather than a true 45 line: a
-            diagonal that only touches at the corners reads as a row of
-            separate dots at this size. They share a slope and vary in length
-            instead — three or four pixels is not enough line for an angle to
-            survive being different from its neighbours, so the gusting has to
-            come from somewhere that reads, and length does.
+    rain    streaks blown out of the base, blue-grey so they do not read as
+            cloud breaking off, with a brighter pixel at the leading end. Six
+            of them, no two alike: long raked ones, short ones barely
+            deflected, one torn in two, one lone droplet. The drift varies per
+            streak as well as the shape — nought, one or two columns a step —
+            so they cross rather than run parallel, which is the difference
+            between weather and a comb.
 
-            Seeds are tiled along the wind so the field stays full as streaks
-            blow off the bottom left, which means each one lands two or three
-            times over. Three seeds is the ceiling before the copies start
-            running into each other and clumping.
+            Every shape is edge-connected, stepping down and across rather
+            than cutting a true diagonal. That is not decoration: a 45 line
+            touches only at the corners and comes out as separate dots, and an
+            earlier pass that mixed slopes on corner-touching streaks had
+            nothing reading as a line at all.
+
+            Seeds are tiled by what their own wind carries them in a full
+            cycle, so streaks on different drifts still come back round
+            together. The period is six rather than four because the rain area
+            is only eight rows deep — at four every seed landed twice over and
+            the copies ran into each other.
 
             The rain is also why nothing can be held any more: a long rest
             frame freezes it mid-air, so the gap between strikes is ten
@@ -207,34 +213,39 @@ PULSE_AURA_BURST = (0.50, 0.30, 0.16, 0.08)
 RAIN = "#7E97B2"
 RAIN_TAIL = "#5B6E85"    # trailing pixels, so a streak reads as having a head
 RAIN_TOP = 8             # first row below the cloud
-RAIN_PERIOD = 4          # the wind carries a streak this far before repeating
+# How far a streak travels before it repeats. Six rather than four: at four the
+# rain area is only eight rows deep, so every seed landed twice over and the
+# copies ran into each other. Six keeps most seeds to a single copy in frame.
+RAIN_PERIOD = 6
 RAIN_TICKS_PER_ROW = 2   # frames a streak spends on each step
 
-# Streak shapes, listed tail first so the last offset is the leading end. Each
-# is a staircase down-left, alternating a step down and a step left, because a
-# true 45 line only touches at the corners and at this size reads as a row of
-# separate dots rather than as a streak.
-#
-# They all share that slope. Mixing slopes was tried first and the streaks
-# stopped reading as lines at all — three or four pixels is not enough line for
-# an angle to survive being different from its neighbours. The gusting comes
-# from length instead, which does read at this size.
+# Streak shapes, listed tail first so the last offset is the leading end. Every
+# one is edge-connected — stepping down and across rather than cutting a true
+# diagonal — because a 45 line only touches at the corners and at this size
+# reads as a row of separate dots rather than as a streak. That connectivity is
+# what lets the slopes differ; an earlier pass mixed slopes on corner-touching
+# streaks and nothing read as a line at all.
 RAIN_SHAPES = {
-    "gust":  ((2, -2), (1, -2), (1, -1), (0, -1), (0, 0)),
-    "long":  ((1, -2), (1, -1), (0, -1), (0, 0)),
-    "short": ((1, -1), (0, -1), (0, 0)),
+    "gust":   ((2, -2), (1, -2), (1, -1), (0, -1), (0, 0)),   # long, raked over
+    "slant":  ((1, -1), (0, -1), (0, 0)),                     # short, same lean
+    "steep":  ((0, -2), (0, -1), (0, 0)),                     # barely deflected
+    "raked":  ((2, -1), (1, -1), (1, 0), (0, 0)),             # nearly sideways
+    "split":  ((1, -2), (0, 0)),                              # torn in two
+    "dot":    ((0, 0),),                                      # a single droplet
 }
 
-# Leading ends, tiled along the wind by (-RAIN_PERIOD, +RAIN_PERIOD) so the
-# field stays full as streaks blow off the bottom left. Scattered by hand — an
-# even lattice reads as hatching rather than as weather.
-# Three is enough. Each one tiles into two or three copies, so five seeds put
-# roughly thirty pixels of rain into the frame and the copies started running
-# into each other and clumping.
+# (head x, head y, shape, columns blown per step). The drift varies per streak,
+# not just the shape — that is what stops the field reading as one comb raked
+# over at a single angle. Each seed is tiled by what its own wind carries it in
+# a full cycle, so streaks on different drifts still all come back round
+# together.
 RAIN_STREAKS = (
-    (11, 12, "gust"),
-    (2, 12, "long"),
-    (14, 15, "short"),
+    (11, 12, "gust",  -1),
+    (3, 13,  "raked", -2),
+    (14, 15, "slant", -1),
+    (9, 11,  "steep",  0),
+    (15, 10, "dot",   -2),
+    (5, 15,  "split", -1),
 )
 
 # (pulse, hold in ticks). `pulse` is (phase, head row) or None for the rest
@@ -312,13 +323,13 @@ def rain_pixels(frame):
     one step down-left every RAIN_TICKS_PER_ROW frames; because the seeds are
     tiled by exactly the distance travelled in RAIN_PERIOD steps, the field is
     identical again after that and the loop closes."""
-    blown = (frame // RAIN_TICKS_PER_ROW) % RAIN_PERIOD
+    step = (frame // RAIN_TICKS_PER_ROW) % RAIN_PERIOD
     out = {}
-    for sx, sy, shape in RAIN_STREAKS:
-        for k in range(-3, 4):
-            hx = sx - blown - k * RAIN_PERIOD
-            hy = sy + blown + k * RAIN_PERIOD
-            shape_px = RAIN_SHAPES[shape]
+    for sx, sy, shape, drift in RAIN_STREAKS:
+        shape_px = RAIN_SHAPES[shape]
+        for k in range(-4, 5):
+            hx = sx + (step + k * RAIN_PERIOD) * drift
+            hy = sy + step + k * RAIN_PERIOD
             for i, (dx, dy) in enumerate(shape_px):
                 p = (hx + dx, hy + dy)
                 if 0 <= p[0] < SIZE and RAIN_TOP <= p[1] < SIZE:
